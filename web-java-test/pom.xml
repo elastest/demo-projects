@@ -43,6 +43,7 @@
 		<!-- Test dependencies version -->
 		<junit.jupiter.version>5.0.0</junit.jupiter.version>
 		<webdrivermanager.version>1.7.2</webdrivermanager.version>
+		<junit.platform.version>1.0.0</junit.platform.version>
 	</properties>
 
 	<!-- Apache Software License -->
