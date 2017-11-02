@@ -16,7 +16,8 @@
  */
 package io.elastest.demo.web;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,64 +36,65 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 public class WebAppTest {
 
-	private WebDriver driver;
-	private static String eusApiURL;
-	private static String appURL;
+    private WebDriver driver;
+    private static String eusApiURL;
+    private static String appURL;
 
-	@BeforeAll
-	public static void setupClass() {
-		eusApiURL = System.getenv("ET_EUS_API");
-		if (eusApiURL == null) {
-			ChromeDriverManager.getInstance().setup();
-		}
-		
-		appURL = System.getenv("APP_IP");
-		if(appURL == null) {
-			appURL = "http://localhost:8080/";
-		}
-	}
+    @BeforeAll
+    public static void setupClass() {
+        eusApiURL = System.getenv("ET_EUS_API");
+        if (eusApiURL == null) {
+            ChromeDriverManager.getInstance().setup();
+        }
 
-	@BeforeEach
-	public void setupTest() throws MalformedURLException {
-		if (eusApiURL == null) {
-			driver = new ChromeDriver();
-		} else {
-			driver = new RemoteWebDriver(new URL(eusApiURL), DesiredCapabilities.chrome());
-		}
-	}
+        appURL = System.getenv("APP_IP");
+        if (appURL == null) {
+            appURL = "http://localhost:8080/";
+        }
+    }
 
-	@AfterEach
-	public void teardown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
+    @BeforeEach
+    public void setupTest() throws MalformedURLException {
+        if (eusApiURL == null) {
+            driver = new ChromeDriver();
+        } else {
+            driver = new RemoteWebDriver(new URL(eusApiURL),
+                    DesiredCapabilities.chrome());
+        }
+    }
 
-	@Test
-	public void test() throws InterruptedException {
-		driver.get(appURL);
+    @AfterEach
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
-		Thread.sleep(3000);
-		
-		String newTitle = "MessageTitle";
-		String newBody = "MessageBody";
-		
-		driver.findElement(By.id("title-input")).sendKeys(newTitle);
-		driver.findElement(By.id("body-input")).sendKeys(newBody);
-		
-		Thread.sleep(3000);
-		
-		driver.findElement(By.id("submit")).click();
-		
-		Thread.sleep(3000);
-		
-		String title = driver.findElement(By.id("title")).getText();
-		String body = driver.findElement(By.id("body")).getText();
-		
-		assertThat(title).isEqualTo(newTitle);
-		assertThat(body).isEqualTo(newBody);
-		
-		Thread.sleep(3000);
-	}
+    @Test
+    public void test() throws InterruptedException {
+        driver.get(appURL);
+
+        Thread.sleep(3000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
+
+        Thread.sleep(3000);
+
+        driver.findElement(By.id("submit")).click();
+
+        Thread.sleep(3000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        assertThat(title, equalTo(newTitle));
+        assertThat(body, equalTo(newBody));
+
+        Thread.sleep(3000);
+    }
 
 }
