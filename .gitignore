@@ -4,6 +4,7 @@
 *.project
 *.swagger-codegen-ignore
 *.settings
+*.springBeans
 
 # Log file
 *.log
