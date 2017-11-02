@@ -51,6 +51,7 @@ public class WebAppTest {
         if (appURL == null) {
             appURL = "http://localhost:8080/";
         }
+        System.out.println("App url: " + appURL);
     }
 
     @BeforeEach
