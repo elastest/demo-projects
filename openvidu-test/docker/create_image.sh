@@ -15,7 +15,7 @@ cp -r ./dist ../../openvidu-testapp
 
 # Build docker image
 cd ../../
-docker build -t elastest/demo-openvidu-test-sut .
+docker build -t elastest/demo-openvidu-test-sut2 .
 
 # Delete unwanted files
 rm -rf ./openvidu-testapp
