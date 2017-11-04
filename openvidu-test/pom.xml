@@ -2,13 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>io.openvidu</groupId>
-		<artifactId>openvidu-parent</artifactId>
-		<version>1.1.0</version>
-	</parent>
-
 	<artifactId>openvidu-test</artifactId>
+	<groupId>io.elastest.demo</groupId>
 	<version>1.1.1</version>
 	<packaging>jar</packaging>
 
@@ -86,7 +81,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
@@ -128,6 +122,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<version>1.7.13</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -146,6 +141,7 @@
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>xml-apis</groupId>

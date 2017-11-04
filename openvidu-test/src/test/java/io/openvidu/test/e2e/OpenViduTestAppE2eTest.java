@@ -151,6 +151,9 @@ public class OpenViduTestAppE2eTest {
 
 		user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
 		
+		log.info("Waiting for video recording");
+		Thread.sleep(10000);
+		
 		try {
 			System.out.println(getBase64Screenshot(user));
 		} catch (Exception e) {
