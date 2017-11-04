@@ -123,6 +123,8 @@ public class OpenViduTestAppE2eTest {
 
 		user.getDriver().get(APP_URL);
 
+		sleep(5000);
+		
 		WebElement urlInput = user.getDriver().findElement(By.id("openvidu-url"));
 		urlInput.clear();
 		urlInput.sendKeys(OPENVIDU_URL);
@@ -131,6 +133,13 @@ public class OpenViduTestAppE2eTest {
 		secretInput.sendKeys(OPENVIDU_SECRET);
 
 		user.getEventManager().startPolling();
+	}
+
+	private void sleep(int millis) {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+		}		
 	}
 
 	@AfterEach
