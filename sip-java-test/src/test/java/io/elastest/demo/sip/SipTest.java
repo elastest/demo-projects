@@ -35,8 +35,12 @@ public class SipTest {
 			System.err.println("Environment ET_SUT_HOST is mandatory to execute SIP Test");
 			System.exit(1);
 		}
+		
+		String command = "sipp -nostdin -sn uac -m 1 " + sutIp;
+		
+		System.out.println("Executing command: "+command);
 
-		Process p = exec("sipp -nostdin -sn uac -m 1 " + sutIp);
+		Process p = exec(command);
 
 		try {
 
