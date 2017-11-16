@@ -56,7 +56,7 @@ public class WebAppTest {
 		eusURL = System.getenv("ET_EUS_API");
 		if (eusURL == null) {
 			ChromeDriverManager.getInstance().setup();
-		}		
+		}
 	}
 
 	@BeforeEach
