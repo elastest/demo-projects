@@ -43,8 +43,8 @@ public class WebAppTest {
 	public static final String FIREFOX = "firefox";
 
 	private static String browserType;
-	private static String eusApiURL;
-	private static String appURL;
+	private static String eusURL;
+	private static String sutUrl;
 	
 	private WebDriver driver;	
 	
@@ -55,8 +55,8 @@ public class WebAppTest {
 		
 		System.out.println("Browser Type: "+browserType);
 		
-		eusApiURL = System.getenv("ET_EUS_API");
-		if (eusApiURL == null) {
+		eusURL = System.getenv("ET_EUS_API");
+		if (eusURL == null) {
 
 			if (browserType == null || browserType.equals(CHROME)) {
 				ChromeDriverManager.getInstance().setup();
@@ -65,16 +65,18 @@ public class WebAppTest {
 			}
 		}
 
-		appURL = System.getenv("APP_IP");
-		if (appURL == null) {
-			appURL = "http://localhost:8080/";
+		String sutHost = System.getenv("ET_SUT_HOST");
+		if (sutHost == null) {
+			sutUrl = "http://localhost:8080/";
+		} else {
+			sutUrl = "http://"+sutHost+":8080/";
 		}
-		System.out.println("App url: " + appURL);
+		System.out.println("Webapp URL: " + sutUrl);
 	}
 
 	@BeforeEach
 	public void setupTest() throws MalformedURLException {
-		if (eusApiURL == null) {
+		if (eusURL == null) {
 			if (browserType == null || browserType.equals(CHROME)) {
 				driver = new ChromeDriver();
 			} else {
@@ -89,7 +91,7 @@ public class WebAppTest {
 				caps = DesiredCapabilities.firefox();
 			}
 			
-			driver = new RemoteWebDriver(new URL(eusApiURL), caps);
+			driver = new RemoteWebDriver(new URL(eusURL), caps);
 		}
 	}
 
@@ -102,7 +104,7 @@ public class WebAppTest {
 
 	@Test
 	public void test() throws InterruptedException {
-		driver.get(appURL);
+		driver.get(sutUrl);
 
 		Thread.sleep(3000);
 
