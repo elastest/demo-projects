@@ -45,10 +45,6 @@ public class WebAppTest {
 	@BeforeAll
 	public static void setupAllTests() {
 
-		if (System.getenv("ET_EUS_API") == null) {
-			ChromeDriverManager.getInstance().setup();
-		}
-
 		String sutHost = System.getenv("ET_SUT_HOST");
 		if (sutHost == null) {
 			sutURL = "http://localhost:8080/";
@@ -56,25 +52,26 @@ public class WebAppTest {
 			sutURL = "http://" + sutHost + ":8080/";
 		}
 		System.out.println("App url: " + sutURL);
+		
+		eusURL = System.getenv("ET_EUS_API");
+		if (eusURL == null) {
+			ChromeDriverManager.getInstance().setup();
+		}		
 	}
 
 	@BeforeEach
 	public void setupTest() throws MalformedURLException {
 
 		ChromeOptions options = new ChromeOptions();
-		// This flag avoids to grant the user media
-		options.addArguments("--use-fake-ui-for-media-stream");
-		// This flag fakes user media with synthetic video
-		options.addArguments("--use-fake-device-for-media-stream");
+		
+		options.addArguments("start-maximized");
 		
 		if (eusURL == null) {
 			driver = new ChromeDriver(options);
-		} else {
-			
+		} else {			
 			DesiredCapabilities caps = new DesiredCapabilities();
 			caps.setBrowserName("chrome");
-			caps.setCapability(ChromeOptions.CAPABILITY, options);				
-					
+			caps.setCapability(ChromeOptions.CAPABILITY, options);					
 			driver = new RemoteWebDriver(new URL(eusURL), caps);
 		}
 	}
