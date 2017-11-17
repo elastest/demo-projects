@@ -5,14 +5,10 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha src/*.js"
   },
-  "chromedriver": {
-    "versions": [
-      "2.33"
-    ]
-  },
   "devDependencies": {
     "chai": "*",
     "mocha": "*",
-    "selenium-webdriver": "*"
+    "selenium-webdriver": "*",
+    "chromedriver": "^2.33.2"
   }
 }

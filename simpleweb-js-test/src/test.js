@@ -17,7 +17,7 @@ before(() => {
   }
   console.log("App url: " + sutURL);
 
-  eusURL = process.env.ET_EUS_URL;
+  eusURL = process.env.ET_EUS_API;
 });
 
 beforeEach(() => {
@@ -28,7 +28,10 @@ beforeEach(() => {
   browserBuilder.setChromeOptions(options);
 
   if (eusURL) {
+    console.log("Using ElasTest browser ("+eusURL+")");
     browserBuilder.usingServer(eusURL);
+  } else {
+    console.log("Using local browser");      
   }
   driver = browserBuilder.build();
 
