@@ -5,6 +5,7 @@
 *.swagger-codegen-ignore
 *.settings
 *.springBeans
+*node_modules
 
 # Log file
 *.log
