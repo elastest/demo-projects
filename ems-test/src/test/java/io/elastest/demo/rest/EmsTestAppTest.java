@@ -46,6 +46,11 @@ public class EmsTestAppTest {
             result = result.split(":")[1];
             result = result.split("}")[0];
             counter--;
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
         assertThat(result).isNotEqualTo("0");
