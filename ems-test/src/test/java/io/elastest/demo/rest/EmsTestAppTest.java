@@ -36,7 +36,7 @@ public class EmsTestAppTest {
 
         String result = "0";
 
-        int counter = 3;
+        int counter = 10;
 
         while (result == "0" && counter > 0) {
             result = client.getForObject("http://" + appHost + ":8888/health",
@@ -51,6 +51,8 @@ public class EmsTestAppTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("trying it again...");
+
 
         }
         assertThat(result).isNotEqualTo("0");
