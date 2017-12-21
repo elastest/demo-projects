@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.web.client.RestTemplate;
 
-
 public class EmsTestAppTest {
 
     @Test
@@ -35,13 +34,20 @@ public class EmsTestAppTest {
 
         RestTemplate client = new RestTemplate();
 
-        String result = client.getForObject(
-                "http://" + appHost + ":8888/health", String.class);
+        String result = "0";
 
-        result = result.split(",")[1];
-        result = result.split(":")[1];
-        result = result.split("}")[0];
+        int counter = 3;
 
+        while (result == "0" && counter > 0) {
+            result = client.getForObject("http://" + appHost + ":8888/health",
+                    String.class);
+
+            result = result.split(",")[1];
+            result = result.split(":")[1];
+            result = result.split("}")[0];
+            counter--;
+
+        }
         assertThat(result).isNotEqualTo("0");
     }
 
