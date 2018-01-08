@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class WordCountTask {
   public static void main(String[] args) {
     checkArgument(args.length > 0, "Please provide the path of input file as first parameter.");
-    new WordCountTask().run(args[0]);
+    new WordCountTask().run( "file://" + args[0]);
   }
 
   
