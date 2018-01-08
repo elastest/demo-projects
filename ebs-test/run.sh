@@ -1,8 +1,3 @@
-git clone https://github.com/LordWire/demo-projects.git
-
-#cd to the directory
-cd demo-projects/ebs-test
-
 #this works too
 mvn package
 
