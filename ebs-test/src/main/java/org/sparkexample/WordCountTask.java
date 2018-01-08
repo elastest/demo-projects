@@ -26,6 +26,6 @@ public class WordCountTask {
     context.textFile(inputFilePath)
         .flatMap(text -> Arrays.asList(text.split(" ")).iterator())
         .mapToPair(word -> new Tuple2<>(word, 1))
-        .reduceByKey((a, b) -> a + b).saveAsTextFile("file:///out.txt");
+        .reduceByKey((a, b) -> a + b).saveAsTextFile("/out.txt");
   }
 }
