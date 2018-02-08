@@ -80,12 +80,12 @@ public class OpenViduTestAppE2eTest {
 			FirefoxDriverManager.getInstance().setup();	
 		}
 
-		String appIp = System.getenv("APP_IP");
-		if (appIp != null) {
+		String appURL = System.getenv("ET_SUT_HOST");
+		if (appURL != null) {
 			//Be sure that protocol is http
-			appIp = appIp.replace("http://", "https://");
-			APP_URL = appIp;
-			OPENVIDU_URL = appIp;
+			appURL = "https://" + appURL + "8443";
+			APP_URL = appURL;
+			OPENVIDU_URL = appURL;
 		}
 		
 		String appUrl = getProperty("app.url");
