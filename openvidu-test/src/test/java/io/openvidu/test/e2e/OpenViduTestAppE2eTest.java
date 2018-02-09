@@ -67,6 +67,11 @@ public class OpenViduTestAppE2eTest {
 	static String APP_URL = "https://localhost:8443/";
 	static Exception ex = null;
 	
+	public static final String CHROME = "chrome";
+	public static final String FIREFOX = "firefox";
+
+	private static String BROWSER;
+	
 	final static Logger log = getLogger(lookup().lookupClass());
 
 	BrowserUser user;
@@ -106,6 +111,12 @@ public class OpenViduTestAppE2eTest {
 			OPENVIDU_SECRET = openvidusecret;
 		}
 		log.info("Using secret {} to connect to openvidu-server", OPENVIDU_SECRET);
+		
+		BROWSER = System.getenv("BROWSER");
+		
+		if ((BROWSER == null) || (!BROWSER.equals(FIREFOX))) {
+ 			BROWSER = CHROME;
+ 		}
 	}
 
 	void setupBrowser(String browser) {
@@ -151,7 +162,7 @@ public class OpenViduTestAppE2eTest {
 	@DisplayName("One2One Chrome [Video + Audio]")
 	void oneToOneVideoAudioSessionChrome() throws Exception {
 		
-		setupBrowser("chrome");
+		setupBrowser(BROWSER);
 
 		log.info("One2One Chrome [Video + Audio]");
 
