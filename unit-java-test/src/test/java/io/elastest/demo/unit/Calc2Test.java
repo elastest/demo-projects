@@ -57,4 +57,18 @@ public class Calc2Test {
             }.getClass().getEnclosingMethod().getName());
         }
     }
+
+    @Test
+    public void sumStringTestKO() {
+	    logger.info("##### Start test: {}", new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        try {
+            assertThat(calc.sum("a", "b")).isEqualTo(5);
+        } finally {
+            logger.info("##### Finish test: {}", new Object() {
+            }.getClass().getEnclosingMethod().getName());
+        }
+    
+        
+    }
 }
