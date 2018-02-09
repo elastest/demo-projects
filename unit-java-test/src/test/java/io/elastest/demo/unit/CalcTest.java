@@ -39,6 +39,7 @@ public class CalcTest {
         logger.info("##### Start test: {}", new Object() {
         }.getClass().getEnclosingMethod().getName());
         try {
+            logger.warn("This is a warn msg to test");
             assertThat(calc.sum(3, 2)).isEqualTo(5);
         } finally {
             logger.info("##### Finish test: {}", new Object() {

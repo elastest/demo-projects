@@ -39,6 +39,7 @@ public class Calc2Test {
         logger.info("##### Start test: {}", new Object() {
         }.getClass().getEnclosingMethod().getName());
         try {
+            logger.warn("This is a warn msg to test");
             assertThat(calc.sum(3, 2)).isEqualTo(5);
         } finally {
             logger.info("##### Finish test: {}", new Object() {
@@ -51,6 +52,8 @@ public class Calc2Test {
         logger.info("##### Start test: {}", new Object() {
         }.getClass().getEnclosingMethod().getName());
         try {
+            logger.warn("This is a warn msg to test");
+            logger.warn("This is other warn msg to test");
             assertThat(calc.sum(3, 3)).isEqualTo(5);
         } finally {
             logger.info("##### Finish test: {}", new Object() {
@@ -60,15 +63,15 @@ public class Calc2Test {
 
     @Test
     public void sumStringTestKO() {
-	    logger.info("##### Start test: {}", new Object() {
+        logger.info("##### Start test: {}", new Object() {
         }.getClass().getEnclosingMethod().getName());
         try {
+            logger.warn("This is a warn msg to test");
             assertThat(calc.sum("a", "b")).isEqualTo(5);
         } finally {
             logger.info("##### Finish test: {}", new Object() {
             }.getClass().getEnclosingMethod().getName());
         }
-    
-        
+
     }
 }
