@@ -47,25 +47,20 @@ public class ChromeUser extends BrowserUser {
 			e.printStackTrace();
 		}
 
-		
 		String eusApiURL = System.getenv("ET_EUS_API");
 		
-		if(eusApiURL == null) { 
-			this.driver = new ChromeDriver(options);	
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);	
+		
+		if(eusApiURL == null) {
+			this.driver = new ChromeDriver(capabilities);	
 		} else {
-			
-			try {				
-				DesiredCapabilities caps = new DesiredCapabilities();
-		        caps.setBrowserName("chrome");
-		        caps.setVersion("61");
-		        caps.setCapability(ChromeOptions.CAPABILITY, options);				
-				
-		        this.driver = new RemoteWebDriver(new URL(eusApiURL),  caps);
-		        				
+			try {
+				this.driver = new RemoteWebDriver(new URL(eusApiURL),  capabilities);
 			} catch (MalformedURLException e) {
 				throw new RuntimeException("Exception creaing eusApiURL",e);
 			}
-		}		
+		}
 		
 		this.driver.manage().timeouts().setScriptTimeout(this.timeOfWaitInSeconds, TimeUnit.SECONDS);
 		
