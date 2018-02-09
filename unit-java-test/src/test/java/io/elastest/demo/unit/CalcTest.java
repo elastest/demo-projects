@@ -20,20 +20,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CalcTest {
 
-	private Calc calc;
-	
-	@BeforeEach
-	public void init() {
-		this.calc = new Calc();
-	}
-	
-	@Test
-	public void sumTest() {
-		assertThat(calc.sum(3,2)).isEqualTo(5);
-	}
-	
+    private Calc calc;
+    private static final Logger logger = LoggerFactory
+            .getLogger(CalcTest.class);
+
+    @BeforeEach
+    public void init() {
+        this.calc = new Calc();
+    }
+
+    @Test
+    public void sumTest() {
+        logger.info("##### Start test: {}", new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        try {
+            assertThat(calc.sum(3, 2)).isEqualTo(5);
+        } finally {
+            logger.info("##### Finish test: {}", new Object() {
+            }.getClass().getEnclosingMethod().getName());
+        }
+    }
+
 }
