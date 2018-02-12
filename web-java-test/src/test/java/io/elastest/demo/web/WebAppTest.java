@@ -24,10 +24,8 @@ import java.net.URL;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -49,8 +47,6 @@ public class WebAppTest {
     private static String browserType;
     private static String eusURL;
     private static String sutUrl;
-
-    DesiredCapabilities caps;
 
     private WebDriver driver;
 
@@ -82,7 +78,6 @@ public class WebAppTest {
 
     // @BeforeEach
     public void setupTest(String testName) throws MalformedURLException {
-        caps = null;
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
                 driver = new ChromeDriver();
@@ -90,7 +85,7 @@ public class WebAppTest {
                 driver = new FirefoxDriver();
             }
         } else {
-
+            DesiredCapabilities caps;
             if (browserType == null || browserType.equals(CHROME)) {
                 caps = DesiredCapabilities.chrome();
             } else {
@@ -113,7 +108,7 @@ public class WebAppTest {
     public void test() throws InterruptedException, MalformedURLException {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
-        
+
         logger.info("##### Start test: {}", testName);
         this.setupTest(testName);
         driver.get(sutUrl);
