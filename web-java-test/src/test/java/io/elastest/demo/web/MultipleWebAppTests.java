@@ -26,6 +26,7 @@ import java.net.URL;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -99,11 +100,16 @@ public class MultipleWebAppTests {
     }
 
     @AfterEach
-    public void teardown() {
+    public void teardown(TestInfo info) {
+        String testName = info.getDisplayName();
+        testName = testName.replaceAll("(", "");
+        testName = testName.replaceAll(")", "");
         if (driver != null) {
-            // Clear
             logger.info("Clearing Messages...");
             driver.findElement(By.id("clearSubmit")).click();
+
+            logger.info("##### Finish test: {}", testName);
+
             driver.quit();
         }
     }
@@ -150,9 +156,6 @@ public class MultipleWebAppTests {
         assertThat(bodyExist, not(equalTo(0)));
 
         Thread.sleep(2000);
-        logger.info("##### Finish test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
-
     }
 
     @Test
@@ -188,9 +191,6 @@ public class MultipleWebAppTests {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(2000);
-        logger.info("##### Finish test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
-
     }
 
     @Test
@@ -226,9 +226,6 @@ public class MultipleWebAppTests {
         assertThat(body, not(equalTo(newBody)));
 
         Thread.sleep(2000);
-        logger.info("##### Finish test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
-
     }
 
 }
