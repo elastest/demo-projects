@@ -100,6 +100,8 @@ public class WebAppTest {
     @AfterEach
     public void teardown() {
         if (driver != null) {
+            logger.info("Clearing Messages...");
+            driver.findElement(By.id("clearSubmit")).click();
             driver.quit();
         }
     }
@@ -134,9 +136,6 @@ public class WebAppTest {
         logger.info("Checking Message...");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
-
-        logger.info("Clearing Messages...");
-        driver.findElement(By.id("clearSubmit")).click();
 
         Thread.sleep(2000);
         logger.info("##### Finish test: {}", new Object() {

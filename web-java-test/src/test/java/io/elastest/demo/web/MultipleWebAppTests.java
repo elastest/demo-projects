@@ -101,6 +101,9 @@ public class MultipleWebAppTests {
     @AfterEach
     public void teardown() {
         if (driver != null) {
+            // Clear
+            logger.info("Clearing Messages...");
+            driver.findElement(By.id("clearSubmit")).click();
             driver.quit();
         }
     }
@@ -139,10 +142,6 @@ public class MultipleWebAppTests {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(1000);
-
-        // Clear
-        logger.info("Clearing Messages...");
-        driver.findElement(By.id("clearSubmit")).click();
 
         int titleExist = driver.findElements(By.id("title")).size();
         int bodyExist = driver.findElements(By.id("body")).size();
@@ -188,9 +187,6 @@ public class MultipleWebAppTests {
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
-        logger.info("Clearing Messages...");
-        driver.findElement(By.id("clearSubmit")).click();
-
         Thread.sleep(2000);
         logger.info("##### Finish test: {}", new Object() {
         }.getClass().getEnclosingMethod().getName());
@@ -228,9 +224,6 @@ public class MultipleWebAppTests {
         logger.info("Checking Message...");
         assertThat(title, not(equalTo(newTitle)));
         assertThat(body, not(equalTo(newBody)));
-
-        logger.info("Clearing Messages...");
-        driver.findElement(By.id("clearSubmit")).click();
 
         Thread.sleep(2000);
         logger.info("##### Finish test: {}", new Object() {
