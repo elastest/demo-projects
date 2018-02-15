@@ -41,9 +41,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Test dependencies version -->
-		<junit.jupiter.version>5.0.0</junit.jupiter.version>
+		<junit.jupiter.version>5.0.3</junit.jupiter.version>
 		<webdrivermanager.version>1.7.2</webdrivermanager.version>
-		<junit.platform.version>1.0.0</junit.platform.version>
+		<junit.platform.version>1.0.3</junit.platform.version>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
 	</properties>
 

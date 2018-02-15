@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
-public class MultipleWebAppTests {
+public class MultipleWebAppTest {
     private static final Logger logger = LoggerFactory
-            .getLogger(MultipleWebAppTests.class);
+            .getLogger(MultipleWebAppTest.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
@@ -102,8 +102,9 @@ public class MultipleWebAppTests {
     @AfterEach
     public void teardown(TestInfo info) {
         String testName = info.getDisplayName();
-        testName = testName.replaceAll("(", "");
-        testName = testName.replaceAll(")", "");
+
+        testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
+
         if (driver != null) {
             logger.info("Clearing Messages...");
             driver.findElement(By.id("clearSubmit")).click();
