@@ -18,6 +18,7 @@ package io.elastest.demo.web;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,9 +38,9 @@ import org.slf4j.LoggerFactory;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
-public class WebAppTest {
+public class MultipleWebAppTests {
     private static final Logger logger = LoggerFactory
-            .getLogger(WebAppTest.class);
+            .getLogger(MultipleWebAppTests.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
@@ -105,7 +106,59 @@ public class WebAppTest {
     }
 
     @Test
-    public void test() throws InterruptedException, MalformedURLException {
+    public void addMsgAndClear()
+            throws InterruptedException, MalformedURLException {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        logger.info("##### Start test: {}", testName);
+        this.setupTest(testName);
+        driver.get(sutUrl);
+
+        Thread.sleep(2000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
+
+        Thread.sleep(2000);
+
+        logger.info("Adding Message...");
+        driver.findElement(By.id("submit")).click();
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        // Added
+        logger.info("Checking Message...");
+        assertThat(title, equalTo(newTitle));
+        assertThat(body, equalTo(newBody));
+
+        Thread.sleep(1000);
+
+        // Clear
+        logger.info("Clearing Messages...");
+        driver.findElement(By.id("clearSubmit")).click();
+
+        int titleExist = driver.findElements(By.id("title")).size();
+        int bodyExist = driver.findElements(By.id("body")).size();
+
+        assertThat(titleExist, not(equalTo(0)));
+        assertThat(bodyExist, not(equalTo(0)));
+
+        Thread.sleep(2000);
+        logger.info("##### Finish test: {}", new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+    }
+
+    @Test
+    public void findTitleAndBody()
+            throws InterruptedException, MalformedURLException {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
@@ -134,6 +187,47 @@ public class WebAppTest {
         logger.info("Checking Message...");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
+
+        logger.info("Clearing Messages...");
+        driver.findElement(By.id("clearSubmit")).click();
+
+        Thread.sleep(2000);
+        logger.info("##### Finish test: {}", new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+    }
+
+    @Test
+    public void checkTitleAndBodyNoEmpty()
+            throws InterruptedException, MalformedURLException {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        logger.info("##### Start test: {}", testName);
+        this.setupTest(testName);
+        driver.get(sutUrl);
+
+        Thread.sleep(2000);
+
+        String newTitle = "";
+        String newBody = "";
+
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
+
+        Thread.sleep(2000);
+
+        logger.info("Adding Message...");
+        driver.findElement(By.id("submit")).click();
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        logger.info("Checking Message...");
+        assertThat(title, not(equalTo(newTitle)));
+        assertThat(body, not(equalTo(newBody)));
 
         logger.info("Clearing Messages...");
         driver.findElement(By.id("clearSubmit")).click();

@@ -12,22 +12,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class MessageController {
 
-	private List<Message> messages = Collections.synchronizedList(new ArrayList<>());
+    private List<Message> messages = Collections
+            .synchronizedList(new ArrayList<>());
 
-	@GetMapping("/")
-	public String showMessages(Model model) {
+    @GetMapping("/")
+    public String showMessages(Model model) {
 
-		model.addAttribute("messages", this.messages);
+        model.addAttribute("messages", this.messages);
 
-		return "index";
-	}
+        return "index";
+    }
 
-	@PostMapping("/")
-	public String newMessage(Message message) {
+    @PostMapping("/")
+    public String newMessage(Message message) {
 
-		messages.add(message);
+        messages.add(message);
 
-		return "redirect:/";
-	}
+        return "redirect:/";
+    }
+
+    @PostMapping("/clear")
+    public String clearMessages() {
+
+        this.messages = Collections.synchronizedList(new ArrayList<>());
+
+        return "redirect:/";
+    }
 
 }
