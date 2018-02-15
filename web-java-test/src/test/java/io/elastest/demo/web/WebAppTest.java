@@ -25,6 +25,7 @@ import java.net.URL;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -98,10 +99,16 @@ public class WebAppTest {
     }
 
     @AfterEach
-    public void teardown() {
+    public void teardown(TestInfo info) {
+        String testName = info.getDisplayName();
+        testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
+
         if (driver != null) {
             logger.info("Clearing Messages...");
             driver.findElement(By.id("clearSubmit")).click();
+
+            logger.info("##### Finish test: {}", testName);
+
             driver.quit();
         }
     }
@@ -138,8 +145,6 @@ public class WebAppTest {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(2000);
-        logger.info("##### Finish test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
 
     }
 

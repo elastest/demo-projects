@@ -102,7 +102,6 @@ public class MultipleWebAppTest {
     @AfterEach
     public void teardown(TestInfo info) {
         String testName = info.getDisplayName();
-
         testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
