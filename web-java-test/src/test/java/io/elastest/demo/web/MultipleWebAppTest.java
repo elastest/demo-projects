@@ -157,75 +157,75 @@ public class MultipleWebAppTest {
 
         Thread.sleep(2000);
     }
-
-    @Test
-    public void findTitleAndBody()
-            throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        logger.info("##### Start test: {}", testName);
-        this.setupTest(testName);
-        driver.get(sutUrl);
-
-        Thread.sleep(2000);
-
-        String newTitle = "MessageTitle";
-        String newBody = "MessageBody";
-
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        driver.findElement(By.id("submit")).click();
-
-        Thread.sleep(2000);
-
-        String title = driver.findElement(By.id("title")).getText();
-        String body = driver.findElement(By.id("body")).getText();
-
-        logger.info("Checking Message...");
-        assertThat(title, equalTo(newTitle));
-        assertThat(body, equalTo(newBody));
-
-        Thread.sleep(2000);
-    }
-
-    @Test
-    public void checkTitleAndBodyNoEmpty()
-            throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        logger.info("##### Start test: {}", testName);
-        this.setupTest(testName);
-        driver.get(sutUrl);
-
-        Thread.sleep(2000);
-
-        String newTitle = "";
-        String newBody = "";
-
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        driver.findElement(By.id("submit")).click();
-
-        Thread.sleep(2000);
-
-        String title = driver.findElement(By.id("title")).getText();
-        String body = driver.findElement(By.id("body")).getText();
-
-        logger.info("Checking Message...");
-        assertThat(title, not(equalTo(newTitle)));
-        assertThat(body, not(equalTo(newBody)));
-
-        Thread.sleep(2000);
-    }
+//
+//    @Test
+//    public void findTitleAndBody()
+//            throws InterruptedException, MalformedURLException {
+//        String testName = new Object() {
+//        }.getClass().getEnclosingMethod().getName();
+//
+//        logger.info("##### Start test: {}", testName);
+//        this.setupTest(testName);
+//        driver.get(sutUrl);
+//
+//        Thread.sleep(2000);
+//
+//        String newTitle = "MessageTitle";
+//        String newBody = "MessageBody";
+//
+//        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+//        driver.findElement(By.id("body-input")).sendKeys(newBody);
+//
+//        Thread.sleep(2000);
+//
+//        logger.info("Adding Message...");
+//        driver.findElement(By.id("submit")).click();
+//
+//        Thread.sleep(2000);
+//
+//        String title = driver.findElement(By.id("title")).getText();
+//        String body = driver.findElement(By.id("body")).getText();
+//
+//        logger.info("Checking Message...");
+//        assertThat(title, equalTo(newTitle));
+//        assertThat(body, equalTo(newBody));
+//
+//        Thread.sleep(2000);
+//    }
+//
+//    @Test
+//    public void checkTitleAndBodyNoEmpty()
+//            throws InterruptedException, MalformedURLException {
+//        String testName = new Object() {
+//        }.getClass().getEnclosingMethod().getName();
+//
+//        logger.info("##### Start test: {}", testName);
+//        this.setupTest(testName);
+//        driver.get(sutUrl);
+//
+//        Thread.sleep(2000);
+//
+//        String newTitle = "";
+//        String newBody = "";
+//
+//        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+//        driver.findElement(By.id("body-input")).sendKeys(newBody);
+//
+//        Thread.sleep(2000);
+//
+//        logger.info("Adding Message...");
+//        driver.findElement(By.id("submit")).click();
+//
+//        Thread.sleep(2000);
+//
+//        String title = driver.findElement(By.id("title")).getText();
+//        String body = driver.findElement(By.id("body")).getText();
+//
+//        logger.info("Checking Message...");
+//        assertThat(title, not(equalTo(newTitle)));
+//        assertThat(body, not(equalTo(newBody)));
+//
+//        Thread.sleep(2000);
+//    }
 
 }
