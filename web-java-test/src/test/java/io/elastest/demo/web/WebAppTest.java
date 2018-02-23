@@ -27,6 +27,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -120,7 +122,11 @@ public class WebAppTest {
 
         logger.info("##### Start test: {}", testName);
         this.setupTest(testName);
+        
         driver.get(sutUrl);
+        driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
+        ((JavascriptExecutor) driver)
+                .executeScript("console.log('Hola caracola')");
 
         Thread.sleep(2000);
 
