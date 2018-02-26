@@ -150,7 +150,7 @@ public class WebAppTest {
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
-        Thread.sleep(2000);
+        Thread.sleep(22000);
 
     }
 
