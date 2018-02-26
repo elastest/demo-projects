@@ -122,7 +122,8 @@ public class WebAppTest {
 
         logger.info("##### Start test: {}", testName);
         this.setupTest(testName);
-        
+        Thread.sleep(22000);
+
         driver.get(sutUrl);
         driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
         ((JavascriptExecutor) driver)
