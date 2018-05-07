@@ -118,8 +118,8 @@ public class WikiTest {
         driver.get(sutUrl);
         
         driver.findElement(By.id("searchInput")).sendKeys("Testing");
-        driver.findElement(By.id("searchInput")).sendKeys(Keys.RETURN);
-        
+        Thread.sleep(2000);
+        driver.findElement(By.id("searchInput")).sendKeys(Keys.RETURN);        
         Thread.sleep(2000);
 
     }
