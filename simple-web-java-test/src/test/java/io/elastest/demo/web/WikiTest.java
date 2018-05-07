@@ -68,7 +68,7 @@ public class WikiTest {
 
         String sutHost = System.getenv("ET_SUT_HOST");        
         if (sutHost == null) {
-            sutUrl = System.getProperty("etSuUrl") != null ? System.getProperty("etSutUrl") : "https://www.wikipedia.org/";
+            sutUrl = System.getProperty("etSutUrl") != null ? System.getProperty("etSutUrl") : "https://www.wikipedia.org/";
         } else {
             sutUrl = "http://" + sutHost + ":8080/";
         }
@@ -102,11 +102,8 @@ public class WikiTest {
         testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-
+            logger.info("Clearing Messages...");            
             logger.info("##### Finish test: {}", testName);
-
             driver.quit();
         }
     }
