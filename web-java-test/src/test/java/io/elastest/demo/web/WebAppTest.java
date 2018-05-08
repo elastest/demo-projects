@@ -75,7 +75,7 @@ public class WebAppTest {
         if (sutHost == null) {
             sutUrl = "http://localhost:8080/";
         } else {
-            sutUrl = "http://" + sutHost + sutPort != null ? (":" + sutPort + "/"): ":8080/";
+            sutUrl = "http://" + sutHost + (sutPort != null ? (":" + sutPort + "/"): ":8080/");
         }
         System.out.println("Webapp URL: " + sutUrl);
     }
