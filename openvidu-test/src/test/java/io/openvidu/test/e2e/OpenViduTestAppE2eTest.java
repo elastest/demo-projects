@@ -121,17 +121,20 @@ public class OpenViduTestAppE2eTest {
         }
     }
 
-    void setupBrowser(String browser) {
+    void setupBrowser(String browser, TestInfo testInfo, int secondsOfWait) {
 
         switch (browser) {
         case "chrome":
-            this.user = new ChromeUser("TestUser", 50);
+            this.user = new ChromeUser("TestUser", secondsOfWait,
+                    testInfo.getTestMethod().get().getName());
             break;
         case "firefox":
-            this.user = new FirefoxUser("TestUser", 50);
+            this.user = new FirefoxUser("TestUser", secondsOfWait,
+                    testInfo.getTestMethod().get().getName());
             break;
         default:
-            this.user = new ChromeUser("TestUser", 50);
+            this.user = new ChromeUser("TestUser", secondsOfWait,
+                    testInfo.getTestMethod().get().getName());
         }
 
         user.getDriver().get(APP_URL);
@@ -171,7 +174,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("One2One Chrome [Video + Audio]")
     void oneToOneVideoAudioSessionChrome(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
-        setupBrowser(BROWSER);
+        setupBrowser(BROWSER, info, 50);
 
         log.info("One2One Chrome [Video + Audio]");
 
@@ -212,8 +215,7 @@ public class OpenViduTestAppE2eTest {
      * oneToOneVideoAudioSessionFirefox(TestInfo info) throws Exception {
      * log.info("##### Start test: " + info.getTestMethod().get().getName());
      * 
-     * setupBrowser("firefox");
-     * 
+     * setupBrowser("firefox", info, 50);
      * log.info("One2One Firefox [Video + Audio]");
      * 
      * user.getDriver().findElement(By.id("auto-join-checkbox")).click();
@@ -245,7 +247,7 @@ public class OpenViduTestAppE2eTest {
     void oneToOneAudioSession(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
+        setupBrowser("chrome", info, 50);
 
         log.info("One2One [Audio]");
 
@@ -295,7 +297,7 @@ public class OpenViduTestAppE2eTest {
     void oneToOneVideoSession(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
+        setupBrowser("chrome", info, 50);
 
         log.info("One2One [Video]");
 
@@ -345,7 +347,7 @@ public class OpenViduTestAppE2eTest {
     void oneToManyVideoAudioSession(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
+        setupBrowser("chrome", info, 50);
 
         log.info("One2Many [Video + Audio]");
 
@@ -375,8 +377,7 @@ public class OpenViduTestAppE2eTest {
     void oneRemoteSubscription(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
-
+        setupBrowser("chrome", info, 50);
         log.info("Unique user remote subscription [Video + Audio]");
 
         user.getDriver().findElement(By.id("add-user-btn")).click();
@@ -410,8 +411,7 @@ public class OpenViduTestAppE2eTest {
     void oneRemoteSubscriptionScreen(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
-
+        setupBrowser("chrome", info, 50);
         log.info("Unique user remote subscription [ScreenShare + Audio]");
 
         user.getDriver().findElement(By.id("add-user-btn")).click();
@@ -446,8 +446,7 @@ public class OpenViduTestAppE2eTest {
     void manyToManyVideoAudioSession(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
-
+        setupBrowser("chrome", info, 50);
         log.info("Many2Many [Video + Audio]");
 
         WebElement addUser = user.getDriver()
@@ -505,8 +504,7 @@ public class OpenViduTestAppE2eTest {
     void secureTest(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
 
-        setupBrowser("chrome");
-
+        setupBrowser("chrome", info, 50);
         log.info("Secure Test");
 
         WebElement addUser = user.getDriver()
@@ -588,7 +586,7 @@ public class OpenViduTestAppE2eTest {
      * throws Exception { log.info("##### Start test: " +
      * info.getTestMethod().get().getName());
      * 
-     * setupBrowser("chrome");
+     * setupBrowser("chrome", info, 50);
      * 
      * log.info("Cross-Browser test");
      * 
