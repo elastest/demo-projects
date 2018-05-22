@@ -126,15 +126,15 @@ public class OpenViduTestAppE2eTest {
         switch (browser) {
         case "chrome":
             this.user = new ChromeUser("TestUser", secondsOfWait,
-                    testInfo.getTestMethod().get().getName());
+                    testInfo.getDisplayName());
             break;
         case "firefox":
             this.user = new FirefoxUser("TestUser", secondsOfWait,
-                    testInfo.getTestMethod().get().getName());
+                    testInfo.getDisplayName());
             break;
         default:
             this.user = new ChromeUser("TestUser", secondsOfWait,
-                    testInfo.getTestMethod().get().getName());
+                    testInfo.getDisplayName());
         }
 
         user.getDriver().get(APP_URL);
@@ -165,8 +165,7 @@ public class OpenViduTestAppE2eTest {
         try {
             user.dispose();
         } finally {
-            log.info("##### Finish test: "
-                    + info.getDisplayName());
+            log.info("##### Finish test: " + info.getDisplayName());
         }
     }
 
