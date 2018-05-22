@@ -126,15 +126,15 @@ public class OpenViduTestAppE2eTest {
         switch (browser) {
         case "chrome":
             this.user = new ChromeUser("TestUser", secondsOfWait,
-                    testInfo.getDisplayName());
+                    testInfo.getTestMethod().get().getName());
             break;
         case "firefox":
             this.user = new FirefoxUser("TestUser", secondsOfWait,
-                    testInfo.getDisplayName());
+                    testInfo.getTestMethod().get().getName());
             break;
         default:
             this.user = new ChromeUser("TestUser", secondsOfWait,
-                    testInfo.getDisplayName());
+                    testInfo.getTestMethod().get().getName());
         }
 
         user.getDriver().get(APP_URL);
@@ -165,14 +165,15 @@ public class OpenViduTestAppE2eTest {
         try {
             user.dispose();
         } finally {
-            log.info("##### Finish test: " + info.getDisplayName());
+            log.info("##### Finish test: "
+                    + info.getTestMethod().get().getName());
         }
     }
 
     @Test
-    @DisplayName("One2One Chrome [Video + Audio]")
+    // @DisplayName("One2One Chrome [Video + Audio]")
     void oneToOneVideoAudioSessionChrome(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
         setupBrowser(BROWSER, info, 50);
 
         log.info("One2One Chrome [Video + Audio]");
@@ -212,7 +213,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * @DisplayName("One2One Firefox [Video + Audio]") void
      * oneToOneVideoAudioSessionFirefox(TestInfo info) throws Exception {
-     * log.info("##### Start test: " + info.getDisplayName());
+     * log.info("##### Start test: " + info.getTestMethod().get().getName());
      * 
      * setupBrowser("firefox", info, 50);
      * log.info("One2One Firefox [Video + Audio]");
@@ -241,10 +242,10 @@ public class OpenViduTestAppE2eTest {
      */
 
     @Test
-    @DisplayName("One2One [Audio]")
+    // @DisplayName("One2One [Audio]")
     @Disabled
     void oneToOneAudioSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
 
@@ -291,10 +292,10 @@ public class OpenViduTestAppE2eTest {
     }
 
     @Test
-    @DisplayName("One2One [Video]")
+    // @DisplayName("One2One [Video]")
     @Disabled
     void oneToOneVideoSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
 
@@ -341,10 +342,10 @@ public class OpenViduTestAppE2eTest {
     }
 
     @Test
-    @DisplayName("One2Many [Video + Audio]")
+    // @DisplayName("One2Many [Video + Audio]")
     @Disabled
     void oneToManyVideoAudioSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
 
@@ -371,10 +372,10 @@ public class OpenViduTestAppE2eTest {
     }
 
     @Test
-    @DisplayName("Unique user remote subscription [Video + Audio]")
+    // @DisplayName("Unique user remote subscription [Video + Audio]")
     @Disabled
     void oneRemoteSubscription(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
         log.info("Unique user remote subscription [Video + Audio]");
@@ -405,10 +406,10 @@ public class OpenViduTestAppE2eTest {
     }
 
     @Test
-    @DisplayName("Unique user remote subscription [ScreenShare + Audio]")
+    // @DisplayName("Unique user remote subscription [ScreenShare + Audio]")
     @Disabled
     void oneRemoteSubscriptionScreen(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
         log.info("Unique user remote subscription [ScreenShare + Audio]");
@@ -440,10 +441,10 @@ public class OpenViduTestAppE2eTest {
     }
 
     @Test
-    @DisplayName("Many2Many [Video + Audio]")
+    // @DisplayName("Many2Many [Video + Audio]")
     @Disabled
     void manyToManyVideoAudioSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
         log.info("Many2Many [Video + Audio]");
@@ -498,10 +499,10 @@ public class OpenViduTestAppE2eTest {
     }
 
     @Test
-    @DisplayName("Secure Test")
+    // @DisplayName("Secure Test")
     @Disabled
     void secureTest(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getDisplayName());
+        log.info("##### Start test: " + info.getTestMethod().get().getName());
 
         setupBrowser("chrome", info, 50);
         log.info("Secure Test");
@@ -583,7 +584,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * @DisplayName("Cross-Browser test") void crossBrowserTest(TestInfo info)
      * throws Exception { log.info("##### Start test: " +
-     * info.getDisplayName());
+     * info.getTestMethod().get().getName());
      * 
      * setupBrowser("chrome", info, 50);
      * 
