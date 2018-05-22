@@ -166,14 +166,14 @@ public class OpenViduTestAppE2eTest {
             user.dispose();
         } finally {
             log.info("##### Finish test: "
-                    + info.getTestMethod().get().getName());
+                    + info.getDisplayName());
         }
     }
 
     @Test
     @DisplayName("One2One Chrome [Video + Audio]")
     void oneToOneVideoAudioSessionChrome(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
         setupBrowser(BROWSER, info, 50);
 
         log.info("One2One Chrome [Video + Audio]");
@@ -213,7 +213,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * @DisplayName("One2One Firefox [Video + Audio]") void
      * oneToOneVideoAudioSessionFirefox(TestInfo info) throws Exception {
-     * log.info("##### Start test: " + info.getTestMethod().get().getName());
+     * log.info("##### Start test: " + info.getDisplayName());
      * 
      * setupBrowser("firefox", info, 50);
      * log.info("One2One Firefox [Video + Audio]");
@@ -245,7 +245,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("One2One [Audio]")
     @Disabled
     void oneToOneAudioSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
 
@@ -295,7 +295,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("One2One [Video]")
     @Disabled
     void oneToOneVideoSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
 
@@ -345,7 +345,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("One2Many [Video + Audio]")
     @Disabled
     void oneToManyVideoAudioSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
 
@@ -375,7 +375,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("Unique user remote subscription [Video + Audio]")
     @Disabled
     void oneRemoteSubscription(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
         log.info("Unique user remote subscription [Video + Audio]");
@@ -409,7 +409,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("Unique user remote subscription [ScreenShare + Audio]")
     @Disabled
     void oneRemoteSubscriptionScreen(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
         log.info("Unique user remote subscription [ScreenShare + Audio]");
@@ -444,7 +444,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("Many2Many [Video + Audio]")
     @Disabled
     void manyToManyVideoAudioSession(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
         log.info("Many2Many [Video + Audio]");
@@ -502,7 +502,7 @@ public class OpenViduTestAppE2eTest {
     @DisplayName("Secure Test")
     @Disabled
     void secureTest(TestInfo info) throws Exception {
-        log.info("##### Start test: " + info.getTestMethod().get().getName());
+        log.info("##### Start test: " + info.getDisplayName());
 
         setupBrowser("chrome", info, 50);
         log.info("Secure Test");
@@ -584,7 +584,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * @DisplayName("Cross-Browser test") void crossBrowserTest(TestInfo info)
      * throws Exception { log.info("##### Start test: " +
-     * info.getTestMethod().get().getName());
+     * info.getDisplayName());
      * 
      * setupBrowser("chrome", info, 50);
      * 
