@@ -17,14 +17,15 @@
 
 package io.openvidu.test.e2e.browser;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.core.io.ClassPathResource;
 
 public class ChromeUser extends BrowserUser {
 
@@ -33,7 +34,6 @@ public class ChromeUser extends BrowserUser {
         super(userName, timeOfWaitInSeconds);
 
         ChromeOptions options = new ChromeOptions();
-
         // This flag avoids to grant the user media
         options.addArguments("--use-fake-ui-for-media-stream");
         // This flag fakes user media with synthetic video
@@ -43,7 +43,13 @@ public class ChromeUser extends BrowserUser {
         options.addArguments(
                 "--auto-select-desktop-capture-source=Entire screen");
 
-        options.addArguments("--disable-notifications");
+        try {
+            // Add Screen Sharing extension
+            options.addExtensions(
+                    new ClassPathResource("ScreenCapturing.crx").getFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         String eusApiURL = System.getenv("ET_EUS_API");
 
@@ -55,10 +61,8 @@ public class ChromeUser extends BrowserUser {
         } else {
             try {
                 capabilities.setCapability("browserId", browserId);
-                RemoteWebDriver remote = new RemoteWebDriver(new URL(eusApiURL),
+                this.driver = new RemoteWebDriver(new URL(eusApiURL),
                         capabilities);
-                remote.setFileDetector(new LocalFileDetector());
-                this.driver = remote;
             } catch (MalformedURLException e) {
                 throw new RuntimeException("Exception creaing eusApiURL", e);
             }

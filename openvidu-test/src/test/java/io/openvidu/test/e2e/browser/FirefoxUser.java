@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class FirefoxUser extends BrowserUser {
@@ -39,11 +38,11 @@ public class FirefoxUser extends BrowserUser {
         // This flag force to use fake user media (synthetic video of multiple
         // color)
         profile.setPreference("media.navigator.streams.fake", true);
-        profile.setPreference("dom.file.createInChild", true);
 
         String eusApiURL = System.getenv("ET_EUS_API");
 
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setVersion("57");
         capabilities.setCapability("acceptInsecureCerts", true);
         capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 
@@ -52,10 +51,8 @@ public class FirefoxUser extends BrowserUser {
         } else {
             try {
                 capabilities.setCapability("browserId", browserId);
-                RemoteWebDriver remote = new RemoteWebDriver(new URL(eusApiURL),
+                this.driver = new RemoteWebDriver(new URL(eusApiURL),
                         capabilities);
-                remote.setFileDetector(new LocalFileDetector());
-                this.driver = remote;
             } catch (MalformedURLException e) {
                 throw new RuntimeException("Exception creaing eusApiURL", e);
             }
