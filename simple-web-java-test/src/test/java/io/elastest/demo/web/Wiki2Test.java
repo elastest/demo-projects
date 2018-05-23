@@ -36,9 +36,9 @@ import org.slf4j.LoggerFactory;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
-public class WikiTest2 {
+public class Wiki2Test {
     private static final Logger logger = LoggerFactory
-            .getLogger(WikiTest2.class);
+            .getLogger(Wiki2Test.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
