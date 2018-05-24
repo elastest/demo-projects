@@ -64,8 +64,8 @@ import io.openvidu.test.e2e.browser.FirefoxUser;
 public class OpenViduTestAppE2eTest {
 
     static String OPENVIDU_SECRET = "MY_SECRET";
-    static String OPENVIDU_URL = "https://localhost:8443/";
-    static String APP_URL = "https://localhost:8443/";
+    static String OPENVIDU_URL = "https://localhost:4443/";
+    static String APP_URL = "https://localhost:4443/";
     static Exception ex = null;
 
     public static final String CHROME = "chrome";
@@ -89,7 +89,7 @@ public class OpenViduTestAppE2eTest {
         String appURL = System.getenv("ET_SUT_HOST");
         if (appURL != null) {
             // Be sure that protocol is http
-            appURL = "https://" + appURL + ":8443";
+            appURL = "https://" + appURL + ":4443";
             APP_URL = appURL;
             OPENVIDU_URL = appURL;
         }
