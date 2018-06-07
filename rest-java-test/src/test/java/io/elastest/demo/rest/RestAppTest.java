@@ -16,28 +16,48 @@
  */
 package io.elastest.demo.rest;
 
+import static java.lang.invoke.MethodHandles.lookup;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.slf4j.LoggerFactory.getLogger;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
-
 public class RestAppTest {
+    final static Logger log = getLogger(lookup().lookupClass());
 
-	@Test
-	public void rootServiceTest() {
-		
-		String appHost = System.getenv("ET_SUT_HOST");
-		
-		if(appHost == null) {
-			appHost = "localhost";
-		}
-		
-		RestTemplate client = new RestTemplate();
-		
-		String result = client.getForObject("http://"+appHost+":8080/", String.class);
-		
-		assertThat(result).isEqualTo("Hello World!");
-	}
-	
+    @AfterEach
+    void dispose(TestInfo info) {
+
+        log.info("##### Finish test: " + info.getTestMethod().get().getName());
+
+    }
+
+    @Test
+    public void rootServiceTest() {
+        log.info("##### Start test: {}", new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        String appHost = System.getenv("ET_SUT_HOST");
+
+        try {
+            RestTemplate client = new RestTemplate();
+
+            String result = client.getForObject("http://" + appHost + ":8080/",
+                    String.class);
+
+            assertThat(result).isEqualTo("Hello World!");
+        } finally {
+            log.info("##### Finish test: {}", new Object() {
+            }.getClass().getEnclosingMethod().getName());
+        }
+
+        if (appHost == null) {
+            appHost = "localhost";
+        }
+
+    }
+
 }
