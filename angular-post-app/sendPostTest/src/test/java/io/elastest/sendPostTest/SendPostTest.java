@@ -67,9 +67,9 @@ public class SendPostTest {
 
         String sutHost = System.getenv("ET_SUT_HOST");
         if (sutHost == null) {
-            sutUrl = "http://localhost:4200/#/";
+            sutUrl = "http://localhost:8080/#/";
         } else {
-            sutUrl = "http://" + sutHost + ":4200/#/";
+            sutUrl = "http://" + sutHost + ":8080/#/";
         }
 
         sutUrl += "?url=" + URLEncoder.encode(endpointUrl, "UTF-8");
