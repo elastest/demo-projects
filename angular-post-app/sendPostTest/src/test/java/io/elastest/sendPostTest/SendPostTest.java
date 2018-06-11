@@ -2,6 +2,7 @@ package io.elastest.sendPostTest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -18,12 +19,11 @@ import org.slf4j.LoggerFactory;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import junit.framework.TestCase;
 
 /**
  * Unit test for simple App.
  */
-public class SendPostTest extends TestCase {
+public class SendPostTest {
     private static final Logger logger = LoggerFactory
             .getLogger(SendPostTest.class);
 
@@ -33,7 +33,7 @@ public class SendPostTest extends TestCase {
     private static String browserType;
     private static String eusURL;
     private static String sutUrl;
-    private static String endpointUrl;
+    private static String endpointUrl = "http://localhost:37000/logstash/";
 
     private static Long sleep = (long) 3000;
 
@@ -46,11 +46,15 @@ public class SendPostTest extends TestCase {
 
         System.out.println("Browser Type: " + browserType);
 
-        sleep = Long.parseLong(System.getenv("SLEEP"));
+        if (System.getenv("SLEEP") != null) {
+            sleep = Long.parseLong(System.getenv("SLEEP"));
+        }
         eusURL = System.getenv("ET_EUS_API");
         endpointUrl = System.getenv("ET_MON_LSHTTPS_API");
         if (endpointUrl == null) {
-            throw new Exception("No endpoint url received");
+            String msg = "No endpoint url received";
+            logger.error("Error: {}", msg);
+            throw new Exception(msg);
         }
         if (eusURL == null) {
 
@@ -68,7 +72,8 @@ public class SendPostTest extends TestCase {
             sutUrl = "http://" + sutHost + ":4200/#/";
         }
 
-        sutUrl += "?url=" + endpointUrl;
+        sutUrl += "?url=" + URLEncoder.encode(endpointUrl, "UTF-8");
+        ;
 
         String exec = System.getenv("ET_MON_EXEC");
         if (exec != null) {
@@ -80,21 +85,17 @@ public class SendPostTest extends TestCase {
 
     // @BeforeEach
     public void setupTest(String testName) throws MalformedURLException {
-        if (eusURL == null) {
-            if (browserType == null || browserType.equals(CHROME)) {
-                driver = new ChromeDriver();
-            } else {
-                driver = new FirefoxDriver();
-            }
-        } else {
-            DesiredCapabilities caps;
-            if (browserType == null || browserType.equals(CHROME)) {
-                caps = DesiredCapabilities.chrome();
-            } else {
-                caps = DesiredCapabilities.firefox();
-            }
-            caps.setCapability("browserId", testName);
+        ChromeOptions options = new ChromeOptions();
 
+        options.addArguments("start-maximized");
+
+        if (eusURL == null) {
+            driver = new ChromeDriver(options);
+        } else {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setBrowserName("chrome");
+            caps.setCapability(ChromeOptions.CAPABILITY, options);
+            caps.setCapability("browserId", testName);
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
     }
@@ -105,9 +106,6 @@ public class SendPostTest extends TestCase {
         testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-
             logger.info("##### Finish test: {}", testName);
 
             driver.quit();
@@ -115,7 +113,7 @@ public class SendPostTest extends TestCase {
     }
 
     @Test
-    public void openApp()
+    public void testOpenApp()
             throws InterruptedException, MalformedURLException {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
