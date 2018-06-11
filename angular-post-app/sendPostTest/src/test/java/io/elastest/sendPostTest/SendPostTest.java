@@ -49,13 +49,21 @@ public class SendPostTest {
         if (System.getenv("SLEEP") != null) {
             sleep = Long.parseLong(System.getenv("SLEEP"));
         }
-        eusURL = System.getenv("ET_EUS_API");
-        endpointUrl = System.getenv("ET_MON_LSHTTPS_API");
+
+        // Endpoint
+        endpointUrl = System.getenv("ET_EMS_HTTPSINEVENTS_API");
+        if (endpointUrl == null) {
+            endpointUrl = System.getenv("ET_MON_LSHTTPS_API");
+        }
+
         if (endpointUrl == null) {
             String msg = "No endpoint url received";
             logger.error("Error: {}", msg);
             throw new Exception(msg);
         }
+
+        // EUS
+        eusURL = System.getenv("ET_EUS_API");
         if (eusURL == null) {
 
             if (browserType == null || browserType.equals(CHROME)) {
