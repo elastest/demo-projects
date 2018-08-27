@@ -125,9 +125,6 @@ public class WebAppTest {
         this.setupTest(testName);
 
         driver.get(sutUrl);
-        driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
-        ((JavascriptExecutor) driver)
-                .executeScript("console.log('Hola caracola')");
 
         Thread.sleep(2000);
 
