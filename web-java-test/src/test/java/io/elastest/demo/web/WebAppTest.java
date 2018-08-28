@@ -125,6 +125,7 @@ public class WebAppTest {
         this.setupTest(testName);
 
         driver.get(sutUrl);
+        driver.manage().deleteAllCookies();
         driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
         ((JavascriptExecutor) driver)
                 .executeScript("console.log('Hola caracola')");
@@ -152,7 +153,6 @@ public class WebAppTest {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(2500);
-        driver.manage().deleteCookieNamed("sss");
 
     }
 
