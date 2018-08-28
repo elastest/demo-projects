@@ -59,7 +59,7 @@ public class WebAppTest {
 
         browserType = System.getProperty("browser");
 
-        System.out.println("Browser Type: " + browserType);
+        logger.info("Browser Type: " + browserType);
 
         eusURL = System.getenv("ET_EUS_API");
         if (eusURL == null) {
