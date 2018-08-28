@@ -152,6 +152,7 @@ public class WebAppTest {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(2500);
+        driver.manage().deleteCookieNamed("sss");
 
     }
 
