@@ -127,10 +127,10 @@ public class WebAppTest {
 
         driver.get(sutUrl);
         Set<Cookie> cookies = driver.manage().getCookies();
-        logger.debug("Cookies {}", cookies);
+        logger.info("Cookies {}", cookies);
         driver.manage().deleteAllCookies();
         cookies = driver.manage().getCookies();
-        logger.debug("Cookies {}", cookies);
+        logger.info("Cookies {}", cookies);
         driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
         ((JavascriptExecutor) driver)
                 .executeScript("console.log('Hola caracola')");
