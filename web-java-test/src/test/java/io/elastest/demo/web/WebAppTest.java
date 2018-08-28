@@ -21,6 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -125,7 +126,11 @@ public class WebAppTest {
         this.setupTest(testName);
 
         driver.get(sutUrl);
+        Set<Cookie> cookies = driver.manage().getCookies();
+        logger.debug("Cookies {}", cookies);
         driver.manage().deleteAllCookies();
+        cookies = driver.manage().getCookies();
+        logger.debug("Cookies {}", cookies);
         driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
         ((JavascriptExecutor) driver)
                 .executeScript("console.log('Hola caracola')");
