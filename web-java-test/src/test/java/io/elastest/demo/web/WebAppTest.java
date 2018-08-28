@@ -78,7 +78,7 @@ public class WebAppTest {
         } else {
             sutUrl = "http://" + sutHost + (sutPort != null ? (":" + sutPort + "/"): ":8080/");
         }
-        System.out.println("Webapp URL: " + sutUrl);
+        logger.info("Webapp URL: {} ", sutUrl);
     }
 
     // @BeforeEach
@@ -126,11 +126,6 @@ public class WebAppTest {
         this.setupTest(testName);
 
         driver.get(sutUrl);
-        Set<Cookie> cookies = driver.manage().getCookies();
-        logger.info("Cookies {}", cookies);
-        driver.manage().deleteAllCookies();
-        cookies = driver.manage().getCookies();
-        logger.info("Cookies {}", cookies);
         driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
         ((JavascriptExecutor) driver)
                 .executeScript("console.log('Hola caracola')");
