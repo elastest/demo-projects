@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.elastest.demo</groupId>
@@ -42,9 +43,10 @@
 
 		<!-- Test dependencies version -->
 		<junit.jupiter.version>5.0.3</junit.jupiter.version>
-		<webdrivermanager.version>1.7.2</webdrivermanager.version>
+		<webdrivermanager.version>3.0.0</webdrivermanager.version>
 		<junit.platform.version>1.0.3</junit.platform.version>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<org.selenium.driver>3.14.0</org.selenium.driver>
 	</properties>
 
 	<!-- Apache Software License -->
@@ -85,18 +87,53 @@
 			<artifactId>hamcrest-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/htmlunit-driver -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>htmlunit-driver</artifactId>
+			<version>2.32.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
+			<version>${org.selenium.driver}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-chrome-driver</artifactId>
+			<version>${org.selenium.driver}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
-		</dependency>		
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-ie-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-safari-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
 	</dependencies>
 
 	<!-- Plugins -->

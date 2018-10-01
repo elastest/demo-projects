@@ -16,9 +16,9 @@
  */
 package io.elastest.demo.web;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,8 +36,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class MultipleWebAppTests {
     private static final Logger logger = LoggerFactory
@@ -56,16 +55,15 @@ public class MultipleWebAppTests {
     public static void setupClass() {
 
         browserType = System.getProperty("browser");
-
         System.out.println("Browser Type: " + browserType);
 
         eusURL = System.getenv("ET_EUS_API");
         if (eusURL == null) {
 
             if (browserType == null || browserType.equals(CHROME)) {
-                ChromeDriverManager.getInstance().setup();
+                WebDriverManager.chromedriver().setup();
             } else {
-                FirefoxDriverManager.getInstance().setup();
+                WebDriverManager.firefoxdriver().setup();
             }
         }
 

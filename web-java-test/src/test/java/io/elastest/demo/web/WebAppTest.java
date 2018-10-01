@@ -16,12 +16,11 @@
  */
 package io.elastest.demo.web;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -38,8 +37,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebAppTest {
     private static final Logger logger = LoggerFactory
@@ -65,9 +63,9 @@ public class WebAppTest {
         if (eusURL == null) {
 
             if (browserType == null || browserType.equals(CHROME)) {
-                ChromeDriverManager.getInstance().setup();
+                WebDriverManager.chromedriver().setup();
             } else {
-                FirefoxDriverManager.getInstance().setup();
+                WebDriverManager.firefoxdriver().setup();
             }
         }
 
@@ -76,7 +74,8 @@ public class WebAppTest {
         if (sutHost == null) {
             sutUrl = "http://localhost:8080/";
         } else {
-            sutUrl = "http://" + sutHost + (sutPort != null ? (":" + sutPort + "/"): ":8080/");
+            sutUrl = "http://" + sutHost
+                    + (sutPort != null ? (":" + sutPort + "/") : ":8080/");
         }
         logger.info("Webapp URL: {} ", sutUrl);
     }
