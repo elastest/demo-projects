@@ -1,0 +1,9 @@
+FROM elastest/test-etm-alpinegitjava
+WORKDIR /root
+
+COPY pom.xml .
+COPY src/ ./src/
+COPY .m2 ./.m2
+
+CMD exec mvn test -o
+
