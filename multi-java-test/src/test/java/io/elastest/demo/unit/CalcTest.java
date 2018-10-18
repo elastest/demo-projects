@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CalcTest {
+    private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
 
     private int leftOperand = 3;
     private int rightOperand = 2;
@@ -54,6 +55,7 @@ public class CalcTest {
         try {
             logger.info("Left operand: {}", leftOperand);
             logger.info("Right operand: {}", rightOperand);
+            logger.info(etMonitorMarkPrefix + " id=action, value=Sum");
             assertThat(calc.sum(leftOperand, rightOperand)).isEqualTo(5);
         } finally {
             logger.info("##### Finish test: {}", new Object() {
@@ -68,6 +70,7 @@ public class CalcTest {
         try {
             logger.info("Left operand: {}", leftOperand);
             logger.info("Right operand: {}", rightOperand);
+            logger.info(etMonitorMarkPrefix + " id=action, value=Sub");
             assertThat(calc.sub(leftOperand, rightOperand)).isEqualTo(1);
         } finally {
             logger.info("##### Finish test: {}", new Object() {

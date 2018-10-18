@@ -45,6 +45,8 @@ public class MultipleWebAppTests {
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
 
+    private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
+
     private static String browserType;
     private static String eusURL;
     private static String sutUrl;
@@ -93,6 +95,8 @@ public class MultipleWebAppTests {
             }
             caps.setCapability("browserId", testName);
 
+            logger.info(etMonitorMarkPrefix
+                    + " id=action, value=Start Browser Session");
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
     }
@@ -133,6 +137,7 @@ public class MultipleWebAppTests {
         Thread.sleep(2000);
 
         logger.info("Adding Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Submit");
         driver.findElement(By.id("submit")).click();
 
         Thread.sleep(2000);
@@ -150,6 +155,7 @@ public class MultipleWebAppTests {
         int titleExist = driver.findElements(By.id("title")).size();
         int bodyExist = driver.findElements(By.id("body")).size();
 
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert");
         assertThat(titleExist, not(equalTo(0)));
         assertThat(bodyExist, not(equalTo(0)));
 

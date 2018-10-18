@@ -1,0 +1,15 @@
+FROM elastest/test-etm-alpinegitjava
+WORKDIR /root
+
+# ONLY for construct. use -v YOURFOLDER:/root/.m2 in docker run command
+
+#ADD . / demos/
+#RUN chmod 777 demos/downloadMvnDependencies.sh
+#CMD cd demos; ./downloadMvnDependencies.sh
+
+
+# After, comment the lines, copy .m2 folder to demo-projects and build
+
+COPY .m2 /root/.m2
+
+
