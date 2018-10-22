@@ -80,6 +80,8 @@ public class MultipleWebAppTests {
 
     // @BeforeEach
     public void setupTest(String testName) throws MalformedURLException {
+        logger.info("##### Start test: {}", testName);
+
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
                 driver = new ChromeDriver();
@@ -102,6 +104,8 @@ public class MultipleWebAppTests {
                     + testName);
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
+
+        driver.get(sutUrl);
     }
 
     @AfterEach
@@ -119,21 +123,8 @@ public class MultipleWebAppTests {
         }
     }
 
-    @Test
-    public void addMsgAndClear()
-            throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        logger.info("##### Start test: {}", testName);
-        this.setupTest(testName);
-        driver.get(sutUrl);
-
-        Thread.sleep(2000);
-
-        String newTitle = "MessageTitle";
-        String newBody = "MessageBody";
-
+    public void addRow(String testName, String newTitle, String newBody)
+            throws InterruptedException {
         driver.findElement(By.id("title-input")).sendKeys(newTitle);
         driver.findElement(By.id("body-input")).sendKeys(newBody);
 
@@ -143,6 +134,22 @@ public class MultipleWebAppTests {
         logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
                 + testName + ")");
         driver.findElement(By.id("submit")).click();
+    }
+
+    @Test
+    public void addMsgAndClear()
+            throws InterruptedException, MalformedURLException {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        this.setupTest(testName);
+
+        Thread.sleep(2000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        this.addRow(testName, newTitle, newBody);
 
         Thread.sleep(2000);
 
@@ -173,24 +180,14 @@ public class MultipleWebAppTests {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
-        logger.info("##### Start test: {}", testName);
         this.setupTest(testName);
-        driver.get(sutUrl);
 
         Thread.sleep(2000);
 
         String newTitle = "MessageTitle";
         String newBody = "MessageBody";
 
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
-                + testName + ")");
-        driver.findElement(By.id("submit")).click();
+        this.addRow(testName, newTitle, newBody);
 
         Thread.sleep(2000);
 
@@ -212,24 +209,14 @@ public class MultipleWebAppTests {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
-        logger.info("##### Start test: {}", testName);
         this.setupTest(testName);
-        driver.get(sutUrl);
 
         Thread.sleep(2000);
 
         String newTitle = "";
         String newBody = "";
 
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
-                + testName + ")");
-        driver.findElement(By.id("submit")).click();
+        this.addRow(testName, newTitle, newBody);
 
         Thread.sleep(2000);
 
