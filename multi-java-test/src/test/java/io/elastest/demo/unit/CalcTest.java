@@ -52,8 +52,7 @@ public class CalcTest {
     @AfterEach
     public void end() {
         try {
-            logger.info("End");
-            Thread.sleep(800);
+            Thread.sleep(500);
         } catch (Exception e) {
         }
     }
