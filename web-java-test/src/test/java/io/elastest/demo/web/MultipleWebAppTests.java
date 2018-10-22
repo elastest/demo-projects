@@ -151,8 +151,6 @@ public class MultipleWebAppTests {
 
         // Added
         logger.info("Checking Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Check Message ("
-                + testName + ")");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
@@ -190,6 +188,8 @@ public class MultipleWebAppTests {
         Thread.sleep(2000);
 
         logger.info("Adding Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
+                + testName + ")");
         driver.findElement(By.id("submit")).click();
 
         Thread.sleep(2000);
@@ -198,6 +198,8 @@ public class MultipleWebAppTests {
         String body = driver.findElement(By.id("body")).getText();
 
         logger.info("Checking Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + testName + ")");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
@@ -225,6 +227,8 @@ public class MultipleWebAppTests {
         Thread.sleep(2000);
 
         logger.info("Adding Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
+                + testName + ")");
         driver.findElement(By.id("submit")).click();
 
         Thread.sleep(2000);
@@ -233,6 +237,8 @@ public class MultipleWebAppTests {
         String body = driver.findElement(By.id("body")).getText();
 
         logger.info("Checking Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + testName + ")");
         assertThat(title, not(equalTo(newTitle)));
         assertThat(body, not(equalTo(newBody)));
 
