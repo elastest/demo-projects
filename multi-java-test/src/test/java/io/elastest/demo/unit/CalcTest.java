@@ -18,7 +18,7 @@ package io.elastest.demo.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class CalcTest {
         this.calc = new Calc();
     }
 
-    @AfterAll
+    @AfterEach
     public void end() {
         try {
             logger.info("End");
