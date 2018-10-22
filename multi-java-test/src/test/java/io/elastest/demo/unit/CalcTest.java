@@ -18,6 +18,7 @@ package io.elastest.demo.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -48,18 +49,12 @@ public class CalcTest {
         this.calc = new Calc();
     }
 
-    @Test
-    public void sumTest() {
-        logger.info("##### Start test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
+    @AfterAll
+    public void end() {
         try {
-            logger.info("Left operand: {}", leftOperand);
-            logger.info("Right operand: {}", rightOperand);
-            logger.info(etMonitorMarkPrefix + " id=action, value=Sum");
-            assertThat(calc.sum(leftOperand, rightOperand)).isEqualTo(5);
-        } finally {
-            logger.info("##### Finish test: {}", new Object() {
-            }.getClass().getEnclosingMethod().getName());
+            logger.info("End");
+            Thread.sleep(800);
+        } catch (Exception e) {
         }
     }
 
@@ -72,6 +67,21 @@ public class CalcTest {
             logger.info("Right operand: {}", rightOperand);
             logger.info(etMonitorMarkPrefix + " id=action, value=Sub");
             assertThat(calc.sub(leftOperand, rightOperand)).isEqualTo(1);
+        } finally {
+            logger.info("##### Finish test: {}", new Object() {
+            }.getClass().getEnclosingMethod().getName());
+        }
+    }
+
+    @Test
+    public void sumTest() {
+        logger.info("##### Start test: {}", new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        try {
+            logger.info("Left operand: {}", leftOperand);
+            logger.info("Right operand: {}", rightOperand);
+            logger.info(etMonitorMarkPrefix + " id=action, value=Sum");
+            assertThat(calc.sum(leftOperand, rightOperand)).isEqualTo(5);
         } finally {
             logger.info("##### Finish test: {}", new Object() {
             }.getClass().getEnclosingMethod().getName());
