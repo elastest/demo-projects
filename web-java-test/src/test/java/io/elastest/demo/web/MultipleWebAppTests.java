@@ -90,8 +90,10 @@ public class MultipleWebAppTests {
             DesiredCapabilities caps;
             if (browserType == null || browserType.equals(CHROME)) {
                 caps = DesiredCapabilities.chrome();
+                caps.setVersion("69");
             } else {
                 caps = DesiredCapabilities.firefox();
+                caps.setVersion("62");
             }
             caps.setCapability("browserId", testName);
 
