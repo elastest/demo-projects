@@ -48,6 +48,7 @@ public class MultipleWebAppTests {
     private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
 
     private static String browserType;
+    private static String browserVersion;
     private static String eusURL;
     private static String sutUrl;
 
@@ -57,7 +58,7 @@ public class MultipleWebAppTests {
     public static void setupClass() {
 
         browserType = System.getProperty("browser");
-        System.out.println("Browser Type: " + browserType);
+        logger.info("Browser Type: {}", browserType);
 
         eusURL = System.getenv("ET_EUS_API");
         if (eusURL == null) {
@@ -82,6 +83,8 @@ public class MultipleWebAppTests {
     public void setupTest(String testName) throws MalformedURLException {
         logger.info("##### Start test: {}", testName);
 
+        browserVersion = System.getProperty("browserVersion");
+
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
                 driver = new ChromeDriver();
@@ -92,11 +95,15 @@ public class MultipleWebAppTests {
             DesiredCapabilities caps;
             if (browserType == null || browserType.equals(CHROME)) {
                 caps = DesiredCapabilities.chrome();
-                caps.setVersion("69");
             } else {
                 caps = DesiredCapabilities.firefox();
-                caps.setVersion("62");
             }
+
+            if (browserVersion != null) {
+                logger.info("Browser Version: {}", browserVersion);
+                caps.setVersion(browserVersion);
+            }
+
             caps.setCapability("browserId", testName);
 
             logger.info(etMonitorMarkPrefix
