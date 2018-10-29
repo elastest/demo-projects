@@ -1,5 +1,5 @@
 Feature: Test a Sut 
-    
+
 Scenario: Navigate to url and obtain 200 response 
     Given  url appUrl 
     When   method get 
@@ -7,4 +7,4 @@ Scenario: Navigate to url and obtain 200 response
 Scenario: Navigate to url and obtain 500 response 
     Given  url appUrl 
     When   method get 
-    Then   status 500    
+    Then   status 500 
