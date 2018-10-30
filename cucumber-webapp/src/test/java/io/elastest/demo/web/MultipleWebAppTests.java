@@ -75,7 +75,7 @@ public class MultipleWebAppTests {
 
     @Before
     public void beforeScenario(Scenario scenario) {
-        currentTestScenarioName = "Scenario: " + scenario.getName();
+        currentTestScenarioName = scenario.getName();
 
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
@@ -102,7 +102,7 @@ public class MultipleWebAppTests {
 
     @After
     public void afterScenario(Scenario scenario) {
-        currentTestScenarioName = "Scenario: " + scenario.getName();
+        currentTestScenarioName = scenario.getName();
         // testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
