@@ -31,6 +31,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -55,8 +56,9 @@ public class MultipleWebAppTests {
     private WebDriver driver;
 
     // Test variables
-    String newTitle = "";
-    String newBody = "";
+    String newTitle;
+    String newBody;
+    String currentTestScenarioName;
 
     public void addRow(String testName, String newTitle, String newBody)
             throws InterruptedException {
@@ -72,7 +74,9 @@ public class MultipleWebAppTests {
     }
 
     @Before
-    public void beforeScenario() {
+    public void beforeScenario(Scenario scenario) {
+        currentTestScenarioName = "Scenario: " + scenario.getName();
+
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
 
@@ -93,12 +97,13 @@ public class MultipleWebAppTests {
             sutUrl = "http://" + sutHost + ":8080/";
         }
         System.out.println("Webapp URL: " + sutUrl);
+        logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
     @After
-    public void afterScenario() {
-        // String testName = info.getDisplayName();
-        // testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");TODO
+    public void afterScenario(Scenario scenario) {
+        currentTestScenarioName = "Scenario: " + scenario.getName();
+        // testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
             logger.info("Clearing Messages...");
@@ -107,7 +112,7 @@ public class MultipleWebAppTests {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
-            // logger.info("##### Finish test: {}", testName); TODO
+            logger.info("##### Finish test: {}", currentTestScenarioName);
             driver.quit();
         }
     }
@@ -118,8 +123,6 @@ public class MultipleWebAppTests {
 
     @Given("^app url$")
     public void app_url() throws Throwable {
-        // logger.info("##### Start test: {}", testName); TODO
-
         browserVersion = System.getProperty("browserVersion");
 
         if (eusURL == null) {
@@ -141,11 +144,11 @@ public class MultipleWebAppTests {
                 caps.setVersion(browserVersion);
             }
 
-            // caps.setCapability("browserId", testName);
-            //
-            // logger.info(etMonitorMarkPrefix
-            // + " id=action, value=Start Browser Session for "
-            // + testName); TODO
+            caps.setCapability("browserId", currentTestScenarioName);
+
+            logger.info(etMonitorMarkPrefix
+                    + " id=action, value=Start Browser Session for "
+                    + currentTestScenarioName);
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
 
@@ -158,30 +161,25 @@ public class MultipleWebAppTests {
 
     @When("^i add an empty title and body$")
     public void i_add_an_empty_title_and_body() throws Throwable {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        logger.debug("Test name {}", testName);
-        // this.setupTest(testName);
-
         Thread.sleep(2000);
 
         newTitle = "";
         newBody = "";
 
-        this.addRow(testName, newTitle, newBody);
+        this.addRow(currentTestScenarioName, newTitle, newBody);
 
         Thread.sleep(2000);
     }
 
     @Then("^row with empty title and body added$")
     public void row_with_empty_title_and_body_added() throws Throwable {
+
         String title = driver.findElement(By.id("title")).getText();
         String body = driver.findElement(By.id("body")).getText();
 
-        // logger.info("Checking Message...");
-        // logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-        // + testName + ")");
+        logger.info("Checking Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + currentTestScenarioName + ")");
         assertThat(title, not(equalTo(newTitle)));
         assertThat(body, not(equalTo(newBody)));
 
@@ -194,30 +192,26 @@ public class MultipleWebAppTests {
 
     @When("^i add a row with title and body$")
     public void i_add_a_row_with_title_and_body() throws Throwable {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        // this.setupTest(testName);
-
         Thread.sleep(2000);
 
         newTitle = "MessageTitle";
         newBody = "MessageBody";
 
-        this.addRow(testName, newTitle, newBody);
+        this.addRow(currentTestScenarioName, newTitle, newBody);
         Thread.sleep(2000);
     }
 
     @Then("^row with the same title and body added$")
     public void row_with_the_same_title_and_body_added() throws Throwable {
+
         String title = driver.findElement(By.id("title")).getText();
         String body = driver.findElement(By.id("body")).getText();
 
         // Added
         logger.info("Checking Message...");
 
-        // logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-        // + testName + ")");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + currentTestScenarioName + ")");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
