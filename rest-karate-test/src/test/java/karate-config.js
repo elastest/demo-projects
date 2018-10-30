@@ -1,9 +1,9 @@
 function() {   
 
-  //Log start and finish every scenario
-  karate.log('##### Start test: Scenario:',karate.info.scenarioName);
+  // Log start and finish every scenario
+  karate.log('##### Start test:',karate.info.scenarioName);
   karate.configure("afterScenario",function(){
-      karate.log('##### Finish test: Scenario:',karate.info.scenarioName);
+      karate.log('##### Finish test:',karate.info.scenarioName);
   });
   
   var host = java.lang.System.getenv('ET_SUT_HOST');
