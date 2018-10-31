@@ -6,6 +6,6 @@ module.exports = {
     // Capabilities to be passed to the webdriver instance.
     capabilities: {
         browserName: process.env.BROWSER || 'chrome',
-        version: process.env.BROWSER_VERSION || 'ANY',
+        version: process.env.BROWSER ? (process.env.BROWSER_VERSION ? process.env.BROWSER_VERSION : '') : 'ANY',
     },
 };
