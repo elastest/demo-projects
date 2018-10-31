@@ -1,11 +1,11 @@
 var env = require('./envs.js');
-var firstTime = true;
 
 exports.config = {
     seleniumAddress: env.seleniumAddress,
     specs: ['test-webapp-spec.js'],
     sutUrl: 'http://172.17.0.2:8080',
     capabilities: env.capabilities,
+    restartBrowserBetweenTests: true,
     onPrepare: function() {
         var jasmineReporters = require('jasmine-reporters');
         jasmine.getEnv().addReporter(
@@ -18,15 +18,9 @@ exports.config = {
         );
 
         var reporterCurrentSpec = {
-            specStarted: async (result) => {
+            specStarted: function(result) {
+                browser.waitForAngularEnabled(false);
                 console.log('##### Start test: ' + result.description);
-
-                // new browser
-                if (!firstTime) {
-                    await browser.restart();
-                }
-                await browser.waitForAngularEnabled(false);
-                firstTime = false;
             },
             specDone: function(result) {
                 console.log('##### Finish test: ' + result.description);
