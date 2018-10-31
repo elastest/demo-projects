@@ -3,6 +3,7 @@ exports.config = {
     specs: ['test-webapp-spec.js'],
     sutUrl: 'http://172.17.0.2:8080',
     onPrepare: function() {
+        console.log(JSON.stringify(process.env));
         if (typeof process.env.ET_EUS_API !== 'undefined') {
             this.seleniumAddress = process.env.ET_EUS_API;
         }
