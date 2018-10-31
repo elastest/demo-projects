@@ -1,5 +1,3 @@
-console.log(JSON.stringify(process.env));
-
 module.exports = {
     // The address of a running selenium server.
     seleniumAddress: process.env.ET_EUS_API || 'http://localhost:4444/wd/hub',
@@ -8,6 +6,6 @@ module.exports = {
     // Capabilities to be passed to the webdriver instance.
     capabilities: {
         browserName: process.env.BROWSER || 'chrome',
-        version: process.env.BROWSER_VERSION || 'latest',
+        version: process.env.BROWSER_VERSION || 'ANY',
     },
 };
