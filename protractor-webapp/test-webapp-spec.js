@@ -1,6 +1,4 @@
 describe('Test WebApp Application', function() {
-    var elastestStartPrefix = '##### Start test: ';
-    var elastestFinishPrefix = '##### Finish test: ';
     var firstTime = true;
 
     var sutUrl = 'http://172.17.0.2:8080';
@@ -19,8 +17,7 @@ describe('Test WebApp Application', function() {
         firstTime = false;
     });
 
-    var spec1 = it('Check that the title and body are not empty', async () => {
-        console.log(elastestStartPrefix + spec1.description);
+    it('Check that the title and body are not empty', async () => {
         browser.get(sutUrl);
 
         // Add row
@@ -36,11 +33,9 @@ describe('Test WebApp Application', function() {
         expect(body).not.toEqual('');
 
         clearMessages();
-        console.log(elastestFinishPrefix + spec1.description);
     });
 
-    var spec2 = it('Find title and body', async () => {
-        console.log(elastestStartPrefix + spec2.description);
+    it('Find title and body', async () => {
         browser.get(sutUrl);
 
         // Add row
@@ -57,7 +52,6 @@ describe('Test WebApp Application', function() {
         expect(body).toEqual('MessageBody');
 
         clearMessages();
-        console.log(elastestFinishPrefix + spec2.description);
     });
 });
 
