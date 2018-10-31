@@ -1,4 +1,5 @@
 var env = require('./envs.js');
+var firstTime = true;
 
 exports.config = {
     seleniumAddress: env.seleniumAddress,
@@ -17,8 +18,15 @@ exports.config = {
         );
 
         var reporterCurrentSpec = {
-            specStarted: function(result) {
+            specStarted: async (result) => {
                 console.log('##### Start test: ' + result.description);
+
+                // new browser
+                if (!firstTime) {
+                    await browser.restart();
+                }
+                await browser.waitForAngularEnabled(false);
+                firstTime = false;
             },
             specDone: function(result) {
                 console.log('##### Finish test: ' + result.description);

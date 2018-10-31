@@ -1,21 +1,11 @@
 var env = require('./envs.js');
 
 describe('Test WebApp Application', function() {
-    var firstTime = true;
-
-    var sutUrl = env.sutUrl ? env.sutUrl : 'http://172.17.0.2:8080';
-
     beforeEach(async () => {
-        if (!firstTime) {
-            await browser.restart();
-        }
-        await browser.waitForAngularEnabled(false);
-        firstTime = false;
+        browser.get(env.sutUrl);
     });
 
     it('Check that the title and body are not empty', async () => {
-        browser.get(sutUrl);
-
         // Add row
         addRow('', '');
         await sleep(2000);
@@ -32,8 +22,6 @@ describe('Test WebApp Application', function() {
     });
 
     it('Find title and body', async () => {
-        browser.get(sutUrl);
-
         // Add row
         addRow('MessageTitle', 'MessageBody');
         await sleep(2000);
