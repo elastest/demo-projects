@@ -1,0 +1,9 @@
+{
+	"Args": [
+		"run",
+		"--dir=/home/edu/projects/demo-projects/gauge-webapp"
+	],
+	"FailedItems": [
+		"specs/multiple-webapp-tests.spec:5"
+	]
+}
