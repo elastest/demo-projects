@@ -1,13 +1,9 @@
+var env = require('./envs.js');
+
 describe('Test WebApp Application', function() {
     var firstTime = true;
 
-    var sutUrl = 'http://172.17.0.2:8080';
-
-    // console.log('aglia', process.env);
-    if (typeof process.env.ET_SUT_HOST !== 'undefined') {
-        sutUrl = process.env.ET_SUT_HOST;
-        console.log('Using ET_SUT_HOST env value', sutUrl);
-    }
+    var sutUrl = env.sutUrl ? env.sutUrl : 'http://172.17.0.2:8080';
 
     beforeEach(async () => {
         if (!firstTime) {
