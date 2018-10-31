@@ -1,7 +1,7 @@
 var env = require('./envs.js');
 
 describe('Test WebApp Application', function() {
-    beforeEach(async () => {
+    beforeEach(function() {
         browser.get(env.sutUrl);
     });
 
