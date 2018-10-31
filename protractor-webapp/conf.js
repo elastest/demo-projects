@@ -20,6 +20,7 @@ exports.config = {
         var reporterCurrentSpec = {
             specStarted: function(result) {
                 browser.waitForAngularEnabled(false);
+                env.capabilities.browserId = result.description;
                 console.log('##### Start test: ' + result.description);
             },
             specDone: function(result) {
