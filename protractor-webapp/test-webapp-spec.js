@@ -1,7 +1,14 @@
 var env = require('./envs.js');
 
 describe('Test WebApp Application', function() {
-    beforeEach(function() {
+    var firstTime = true;
+
+    beforeEach(async () => {
+        if (!firstTime) {
+            await browser.restart();
+        }
+        await browser.waitForAngularEnabled(false);
+        firstTime = false;
         browser.get(env.sutUrl);
     });
 

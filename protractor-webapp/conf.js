@@ -3,9 +3,9 @@ var env = require('./envs.js');
 exports.config = {
     seleniumAddress: env.seleniumAddress,
     specs: ['test-webapp-spec.js'],
-    sutUrl: 'http://172.17.0.2:8080',
+    sutUrl: env.sutUrl,
     capabilities: env.capabilities,
-    restartBrowserBetweenTests: true,
+    // restartBrowserBetweenTests: true,
     onPrepare: function() {
         var jasmineReporters = require('jasmine-reporters');
         jasmine.getEnv().addReporter(
