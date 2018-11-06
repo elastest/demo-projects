@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import xmlrunner
 
 
 def openBrowser(test):
@@ -46,7 +47,7 @@ def addRow(driver, title, body):
     getElementById(driver, 'submit').click()
 
 
-class TestCustomTestSuite(unittest.TestCase):
+class TestWebApp(unittest.TestCase):
 
     def test_check_title_and_body_not_empty(self):
         driver = openBrowser(self)
@@ -85,4 +86,7 @@ class TestCustomTestSuite(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    with open('./testresults/results.xml', 'wb') as output:
+        unittest.main(
+            testRunner=xmlrunner.XMLTestRunner(output=output),
+            failfast=False, buffer=False, catchbreak=False)
