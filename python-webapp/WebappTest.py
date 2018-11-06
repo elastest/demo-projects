@@ -21,7 +21,7 @@ def openBrowser(test):
             if(os.environ['BROWSER'] == 'firefox'):
                 capabilities = DesiredCapabilities.FIREFOX
 
-        capabilities.browserId = testName
+        capabilities['browserId'] = testName
 
         driver = webdriver.Remote(
             command_executor=os.environ['ET_EUS_API'],
