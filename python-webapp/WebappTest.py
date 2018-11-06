@@ -30,7 +30,7 @@ class TestWebApp(ElasTestBase.ElasTestBase):
     def test_check_title_and_body_not_empty(self):
         driver = ElasTestBase.driver
         try:
-            time.sleep(1)
+            time.sleep(2)
             addRow(driver, '', '')
             time.sleep(2)
 
@@ -49,7 +49,7 @@ class TestWebApp(ElasTestBase.ElasTestBase):
     def test_find_title_and_body(self):
         driver = ElasTestBase.driver
         try:
-            time.sleep(1)
+            time.sleep(2)
             addRow(driver, 'MessageTitle', 'MessageBody')
             time.sleep(2)
 
