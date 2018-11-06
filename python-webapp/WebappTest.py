@@ -66,6 +66,23 @@ class TestCustomTestSuite(unittest.TestCase):
             sys.exit(1)
         endTest(self, driver)
 
+    def test_find_title_and_body(self):
+        driver = openBrowser(self)
+        try:
+            addRow(driver, 'MessageTitle', 'MessageBody')
+            time.sleep(2)
+
+            title = getElementById(driver, 'title').text
+            body = getElementById(driver, 'body').text
+            print 'Checking Message...'
+
+            self.assertEqual('MessageTitle', title)
+            self.assertEqual('MessageBody', body)
+        except Exception as e:
+            endTest(self, driver)
+            sys.exit(1)
+        endTest(self, driver)
+
 
 if __name__ == '__main__':
     unittest.main()
