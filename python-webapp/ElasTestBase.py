@@ -40,4 +40,4 @@ class ElasTestBase(unittest.TestCase):
         global driver
         testName = self._testMethodName
         print '##### Finish test: ' + testName
-        driver.quit()
+        driver.close()
