@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import time
 import xmlrunner
 
@@ -13,7 +14,18 @@ import xmlrunner
 def openBrowser(test):
     testName = test._testMethodName
     print '##### Start test: ' + testName
-    driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
+
+    if('ET_EUS_API' in os.environ):
+        browser=DesiredCapabilities.CHROME
+        if('BROWSER' in os.environ):
+            if(os.environ['BROWSER'] == 'firefox'):
+                browser=DesiredCapabilities.FIREFOX
+
+        driver = webdriver.Remote(
+            command_executor=os.environ['ET_EUS_API'],
+            desired_capabilities=browser)
+    else:
+        driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
 
     sutIp = '172.17.0.3'
     if('ET_SUT_HOST' in os.environ):
