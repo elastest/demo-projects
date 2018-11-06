@@ -16,14 +16,16 @@ def openBrowser(test):
     print '##### Start test: ' + testName
 
     if('ET_EUS_API' in os.environ):
-        browser=DesiredCapabilities.CHROME
+        capabilities = DesiredCapabilities.CHROME
         if('BROWSER' in os.environ):
             if(os.environ['BROWSER'] == 'firefox'):
-                browser=DesiredCapabilities.FIREFOX
+                capabilities = DesiredCapabilities.FIREFOX
+
+        capabilities.browserId = testName
 
         driver = webdriver.Remote(
             command_executor=os.environ['ET_EUS_API'],
-            desired_capabilities=browser)
+            desired_capabilities=capabilities)
     else:
         driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
 
