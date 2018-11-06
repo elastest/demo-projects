@@ -11,44 +11,6 @@ import time
 import xmlrunner
 
 
-def openBrowser(test):
-    testName = test._testMethodName
-    print '##### Start test: ' + testName
-
-    if('ET_EUS_API' in os.environ):
-        capabilities = DesiredCapabilities.CHROME
-        if('BROWSER' in os.environ):
-            if(os.environ['BROWSER'] == 'firefox'):
-                capabilities = DesiredCapabilities.FIREFOX
-
-        capabilities['browserId'] = testName
-
-        driver = webdriver.Remote(
-            command_executor=os.environ['ET_EUS_API'],
-            desired_capabilities=capabilities)
-    else:
-        driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
-
-    sutIp = '172.17.0.3'
-    if('ET_SUT_HOST' in os.environ):
-        sutIp = os.environ['ET_SUT_HOST']
-
-    sutUrl = 'http://' + sutIp + ':8080'
-    # driver.get('http://172.17.0.3:8080')
-    driver.get(sutUrl)
-
-    return driver
-
-
-def endTest(test, driver):
-    print 'Clearing Messages...'
-    getElementById(driver, 'clearSubmit').click()
-
-    testName = test._testMethodName
-    print '##### Finish test: ' + testName
-    driver.close()
-
-
 def getElementById(driver, id, timeout=10):
     wait = WebDriverWait(driver, timeout)
     return wait.until(EC.presence_of_element_located((By.ID, id)))
@@ -61,42 +23,73 @@ def addRow(driver, title, body):
     getElementById(driver, 'submit').click()
 
 
+driver = None
+
+
 class TestWebApp(unittest.TestCase):
+    def setUp(self):
+        global driver
 
+        testName = self._testMethodName
+        print '##### Start test: ' + testName
+
+        if('ET_EUS_API' in os.environ):
+            capabilities = DesiredCapabilities.CHROME
+            if('BROWSER' in os.environ):
+                if(os.environ['BROWSER'] == 'firefox'):
+                    capabilities = DesiredCapabilities.FIREFOX
+
+            capabilities['browserId'] = testName
+
+            driver = webdriver.Remote(
+                command_executor=os.environ['ET_EUS_API'],
+                desired_capabilities=capabilities)
+        else:
+            driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
+
+        sutIp = '172.17.0.3'
+        if('ET_SUT_HOST' in os.environ):
+            sutIp = os.environ['ET_SUT_HOST']
+
+        sutUrl = 'http://' + sutIp + ':8080'
+        driver.get(sutUrl)
+        return driver
+
+    def tearDown(self):
+        global driver
+        print 'Clearing Messages...'
+        getElementById(driver, 'clearSubmit').click()
+
+        testName = self._testMethodName
+        print '##### Finish test: ' + testName
+        driver.close()
+
+    # ############# #
+    # ### TESTS ### #
+    # ############# #
     def test_check_title_and_body_not_empty(self):
-        driver = openBrowser(self)
-        try:
+        global driver
+        addRow(driver, '', '')
+        time.sleep(2)
 
-            addRow(driver, '', '')
-            time.sleep(2)
+        title = getElementById(driver, 'title').text
+        body = getElementById(driver, 'body').text
+        print 'Checking Message...'
 
-            title = getElementById(driver, 'title').text
-            body = getElementById(driver, 'body').text
-            print 'Checking Message...'
-
-            self.assertNotEqual('', title)
-            self.assertNotEqual('', body)
-        except Exception as e:
-            endTest(self, driver)
-            sys.exit(1)
-        endTest(self, driver)
+        self.assertNotEqual('', title)
+        self.assertNotEqual('', body)
 
     def test_find_title_and_body(self):
-        driver = openBrowser(self)
-        try:
-            addRow(driver, 'MessageTitle', 'MessageBody')
-            time.sleep(2)
+        global driver
+        addRow(driver, 'MessageTitle', 'MessageBody')
+        time.sleep(2)
 
-            title = getElementById(driver, 'title').text
-            body = getElementById(driver, 'body').text
-            print 'Checking Message...'
+        title = getElementById(driver, 'title').text
+        body = getElementById(driver, 'body').text
+        print 'Checking Message...'
 
-            self.assertEqual('MessageTitle', title)
-            self.assertEqual('MessageBody', body)
-        except Exception as e:
-            endTest(self, driver)
-            sys.exit(1)
-        endTest(self, driver)
+        self.assertEqual('MessageTitle', title)
+        self.assertEqual('MessageBody', body)
 
 
 if __name__ == '__main__':
