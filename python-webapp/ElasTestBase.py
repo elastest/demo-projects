@@ -20,7 +20,7 @@ class ElasTestBase(unittest.TestCase):
                 if(os.environ['BROWSER'] == 'firefox'):
                     capabilities = DesiredCapabilities.FIREFOX
 
-            capabilities['browserId'] = testName
+            capabilities['testName'] = testName
 
             driver = webdriver.Remote(
                 command_executor=os.environ['ET_EUS_API'],
