@@ -95,7 +95,7 @@ public class WebAppTest {
             } else {
                 caps = DesiredCapabilities.firefox();
             }
-            caps.setCapability("browserId", testName);
+            caps.setCapability("testName", testName);
 
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }

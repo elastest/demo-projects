@@ -104,7 +104,7 @@ public class MultipleWebAppTests {
                 caps.setVersion(browserVersion);
             }
 
-            caps.setCapability("browserId", testName);
+            caps.setCapability("testName", testName);
 
             logger.info(etMonitorMarkPrefix
                     + " id=action, value=Start Browser Session for "

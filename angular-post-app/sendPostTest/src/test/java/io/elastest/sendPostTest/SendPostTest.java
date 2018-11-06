@@ -103,7 +103,7 @@ public class SendPostTest {
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setBrowserName("chrome");
             caps.setCapability(ChromeOptions.CAPABILITY, options);
-            caps.setCapability("browserId", testName);
+            caps.setCapability("testName", testName);
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
     }
