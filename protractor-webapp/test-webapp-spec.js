@@ -1,7 +1,7 @@
 describe('Test WebApp Application', function() {
     it('Check that the title and body are not empty', async () => {
         // Add row
-        addRow('', '');
+        await addRow('', '');
         await sleep(2000);
 
         // Check row
@@ -17,7 +17,7 @@ describe('Test WebApp Application', function() {
 
     it('Find title and body', async () => {
         // Add row
-        addRow('MessageTitle', 'MessageBody');
+        await addRow('MessageTitle', 'MessageBody');
         await sleep(2000);
 
         // Check row
@@ -33,9 +33,11 @@ describe('Test WebApp Application', function() {
     });
 });
 
-function addRow(title, body) {
+async function addRow(title, body) {
+    console.log('Inserting data...');
     element(by.id('title-input')).sendKeys(title);
     element(by.id('body-input')).sendKeys(body);
+    await sleep(2000);
     console.log('Adding Message...');
     element(by.id('submit')).click();
 }
