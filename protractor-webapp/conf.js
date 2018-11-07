@@ -5,7 +5,6 @@ exports.config = {
     specs: ['test-webapp-spec.js'],
     sutUrl: env.sutUrl,
     capabilities: env.capabilities,
-    // restartBrowserBetweenTests: true,
     onPrepare: function() {
         var jasmineReporters = require('jasmine-reporters');
         jasmine.getEnv().addReporter(
@@ -20,11 +19,17 @@ exports.config = {
         var reporterCurrentSpec = {
             specStarted: function(result) {
                 browser.waitForAngularEnabled(false);
-                // env.capabilities.testName = result.description; TODO
+                browser.executeScript(
+                    '<<##et => {"command": "startTest", "args": {"testName": "' + result.description + '"} }>>',
+                );
                 console.log('##### Start test: ' + result.description);
+                browser.get(env.sutUrl);
             },
             specDone: function(result) {
                 console.log('##### Finish test: ' + result.description);
+            },
+            suiteDone: function(result) {
+                browser.close();
             },
         };
 

@@ -1,17 +1,4 @@
-var env = require('./envs.js');
-
 describe('Test WebApp Application', function() {
-    var firstTime = true;
-
-    beforeEach(async () => {
-        if (!firstTime) {
-            await browser.restart();
-        }
-        await browser.waitForAngularEnabled(false);
-        firstTime = false;
-        browser.get(env.sutUrl);
-    });
-
     it('Check that the title and body are not empty', async () => {
         // Add row
         addRow('', '');
