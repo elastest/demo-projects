@@ -20,50 +20,49 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 public class RestAppTest {
     final static Logger logger = getLogger(lookup().lookupClass());
-
     String appHost;
 
-    @BeforeAll
+    @BeforeClass
     public void beforeAll() {
         appHost = System.getenv("ET_SUT_HOST");
-
-        if (appHost == null) {
-            appHost = "localhost";
-        }
     }
 
-    @BeforeEach
-    void init(TestInfo info) {
-        logger.info(
-                "##### Start test: " + info.getTestMethod().get().getName());
+    public void init(String testName) {
+        logger.info("##### Start test: " + testName);
     }
 
-    @AfterEach
-    void dispose(TestInfo info) {
-
-        logger.info(
-                "##### Finish test: " + info.getTestMethod().get().getName());
-
+    public void end(String testName) {
+        logger.info("##### Finish test: " + testName);
     }
 
     @Test
     public void rootServiceTest() {
-        RestTemplate client = new RestTemplate();
-        String url = "http://" + appHost + ":8080/";
-        logger.info("Send GET request to {}", url);
-        String result = client.getForObject(url, String.class);
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
 
-        assertThat(result).isEqualTo("Hello World!");
+        this.init(testName);
+        try {
+            RestTemplate client = new RestTemplate();
+            String url = "http://" + appHost + ":8080/";
+            logger.info("Send GET request to {}", url);
+            String result = client.getForObject(url, String.class);
+
+            assertThat(result).isEqualTo("Hello World!");
+        } finally {
+            this.end(testName);
+        }
+
+        if (appHost == null) {
+            appHost = "localhost";
+        }
+
     }
 
 }

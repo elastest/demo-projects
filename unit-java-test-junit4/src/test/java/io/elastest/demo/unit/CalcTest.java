@@ -18,6 +18,7 @@ package io.elastest.demo.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public class CalcTest {
         logger.info("##### Finish test: " + testName);
     }
 
-    @org.junit.Test
+    @Test
     public void sumTest() {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
