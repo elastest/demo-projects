@@ -23,11 +23,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -55,7 +52,7 @@ public class MultipleWebAppTests {
 
     private WebDriver driver;
 
-    @BeforeAll
+    @BeforeClass
     public static void setupClass() {
 
         browserType = System.getProperty("browser");
@@ -80,9 +77,7 @@ public class MultipleWebAppTests {
         System.out.println("Webapp URL: " + sutUrl);
     }
 
-    @BeforeEach
-    public void setupTest(TestInfo info) throws MalformedURLException {
-        String testName = info.getDisplayName();
+    public void setupTest(String testName) throws MalformedURLException {
         logger.info("##### Start test: {}", testName);
 
         browserVersion = System.getProperty("browserVersion");
@@ -117,9 +112,7 @@ public class MultipleWebAppTests {
         driver.get(sutUrl);
     }
 
-    @AfterEach
-    public void teardown(TestInfo info) {
-        String testName = info.getDisplayName();
+    public void teardown(String testName) {
         testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
@@ -151,34 +144,40 @@ public class MultipleWebAppTests {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
-        Thread.sleep(2000);
+        this.setupTest(testName);
 
-        String newTitle = "MessageTitle";
-        String newBody = "MessageBody";
+        try {
+            Thread.sleep(2000);
 
-        this.addRow(testName, newTitle, newBody);
+            String newTitle = "MessageTitle";
+            String newBody = "MessageBody";
 
-        Thread.sleep(2000);
+            this.addRow(testName, newTitle, newBody);
 
-        String title = driver.findElement(By.id("title")).getText();
-        String body = driver.findElement(By.id("body")).getText();
+            Thread.sleep(2000);
 
-        // Added
-        logger.info("Checking Message...");
-        assertThat(title, equalTo(newTitle));
-        assertThat(body, equalTo(newBody));
+            String title = driver.findElement(By.id("title")).getText();
+            String body = driver.findElement(By.id("body")).getText();
 
-        Thread.sleep(1000);
+            // Added
+            logger.info("Checking Message...");
+            assertThat(title, equalTo(newTitle));
+            assertThat(body, equalTo(newBody));
 
-        int titleExist = driver.findElements(By.id("title")).size();
-        int bodyExist = driver.findElements(By.id("body")).size();
+            Thread.sleep(1000);
 
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + testName + ")");
-        assertThat(titleExist, not(equalTo(0)));
-        assertThat(bodyExist, not(equalTo(0)));
+            int titleExist = driver.findElements(By.id("title")).size();
+            int bodyExist = driver.findElements(By.id("body")).size();
 
-        Thread.sleep(2000);
+            logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                    + testName + ")");
+            assertThat(titleExist, not(equalTo(0)));
+            assertThat(bodyExist, not(equalTo(0)));
+
+            Thread.sleep(2000);
+        } finally {
+            teardown(testName);
+        }
     }
 
     @Test
@@ -187,25 +186,31 @@ public class MultipleWebAppTests {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
-        Thread.sleep(2000);
+        this.setupTest(testName);
 
-        String newTitle = "MessageTitle";
-        String newBody = "MessageBody";
+        try {
+            Thread.sleep(2000);
 
-        this.addRow(testName, newTitle, newBody);
+            String newTitle = "MessageTitle";
+            String newBody = "MessageBody";
 
-        Thread.sleep(2000);
+            this.addRow(testName, newTitle, newBody);
 
-        String title = driver.findElement(By.id("title")).getText();
-        String body = driver.findElement(By.id("body")).getText();
+            Thread.sleep(2000);
 
-        logger.info("Checking Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + testName + ")");
-        assertThat(title, equalTo(newTitle));
-        assertThat(body, equalTo(newBody));
+            String title = driver.findElement(By.id("title")).getText();
+            String body = driver.findElement(By.id("body")).getText();
 
-        Thread.sleep(2000);
+            logger.info("Checking Message...");
+            logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                    + testName + ")");
+            assertThat(title, equalTo(newTitle));
+            assertThat(body, equalTo(newBody));
+
+            Thread.sleep(2000);
+        } finally {
+            teardown(testName);
+        }
     }
 
     @Test
@@ -214,25 +219,31 @@ public class MultipleWebAppTests {
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
-        Thread.sleep(2000);
+        this.setupTest(testName);
 
-        String newTitle = "";
-        String newBody = "";
+        try {
+            Thread.sleep(2000);
 
-        this.addRow(testName, newTitle, newBody);
+            String newTitle = "";
+            String newBody = "";
 
-        Thread.sleep(2000);
+            this.addRow(testName, newTitle, newBody);
 
-        String title = driver.findElement(By.id("title")).getText();
-        String body = driver.findElement(By.id("body")).getText();
+            Thread.sleep(2000);
 
-        logger.info("Checking Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + testName + ")");
-        assertThat(title, not(equalTo(newTitle)));
-        assertThat(body, not(equalTo(newBody)));
+            String title = driver.findElement(By.id("title")).getText();
+            String body = driver.findElement(By.id("body")).getText();
 
-        Thread.sleep(2000);
+            logger.info("Checking Message...");
+            logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                    + testName + ")");
+            assertThat(title, not(equalTo(newTitle)));
+            assertThat(body, not(equalTo(newBody)));
+
+            Thread.sleep(2000);
+        } finally {
+            teardown(testName);
+        }
     }
 
 }

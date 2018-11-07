@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.elastest.demo</groupId>
-	<artifactId>rest-java-test-junit4</artifactId>
+	<artifactId>web-java-test-junit4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>
@@ -14,8 +14,8 @@
 
 
 	<name>${project.groupId}:${project.artifactId}</name>
-	<description>ElasTest demo project with REST tests in JUnit 4</description>
-	<url>https://github.com/elastest/demo-projects/rest-java-test</url>
+	<description>ElasTest demo project with web tests in JUnit 4</description>
+	<url>https://github.com/elastest/demo-projects/web-java-test</url>
 
 	<!-- Organization & developers -->
 	<organization>
@@ -42,7 +42,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Test dependencies version -->
+		<webdrivermanager.version>3.0.0</webdrivermanager.version>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<org.selenium.driver>3.14.0</org.selenium.driver>
 	</properties>
 
 	<!-- Apache Software License -->
@@ -55,7 +57,7 @@
 
 	<!-- Source code manager -->
 	<scm>
-		<url>https://github.com/elastest/demo-projects/rest-java-test</url>
+		<url>https://github.com/elastest/demo-projects/web-java-test</url>
 		<connection>scm:git:https://github.com/elastest/demo-projects/</connection>
 		<developerConnection>scm:git://git@github.com:elastest/demo-projects</developerConnection>
 		<tag>develop</tag>
@@ -64,7 +66,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-mustache</artifactId>
 		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
@@ -74,9 +76,61 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>${webdrivermanager.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/htmlunit-driver -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>htmlunit-driver</artifactId>
+			<version>2.32.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-api</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-ie-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-safari-driver</artifactId>
+			<version>${org.selenium.driver}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>${org.selenium.driver}</version>
 		</dependency>
 	</dependencies>
 
@@ -86,10 +140,19 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<dependencies>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
