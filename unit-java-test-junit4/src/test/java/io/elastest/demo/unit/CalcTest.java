@@ -18,10 +18,6 @@ package io.elastest.demo.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,26 +27,31 @@ public class CalcTest {
     private static final Logger logger = LoggerFactory
             .getLogger(CalcTest.class);
 
-    @BeforeEach
-    public void init(TestInfo info) {
-        logger.info(
-                "##### Start test: " + info.getTestMethod().get().getName());
+    public void init(String testName) {
+        logger.info("##### Start test: " + testName);
         this.calc = new Calc();
     }
 
-    @AfterEach
-    public void end(TestInfo info) {
-        logger.info(
-                "##### Finish test: " + info.getTestMethod().get().getName());
+    public void end(String testName) {
+        logger.info("##### Finish test: " + testName);
     }
 
-    @Test
+    @org.junit.Test
     public void sumTest() {
-        int left = 3;
-        int right = 2;
-        int expectedResult = 5;
-        logger.info("Checking if {} + {} = {}", left, right, expectedResult);
-        assertThat(calc.sum(left, right)).isEqualTo(expectedResult);
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        init(testName);
+        try {
+            int left = 3;
+            int right = 2;
+            int expectedResult = 5;
+            logger.info("Checking if {} + {} = {}", left, right,
+                    expectedResult);
+            assertThat(calc.sum(left, right)).isEqualTo(expectedResult);
+        } finally {
+            end(testName);
+        }
     }
 
 }

@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,9 @@ public class CalcTest {
             .getLogger(CalcTest.class);
 
     @BeforeEach
-    public void init() {
+    public void init(TestInfo info) {
+        logger.info(
+                "##### Start test: " + info.getTestMethod().get().getName());
         String leftOperandString = System.getenv("LEFT_OPERAND");
         if (leftOperandString != null) {
             leftOperand = Integer.valueOf(leftOperandString);
@@ -50,41 +53,29 @@ public class CalcTest {
     }
 
     @AfterEach
-    public void end() {
+    public void end(TestInfo info) {
         try {
             Thread.sleep(500);
         } catch (Exception e) {
         }
+        logger.info(
+                "##### Finish test: " + info.getTestMethod().get().getName());
     }
 
     @Test
     public void subTest() {
-        logger.info("##### Start test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        try {
-            logger.info("Left operand: {}", leftOperand);
-            logger.info("Right operand: {}", rightOperand);
-            logger.info(etMonitorMarkPrefix + " id=action, value=Sub");
-            assertThat(calc.sub(leftOperand, rightOperand)).isEqualTo(1);
-        } finally {
-            logger.info("##### Finish test: {}", new Object() {
-            }.getClass().getEnclosingMethod().getName());
-        }
+        logger.info("Left operand: {}", leftOperand);
+        logger.info("Right operand: {}", rightOperand);
+        logger.info(etMonitorMarkPrefix + " id=action, value=Sub");
+        assertThat(calc.sub(leftOperand, rightOperand)).isEqualTo(1);
     }
 
     @Test
     public void sumTest() {
-        logger.info("##### Start test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        try {
-            logger.info("Left operand: {}", leftOperand);
-            logger.info("Right operand: {}", rightOperand);
-            logger.info(etMonitorMarkPrefix + " id=action, value=Sum");
-            assertThat(calc.sum(leftOperand, rightOperand)).isEqualTo(5);
-        } finally {
-            logger.info("##### Finish test: {}", new Object() {
-            }.getClass().getEnclosingMethod().getName());
-        }
+        logger.info("Left operand: {}", leftOperand);
+        logger.info("Right operand: {}", rightOperand);
+        logger.info(etMonitorMarkPrefix + " id=action, value=Sum");
+        assertThat(calc.sum(leftOperand, rightOperand)).isEqualTo(5);
     }
 
 }
