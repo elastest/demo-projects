@@ -31,17 +31,6 @@ import org.springframework.web.client.RestTemplate;
 public class RestAppTest {
     final static Logger logger = getLogger(lookup().lookupClass());
 
-    String appHost;
-
-    @BeforeAll
-    public void beforeAll() {
-        appHost = System.getenv("ET_SUT_HOST");
-
-        if (appHost == null) {
-            appHost = "localhost";
-        }
-    }
-
     @BeforeEach
     void init(TestInfo info) {
         logger.info(
@@ -58,6 +47,12 @@ public class RestAppTest {
 
     @Test
     public void rootServiceTest() {
+        String appHost = System.getenv("ET_SUT_HOST");
+
+        if (appHost == null) {
+            appHost = "localhost";
+        }
+
         RestTemplate client = new RestTemplate();
         String url = "http://" + appHost + ":8080/";
         logger.info("Send GET request to {}", url);
