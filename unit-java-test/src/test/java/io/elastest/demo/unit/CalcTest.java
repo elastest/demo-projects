@@ -18,8 +18,10 @@ package io.elastest.demo.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,21 +32,25 @@ public class CalcTest {
             .getLogger(CalcTest.class);
 
     @BeforeEach
-    public void init() {
+    public void init(TestInfo info) {
+        logger.info(
+                "##### Start test: " + info.getTestMethod().get().getName());
         this.calc = new Calc();
+    }
+
+    @AfterEach
+    public void dispose(TestInfo info) {
+        logger.info(
+                "##### Finish test: " + info.getTestMethod().get().getName());
     }
 
     @Test
     public void sumTest() {
-        logger.info("##### Start test: {}", new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        try {
-            logger.warn("This is a warn msg to test");
-            assertThat(calc.sum(3, 2)).isEqualTo(5);
-        } finally {
-            logger.info("##### Finish test: {}", new Object() {
-            }.getClass().getEnclosingMethod().getName());
-        }
+        int left = 3;
+        int right = 2;
+        int expectedResult = 5;
+        logger.info("Checking if {} + {} = {}", left, right, expectedResult);
+        assertThat(calc.sum(left, right)).isEqualTo(expectedResult);
     }
 
 }

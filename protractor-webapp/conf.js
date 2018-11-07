@@ -1,5 +1,46 @@
 var env = require('./envs.js');
 
+class ElasTestBrowserManager {
+    
+    constructor() {
+        /* `_asyncFlow` is a promise.
+         * It is a "flow" that we create in `specStarted`.
+         * function will wait for the flow to finish before running the next spec. 
+         * This is not needed since Jasmine 3.0.
+         * See https://github.com/jasmine/jasmine/issues/842#issuecomment-336077418
+        */
+        this._asyncFlow = null;
+    }
+
+    jasmineStarted() {
+        /* Wait for async tasks triggered by `specStarted`. */
+        beforeEach(async () => {
+            await this._asyncFlow;
+            this._asyncFlow = null;
+        });
+    }
+
+    specStarted(result) {
+        /* Convert async method to promise */
+        this._asyncFlow = this.asyncSpecStarted(result);
+    }
+
+    async asyncSpecStarted(result) {
+        browser.waitForAngularEnabled(false);
+        await browser.executeScript('<<##et => {"command": "startTest", "args": {"testName": "' + result.description + '"} }>>');
+        console.log('##### Start test: ' + result.description);
+        browser.get(env.sutUrl);
+    }
+
+    specDone(result) {
+        console.log('##### Finish test: ' + result.description);
+    }
+
+    jasmineDone(result) {
+        browser.close();
+    }
+}
+
 exports.config = {
     seleniumAddress: env.seleniumAddress,
     specs: ['test-webapp-spec.js'],
@@ -15,25 +56,7 @@ exports.config = {
                 filePrefix: 'xml-report',
             }),
         );
-
-        var reporterCurrentSpec = {
-            specStarted: function(result) {
-                browser.waitForAngularEnabled(false);
-                browser.executeScript(
-                    '<<##et => {"command": "startTest", "args": {"testName": "' + result.description + '"} }>>',
-                );
-                console.log('##### Start test: ' + result.description);
-                browser.get(env.sutUrl);
-            },
-            specDone: function(result) {
-                console.log('##### Finish test: ' + result.description);
-            },
-            suiteDone: function(result) {
-                browser.close();
-            },
-        };
-
-        jasmine.getEnv().addReporter(reporterCurrentSpec);
+        jasmine.getEnv().addReporter(new ElasTestBrowserManager());
 
         browser.waitForAngularEnabled(false);
     },
