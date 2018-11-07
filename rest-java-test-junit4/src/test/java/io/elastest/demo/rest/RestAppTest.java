@@ -20,19 +20,12 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 public class RestAppTest {
     final static Logger logger = getLogger(lookup().lookupClass());
-    String appHost;
-
-    @BeforeClass
-    public void beforeAll() {
-        appHost = System.getenv("ET_SUT_HOST");
-    }
 
     public void init(String testName) {
         logger.info("##### Start test: " + testName);
@@ -49,6 +42,12 @@ public class RestAppTest {
 
         this.init(testName);
         try {
+            String appHost = System.getenv("ET_SUT_HOST");
+
+            if (appHost == null) {
+                appHost = "localhost";
+            }
+
             RestTemplate client = new RestTemplate();
             String url = "http://" + appHost + ":8080/";
             logger.info("Send GET request to {}", url);
@@ -57,10 +56,6 @@ public class RestAppTest {
             assertThat(result).isEqualTo("Hello World!");
         } finally {
             this.end(testName);
-        }
-
-        if (appHost == null) {
-            appHost = "localhost";
         }
 
     }
