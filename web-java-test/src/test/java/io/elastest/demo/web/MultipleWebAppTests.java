@@ -82,7 +82,7 @@ public class MultipleWebAppTests {
 
     @BeforeEach
     public void setupTest(TestInfo info) throws MalformedURLException {
-        String testName = info.getDisplayName();
+        String testName = info.getTestMethod().get().getName();
         logger.info("##### Start test: {}", testName);
 
         browserVersion = System.getProperty("browserVersion");
