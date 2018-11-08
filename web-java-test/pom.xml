@@ -42,10 +42,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Test dependencies version -->
-		<junit.jupiter.version>5.0.3</junit.jupiter.version>
+		<!-- Test dependencies version -->
+		<junit.jupiter.version>5.3.1</junit.jupiter.version>
+		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 		<webdrivermanager.version>3.0.0</webdrivermanager.version>
-		<junit.platform.version>1.0.3</junit.platform.version>
-		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
 		<org.selenium.driver>3.14.0</org.selenium.driver>
 	</properties>
 
@@ -73,9 +73,8 @@
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
+			<artifactId>junit-jupiter-engine</artifactId>
 			<version>${junit.jupiter.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
@@ -142,18 +141,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>org.junit.platform</groupId>
-						<artifactId>junit-platform-surefire-provider</artifactId>
-						<version>${junit.platform.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.junit.jupiter</groupId>
-						<artifactId>junit-jupiter-engine</artifactId>
-						<version>${junit.jupiter.version}</version>
-					</dependency>
-				</dependencies>
+				<version>${maven-surefire-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

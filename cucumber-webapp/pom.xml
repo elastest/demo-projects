@@ -14,7 +14,7 @@
 	</parent>
 
 
-	<description>ElasTest demo project with web tests in JUnit 5</description>
+	<description>ElasTest demo project with web tests in Cucumber</description>
 	<url>https://github.com/elastest/demo-projects/web-java-test</url>
 
 	<!-- Organization & developers -->
