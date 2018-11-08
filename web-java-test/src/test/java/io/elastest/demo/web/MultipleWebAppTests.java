@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+// Uses a browser for each test
 public class MultipleWebAppTests {
     private static final Logger logger = LoggerFactory
             .getLogger(MultipleWebAppTests.class);

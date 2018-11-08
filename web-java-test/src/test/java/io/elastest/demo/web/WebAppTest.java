@@ -17,17 +17,19 @@
 package io.elastest.demo.web;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -39,25 +41,28 @@ import org.slf4j.LoggerFactory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+// Uses a browser for all test
 public class WebAppTest {
     private static final Logger logger = LoggerFactory
-            .getLogger(WebAppTest.class);
+            .getLogger(MultipleWebAppTests.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
 
+    private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
+
     private static String browserType;
+    private static String browserVersion;
     private static String eusURL;
     private static String sutUrl;
 
-    private WebDriver driver;
+    private static WebDriver driver;
 
     @BeforeAll
-    public static void setupClass() {
+    public static void setupClass() throws MalformedURLException {
 
         browserType = System.getProperty("browser");
-
-        logger.info("Browser Type: " + browserType);
+        logger.info("Browser Type: {}", browserType);
 
         eusURL = System.getenv("ET_EUS_API");
         if (eusURL == null) {
@@ -70,18 +75,15 @@ public class WebAppTest {
         }
 
         String sutHost = System.getenv("ET_SUT_HOST");
-        String sutPort = System.getProperty("etSutPort");
         if (sutHost == null) {
             sutUrl = "http://localhost:8080/";
         } else {
-            sutUrl = "http://" + sutHost
-                    + (sutPort != null ? (":" + sutPort + "/") : ":8080/");
+            sutUrl = "http://" + sutHost + ":8080/";
         }
-        logger.info("Webapp URL: {} ", sutUrl);
-    }
+        System.out.println("Webapp URL: " + sutUrl);
 
-    // @BeforeEach
-    public void setupTest(String testName) throws MalformedURLException {
+        browserVersion = System.getProperty("browserVersion");
+
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
                 driver = new ChromeDriver();
@@ -95,10 +97,29 @@ public class WebAppTest {
             } else {
                 caps = DesiredCapabilities.firefox();
             }
-            caps.setCapability("testName", testName);
 
+            if (browserVersion != null) {
+                logger.info("Browser Version: {}", browserVersion);
+                caps.setVersion(browserVersion);
+            }
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
+    }
+
+    @BeforeEach
+    public void setupTest(TestInfo info) throws MalformedURLException {
+        String testName = info.getTestMethod().get().getName();
+        if (driver instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) driver).executeScript(
+                    "<<##et => {\"command\": \"startTest\", \"args\": {\"testName\": \""
+                            + testName + "\"} }>>");
+        }
+
+        logger.info("##### Start test: {}", testName);
+        logger.info(etMonitorMarkPrefix
+                + " id=action, value=Start Browser Session for " + testName);
+
+        driver.get(sutUrl);
     }
 
     @AfterEach
@@ -111,36 +132,77 @@ public class WebAppTest {
             driver.findElement(By.id("clearSubmit")).click();
 
             logger.info("##### Finish test: {}", testName);
+        }
+    }
 
+    @AfterAll
+    public static void afterAll() {
+        if (driver != null) {
             driver.quit();
         }
     }
 
-    @Test
-    public void test() throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        logger.info("##### Start test: {}", testName);
-        this.setupTest(testName);
-
-        driver.get(sutUrl);
-        driver.manage().addCookie(new Cookie("sss", "{\"elastest\"}"));
-        ((JavascriptExecutor) driver)
-                .executeScript("console.log('Hola caracola')");
-
-        Thread.sleep(2000);
-
-        String newTitle = "MessageTitle";
-        String newBody = "MessageBody";
-
+    public void addRow(String testName, String newTitle, String newBody)
+            throws InterruptedException {
         driver.findElement(By.id("title-input")).sendKeys(newTitle);
         driver.findElement(By.id("body-input")).sendKeys(newBody);
 
         Thread.sleep(2000);
 
         logger.info("Adding Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
+                + testName + ")");
         driver.findElement(By.id("submit")).click();
+    }
+
+    @Test
+    public void addMsgAndClear()
+            throws InterruptedException, MalformedURLException {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        Thread.sleep(2000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        this.addRow(testName, newTitle, newBody);
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        // Added
+        logger.info("Checking Message...");
+        assertThat(title, equalTo(newTitle));
+        assertThat(body, equalTo(newBody));
+
+        Thread.sleep(1000);
+
+        int titleExist = driver.findElements(By.id("title")).size();
+        int bodyExist = driver.findElements(By.id("body")).size();
+
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + testName + ")");
+        assertThat(titleExist, not(equalTo(0)));
+        assertThat(bodyExist, not(equalTo(0)));
+
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void findTitleAndBody()
+            throws InterruptedException, MalformedURLException {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        Thread.sleep(2000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        this.addRow(testName, newTitle, newBody);
 
         Thread.sleep(2000);
 
@@ -148,11 +210,39 @@ public class WebAppTest {
         String body = driver.findElement(By.id("body")).getText();
 
         logger.info("Checking Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + testName + ")");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
-        Thread.sleep(2500);
+        Thread.sleep(2000);
+    }
 
+    @Test
+    public void checkTitleAndBodyNoEmpty()
+            throws InterruptedException, MalformedURLException {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        Thread.sleep(2000);
+
+        String newTitle = "";
+        String newBody = "";
+
+        this.addRow(testName, newTitle, newBody);
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        logger.info("Checking Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
+                + testName + ")");
+        assertThat(title, not(equalTo(newTitle)));
+        assertThat(body, not(equalTo(newBody)));
+
+        Thread.sleep(2000);
     }
 
 }
