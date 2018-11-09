@@ -26,7 +26,7 @@ def clearData(driver):
     getElementById(driver, 'clearSubmit').click()
 
 
-class TestWebApp(ElasTestBase.ElasTestBaseBrowserForEach):
+class TestWebApp(ElasTestBase.ElasTestBaseBrowserForAll):
     def test_check_title_and_body_not_empty(self):
         driver = ElasTestBase.driver
         try:
