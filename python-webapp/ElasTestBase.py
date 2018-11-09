@@ -15,7 +15,7 @@ class ElasTestBaseBrowserForEach(unittest.TestCase):
         testName = self._testMethodName
         print '##### Start test: ' + testName
 
-        os.environ['ET_EUS_API'] = 'http://172.18.0.1:8091/eus/v1/'
+        # os.environ['ET_EUS_API'] = 'http://172.18.0.1:8091/eus/v1/'
         if('ET_EUS_API' in os.environ):
             capabilities = DesiredCapabilities.CHROME
             if('BROWSER' in os.environ):
