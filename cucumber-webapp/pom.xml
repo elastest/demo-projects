@@ -159,7 +159,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<includes>
-						<include>TestRunner.java</include>
+						<include>MultipleWebAppTestsRunner.java</include>
+						<include>eWebAppTestRunner.java</include>
 					</includes>
 				</configuration>
 			</plugin>

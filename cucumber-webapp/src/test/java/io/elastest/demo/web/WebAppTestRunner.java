@@ -10,6 +10,6 @@ import cucumber.api.junit.Cucumber;
         "html:target/surefire-reports/cucumber-html-report",
         "json:target/surefire-reports/cucumber.json", "pretty" })
 
-public class TestRunner {
+public class WebAppTestRunner {
 
 }
