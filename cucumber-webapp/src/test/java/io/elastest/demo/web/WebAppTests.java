@@ -22,6 +22,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.URL;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -40,9 +42,9 @@ import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 // With a browser for each test
-public class MultipleWebAppTests {
+public class WebAppTests {
     private static final Logger logger = LoggerFactory
-            .getLogger(MultipleWebAppTests.class);
+            .getLogger(WebAppTests.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
@@ -74,10 +76,8 @@ public class MultipleWebAppTests {
         driver.findElement(By.id("submit")).click();
     }
 
-    @Before
-    public void beforeScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-
+    @BeforeClass
+    public void beforeFeature() {
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
 
@@ -98,6 +98,11 @@ public class MultipleWebAppTests {
             sutUrl = "http://" + sutHost + ":8080/";
         }
         System.out.println("Webapp URL: " + sutUrl);
+    }
+
+    @Before
+    public void beforeScenario(Scenario scenario) {
+        currentTestScenarioName = scenario.getName();
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
@@ -114,6 +119,12 @@ public class MultipleWebAppTests {
             } catch (InterruptedException e) {
             }
             logger.info("##### Finish test: {}", currentTestScenarioName);
+        }
+    }
+
+    @AfterClass
+    public void afterFeature() {
+        if (driver != null) {
             driver.quit();
         }
     }
