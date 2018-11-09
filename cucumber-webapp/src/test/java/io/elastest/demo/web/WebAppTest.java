@@ -42,9 +42,9 @@ import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 // With a browser for each test
-public class WebAppTests {
+public class WebAppTest {
     private static final Logger logger = LoggerFactory
-            .getLogger(WebAppTests.class);
+            .getLogger(WebAppTest.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
