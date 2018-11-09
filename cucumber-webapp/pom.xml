@@ -160,7 +160,7 @@
 				<configuration>
 					<includes>
 						<include>MultipleWebAppTestsRunner.java</include>
-						<include>eWebAppTestRunner.java</include>
+						<include>WebAppTestRunner.java</include>
 					</includes>
 				</configuration>
 			</plugin>
