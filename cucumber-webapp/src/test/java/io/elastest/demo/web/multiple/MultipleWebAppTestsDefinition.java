@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package io.elastest.demo.web;
+package io.elastest.demo.web.multiple;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
@@ -23,7 +23,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.net.URL;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -40,10 +39,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-// With a browser for all test
-public class WebAppTest {
+// With a browser for each test
+public class MultipleWebAppTestsDefinition {
     private static final Logger logger = LoggerFactory
-            .getLogger(WebAppTest.class);
+            .getLogger(MultipleWebAppTestsDefinition.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
@@ -75,9 +74,10 @@ public class WebAppTest {
         driver.findElement(By.id("submit")).click();
     }
 
-    // Hack because @BeforeClass cannot be used
-    @Before("@feature")
-    public void beforeFeature() {
+    @Before
+    public void beforeScenario(Scenario scenario) {
+        currentTestScenarioName = scenario.getName();
+
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
 
@@ -97,17 +97,7 @@ public class WebAppTest {
         } else {
             sutUrl = "http://" + sutHost + ":8080/";
         }
-        System.out.println("Webapp URL: " + sutUrl);
-    }
-
-    @Before
-    public void beforeScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-        if (driver instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) driver).executeScript(
-                    "<<##et => {\"command\": \"startTest\", \"args\": {\"testName\": \""
-                            + currentTestScenarioName + "\"} }>>");
-        }
+        logger.info("Webapp URL: {}", sutUrl);
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
@@ -124,13 +114,6 @@ public class WebAppTest {
             } catch (InterruptedException e) {
             }
             logger.info("##### Finish test: {}", currentTestScenarioName);
-        }
-    }
-
-//    Hack because @AfterClass cannot be used
-    @After("@feature")
-    public void afterFeature() {
-        if (driver != null) {
             driver.quit();
         }
     }
@@ -139,7 +122,7 @@ public class WebAppTest {
     /* ******** Common ******** */
     /* ************************ */
 
-    @Given("^app url 2$")
+    @Given("^app url$")
     public void app_url() throws Throwable {
         browserVersion = System.getProperty("browserVersion");
 
@@ -177,7 +160,7 @@ public class WebAppTest {
     /* **** Check title and body no empty **** */
     /* *************************************** */
 
-    @When("^i add an empty title and body 2$")
+    @When("^i add an empty title and body$")
     public void i_add_an_empty_title_and_body() throws Throwable {
         Thread.sleep(2000);
 
@@ -189,7 +172,7 @@ public class WebAppTest {
         Thread.sleep(2000);
     }
 
-    @Then("^row with empty title and body added 2$")
+    @Then("^row with empty title and body added$")
     public void row_with_empty_title_and_body_added() throws Throwable {
 
         String title = driver.findElement(By.id("title")).getText();
@@ -208,7 +191,7 @@ public class WebAppTest {
     /* ********* Find title and body ********* */
     /* *************************************** */
 
-    @When("^i add a row with title and body 2$")
+    @When("^i add a row with title and body$")
     public void i_add_a_row_with_title_and_body() throws Throwable {
         Thread.sleep(2000);
 
@@ -219,7 +202,7 @@ public class WebAppTest {
         Thread.sleep(2000);
     }
 
-    @Then("^row with the same title and body added 2$")
+    @Then("^row with the same title and body added$")
     public void row_with_the_same_title_and_body_added() throws Throwable {
 
         String title = driver.findElement(By.id("title")).getText();

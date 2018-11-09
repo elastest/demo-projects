@@ -14,15 +14,17 @@
  * limitations under the License.
  *
  */
-package io.elastest.demo.web;
+package io.elastest.demo.web.unique;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -39,10 +41,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-// With a browser for each test
-public class MultipleWebAppTests {
+// With a browser for all test
+public class WebAppTestDefinition {
     private static final Logger logger = LoggerFactory
-            .getLogger(MultipleWebAppTests.class);
+            .getLogger(WebAppTestDefinition.class);
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
@@ -54,30 +56,16 @@ public class MultipleWebAppTests {
     private static String eusURL;
     private static String sutUrl;
 
-    private WebDriver driver;
+    private static WebDriver driver;
 
     // Test variables
     String newTitle;
     String newBody;
     String currentTestScenarioName;
 
-    public void addRow(String testName, String newTitle, String newBody)
-            throws InterruptedException {
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
-                + testName + ")");
-        driver.findElement(By.id("submit")).click();
-    }
-
-    @Before
-    public void beforeScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-
+    // Hack because @BeforeClass cannot be used
+    @Before("@firstScenario")
+    public void beforeFeature() throws MalformedURLException {
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
 
@@ -97,33 +85,8 @@ public class MultipleWebAppTests {
         } else {
             sutUrl = "http://" + sutHost + ":8080/";
         }
-        System.out.println("Webapp URL: " + sutUrl);
-        logger.info("##### Start test: {}", currentTestScenarioName);
-    }
+        logger.info("Webapp URL: {}", sutUrl);
 
-    @After
-    public void afterScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-        // testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
-
-        if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-            logger.info("##### Finish test: {}", currentTestScenarioName);
-            driver.quit();
-        }
-    }
-
-    /* ************************ */
-    /* ******** Common ******** */
-    /* ************************ */
-
-    @Given("^app url$")
-    public void app_url() throws Throwable {
         browserVersion = System.getProperty("browserVersion");
 
         if (eusURL == null) {
@@ -147,12 +110,65 @@ public class MultipleWebAppTests {
 
             caps.setCapability("testName", currentTestScenarioName);
 
-            logger.info(etMonitorMarkPrefix
-                    + " id=action, value=Start Browser Session for "
-                    + currentTestScenarioName);
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
 
+    }
+
+    @Before
+    public void beforeScenario(Scenario scenario) {
+        currentTestScenarioName = scenario.getName();
+        if (driver instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) driver).executeScript(
+                    "'<<##et => {\"command\": \"startTest\", \"args\": {\"testName\": \""
+                            + currentTestScenarioName + "\"} }>>'");
+        }
+        logger.info("##### Start test: {}", currentTestScenarioName);
+    }
+
+    @After
+    public void afterScenario(Scenario scenario) {
+        currentTestScenarioName = scenario.getName();
+        // testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
+
+        if (driver != null) {
+            logger.info("Clearing Messages...");
+            driver.findElement(By.id("clearSubmit")).click();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            logger.info("##### Finish test: {}", currentTestScenarioName);
+        }
+    }
+
+    // Hack because @AfterClass cannot be used
+    @After("@lastScenario")
+    public void afterFeature() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    public void addRow(String testName, String newTitle, String newBody)
+            throws InterruptedException {
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
+
+        Thread.sleep(2000);
+
+        logger.info("Adding Message...");
+        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
+                + testName + ")");
+        driver.findElement(By.id("submit")).click();
+    }
+    
+    /* ************************ */
+    /* ******** Common ******** */
+    /* ************************ */
+
+    @Given("^app url$")
+    public void app_url() throws Throwable {
         driver.get(sutUrl);
     }
 

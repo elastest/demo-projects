@@ -1,4 +1,4 @@
-Feature: Test WebApp Application 
+Feature: Test WebApp Application
 Scenario: Check that the title and body are not empty 
     Given app url 
     When i add an empty title and body 
