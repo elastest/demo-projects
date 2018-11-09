@@ -1,4 +1,4 @@
-package io.elastest.demo.web;
+package io.elastest.demo.web.multiple;
 /*
  * (C) Copyright 2017-2019 ElasTest (http://elastest.io/)
  *
@@ -73,7 +73,7 @@ public class MultipleWebAppTests {
         driver.findElement(By.id("submit")).click();
     }
 
-    @BeforeScenario
+    @BeforeScenario(tags = {"multiple"})
     public void beforeScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
 
@@ -96,11 +96,11 @@ public class MultipleWebAppTests {
         } else {
             sutUrl = "http://" + sutHost + ":8080/";
         }
-        System.out.println("Webapp URL: " + sutUrl);
+        logger.info("Webapp URL: {}", sutUrl);
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
-    @AfterScenario
+    @AfterScenario(tags = {"multiple"})
     public void afterScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
 

@@ -1,8 +1,0 @@
-{
-	"Command": [
-		"gauge",
-		"run",
-		"--dir=/home/edu/projects/demo-projects/gauge-webapp",
-		"/home/edu/projects/demo-projects/gauge-webapp/specs"
-	]
-}
