@@ -4,6 +4,7 @@ import sys
 import xmlrunner
 import ElasTestBase
 
+
 def sum(a, b):
     return int(a) + int(b)
 
@@ -11,8 +12,10 @@ def sum(a, b):
 def sub(a, b):
     return int(a) - int(b)
 
+
 leftOperand = 3
 rightOperand = 2
+
 
 class TestUnit(ElasTestBase.ElasTestBase):
 
@@ -21,9 +24,8 @@ class TestUnit(ElasTestBase.ElasTestBase):
         global rightOperand
         expected = 5
 
-        print 'Left operand: ' + str(leftOperand)
-        print 'Right operand: ' + str(rightOperand)
-        print 'Expected result: ' + str(expected)
+        print 'Checking if ' + str(leftOperand) + ' + ' + \
+            str(rightOperand) + ' = '+str(expected)
 
         self.assertEqual(sum(leftOperand, rightOperand), expected)
 
@@ -32,9 +34,8 @@ class TestUnit(ElasTestBase.ElasTestBase):
         global rightOperand
         expected = 1
 
-        print 'Left operand: ' + str(leftOperand)
-        print 'Right operand: ' + str(rightOperand)
-        print 'Expected result: ' + str(expected)
+        print 'Checking if ' + str(leftOperand) + ' - ' + \
+            str(rightOperand) + ' = '+str(expected)
 
         self.assertEqual(sub(leftOperand, rightOperand), expected)
 
