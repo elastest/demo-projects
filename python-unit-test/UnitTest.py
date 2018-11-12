@@ -3,15 +3,7 @@ import os
 import sys
 import xmlrunner
 import ElasTestBase
-
-
-def sum(a, b):
-    return int(a) + int(b)
-
-
-def sub(a, b):
-    return int(a) - int(b)
-
+from Calc import *
 
 leftOperand = 3
 rightOperand = 2
