@@ -16,61 +16,36 @@
  */
 package io.elastest.demo.unit;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class CalcTest {
-    private static final Logger logger = LoggerFactory
-            .getLogger(CalcTest.class);
+public class CalcTest extends ElasTestBase {
 
     private Calc calc;
 
     static int left = 3;
     static int right = 2;
 
-    public void init(String testName) {
-        logger.info("##### Start test: " + testName);
+    @Before
+    public void setup() {
         this.calc = new Calc();
-    }
-
-    public void end(String testName) {
-        logger.info("##### Finish test: " + testName);
     }
 
     @Test
     public void sumTest() {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        init(testName);
-        try {
-
-            int expectedResult = 5;
-            logger.info("Checking if {} + {} = {}", left, right,
-                    expectedResult);
-            assertThat(calc.sum(left, right)).isEqualTo(expectedResult);
-        } finally {
-            end(testName);
-        }
+        
+        int expectedResult = 5;
+        logger.info("Checking if {} + {} = {}", left, right, expectedResult);
+        assertEquals(expectedResult, calc.sum(left, right));
     }
 
     @Test
     public void subTest() {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
 
-        init(testName);
-        try {
-            int expectedResult = 1;
-            logger.info("Checking if {} + {} = {}", left, right,
-                    expectedResult);
-            assertThat(calc.sub(left, right)).isEqualTo(expectedResult);
-        } finally {
-            end(testName);
-        }
+        int expectedResult = 1;
+        logger.info("Checking if {} + {} = {}", left, right, expectedResult);
+        assertEquals(expectedResult, calc.sub(left, right));
     }
-
 }

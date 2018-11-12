@@ -4,7 +4,6 @@ import sys
 import xmlrunner
 import ElasTestBase
 
-
 def sum(a, b):
     return int(a) + int(b)
 
@@ -12,37 +11,30 @@ def sum(a, b):
 def sub(a, b):
     return int(a) - int(b)
 
-
 leftOperand = 3
 rightOperand = 2
-etMonitorMarkPrefix = '##elastest-monitor-mark:'
-
 
 class TestUnit(ElasTestBase.ElasTestBase):
+
     def test_sum(self):
         global leftOperand
         global rightOperand
-        global etMonitorMarkPrefix
         expected = 5
 
         print 'Left operand: ' + str(leftOperand)
         print 'Right operand: ' + str(rightOperand)
         print 'Expected result: ' + str(expected)
-        print etMonitorMarkPrefix + ' id=action, value=Sum'
 
         self.assertEqual(sum(leftOperand, rightOperand), expected)
-        
 
     def test_sub(self):
         global leftOperand
         global rightOperand
-        global etMonitorMarkPrefix
         expected = 1
 
         print 'Left operand: ' + str(leftOperand)
         print 'Right operand: ' + str(rightOperand)
         print 'Expected result: ' + str(expected)
-        print etMonitorMarkPrefix + ' id=action, value=Sub'
 
         self.assertEqual(sub(leftOperand, rightOperand), expected)
 

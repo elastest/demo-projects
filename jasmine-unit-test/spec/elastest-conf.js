@@ -1,9 +1,9 @@
 var jasmineReporters = require('jasmine-reporters');
+
 jasmine.getEnv().addReporter(
     new jasmineReporters.JUnitXmlReporter({
         consolidateAll: true,
         savePath: 'testresults',
-        // this will produce distinct xml files for each capability
         filePrefix: 'xml-report',
     }),
 );

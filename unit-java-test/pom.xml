@@ -1,99 +1,50 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.elastest.demo</groupId>
 	<artifactId>unit-java-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>${project.groupId}:${project.artifactId}</name>
-	<description>ElasTest demo project with unit tests in JUnit 5</description>
-	<url>https://github.com/elastest/demo-projects/unit-java-test</url>
-
-	<!-- Organization & developers -->
-	<organization>
-		<name>Elastest</name>
-		<url>http://elastest.io</url>
-	</organization>
-
-	<developers>
-		<developer>
-			<id>URJC</id>
-			<organization>Universidad Rey Juan Carlos</organization>
-			<organizationUrl>https://www.urjc.es/</organizationUrl>
-		</developer>
-	</developers>
-
 	<properties>
-		<!-- Java 8 -->
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<!-- Encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<!-- Test dependencies version -->
-		<junit.jupiter.version>5.3.1</junit.jupiter.version>
-		<slf4j.version>1.7.25</slf4j.version>
-		<assertj.version>3.8.0</assertj.version>
-
-		<!-- Plugins versions -->
-		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
-		<jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
+		
+		<junit.jupiter.version></junit.jupiter.version>
+		<slf4j.version></slf4j.version>
+		<maven-surefire-plugin.version></maven-surefire-plugin.version>
 	</properties>
 
-	<!-- Apache Software License -->
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-
-	<!-- Source code manager -->
-	<scm>
-		<url>https://github.com/elastest/demo-projects/unit-java-test</url>
-		<connection>scm:git:https://github.com/elastest/demo-projects/</connection>
-		<developerConnection>scm:git://git@github.com:elastest/demo-projects</developerConnection>
-		<tag>develop</tag>
-	</scm>
-
 	<dependencies>
-		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
+			<version>5.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<version>1.7.25</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency><!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>${assertj.version}</version>
+			<version>1.7.25</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
-	<!-- Plugins -->
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
+				<version>2.22.1</version>
 			</plugin>
 		</plugins>
 	</build>

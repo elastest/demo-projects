@@ -16,18 +16,12 @@
  */
 package io.elastest.demo.unit;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class CalcTest {
-    private static final Logger logger = LoggerFactory
-            .getLogger(CalcTest.class);
+public class CalcTest extends ElasTestBase {
 
     private Calc calc;
 
@@ -35,30 +29,23 @@ public class CalcTest {
     static int right = 2;
 
     @BeforeEach
-    public void init(TestInfo info) {
-        logger.info(
-                "##### Start test: " + info.getTestMethod().get().getName());
+    public void setup() {
         this.calc = new Calc();
-    }
-
-    @AfterEach
-    public void end(TestInfo info) {
-        logger.info(
-                "##### Finish test: " + info.getTestMethod().get().getName());
     }
 
     @Test
     public void sumTest() {
         int expectedResult = 5;
         logger.info("Checking if {} + {} = {}", left, right, expectedResult);
-        assertThat(calc.sum(left, right)).isEqualTo(expectedResult);
+        assertEquals(expectedResult, calc.sum(left, right));
     }
 
     @Test
     public void subTest() {
+
         int expectedResult = 1;
         logger.info("Checking if {} + {} = {}", left, right, expectedResult);
-        assertThat(calc.sub(left, right)).isEqualTo(expectedResult);
+        assertEquals(expectedResult, calc.sub(left, right));
     }
-
 }
+
