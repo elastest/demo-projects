@@ -23,10 +23,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CalcTest {
-
-    private Calc calc;
     private static final Logger logger = LoggerFactory
             .getLogger(CalcTest.class);
+
+    private Calc calc;
+
+    static int left = 3;
+    static int right = 2;
 
     public void init(String testName) {
         logger.info("##### Start test: " + testName);
@@ -44,12 +47,27 @@ public class CalcTest {
 
         init(testName);
         try {
-            int left = 3;
-            int right = 2;
+
             int expectedResult = 5;
             logger.info("Checking if {} + {} = {}", left, right,
                     expectedResult);
             assertThat(calc.sum(left, right)).isEqualTo(expectedResult);
+        } finally {
+            end(testName);
+        }
+    }
+
+    @Test
+    public void subTest() {
+        String testName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+
+        init(testName);
+        try {
+            int expectedResult = 1;
+            logger.info("Checking if {} + {} = {}", left, right,
+                    expectedResult);
+            assertThat(calc.sub(left, right)).isEqualTo(expectedResult);
         } finally {
             end(testName);
         }
