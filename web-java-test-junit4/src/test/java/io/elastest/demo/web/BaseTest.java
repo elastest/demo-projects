@@ -1,8 +1,7 @@
 package io.elastest.demo.web;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.net.MalformedURLException;
 
@@ -76,8 +75,8 @@ public class BaseTest {
 
         // Added
         logger.info("Checking Message...");
-        assertThat(title, equalTo(newTitle));
-        assertThat(body, equalTo(newBody));
+        assertEquals(newTitle, title);
+        assertEquals(newBody, body);
 
         Thread.sleep(1000);
 
@@ -86,8 +85,8 @@ public class BaseTest {
 
         logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
                 + testName + ")");
-        assertThat(titleExist, not(equalTo(0)));
-        assertThat(bodyExist, not(equalTo(0)));
+        assertNotEquals(0, titleExist);
+        assertNotEquals(0, bodyExist);
 
         Thread.sleep(2000);
 
@@ -113,8 +112,8 @@ public class BaseTest {
         logger.info("Checking Message...");
         logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
                 + testName + ")");
-        assertThat(title, equalTo(newTitle));
-        assertThat(body, equalTo(newBody));
+        assertEquals(newTitle, title);
+        assertEquals(newBody, body);
 
         Thread.sleep(2000);
 
@@ -140,8 +139,8 @@ public class BaseTest {
         logger.info("Checking Message...");
         logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
                 + testName + ")");
-        assertThat(title, not(equalTo(newTitle)));
-        assertThat(body, not(equalTo(newBody)));
+        assertNotEquals(newTitle, title);
+        assertNotEquals(newBody, body);
 
         Thread.sleep(2000);
 

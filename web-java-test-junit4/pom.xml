@@ -12,25 +12,6 @@
 		<version>1.5.8.RELEASE</version>
 	</parent>
 
-
-	<name>${project.groupId}:${project.artifactId}</name>
-	<description>ElasTest demo project with web tests in JUnit 4</description>
-	<url>https://github.com/elastest/demo-projects/web-java-test</url>
-
-	<!-- Organization & developers -->
-	<organization>
-		<name>Elastest</name>
-		<url>http://elastest.io</url>
-	</organization>
-
-	<developers>
-		<developer>
-			<id>URJC</id>
-			<organization>Universidad Rey Juan Carlos</organization>
-			<organizationUrl>https://www.urjc.es/</organizationUrl>
-		</developer>
-	</developers>
-
 	<properties>
 		<!-- Java 8 -->
 		<java.version>1.8</java.version>
@@ -42,26 +23,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Test dependencies version -->
-		<webdrivermanager.version>3.0.0</webdrivermanager.version>
-		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
 		<org.selenium.driver>3.14.0</org.selenium.driver>
 	</properties>
-
-	<!-- Apache Software License -->
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-
-	<!-- Source code manager -->
-	<scm>
-		<url>https://github.com/elastest/demo-projects/web-java-test</url>
-		<connection>scm:git:https://github.com/elastest/demo-projects/</connection>
-		<developerConnection>scm:git://git@github.com:elastest/demo-projects</developerConnection>
-		<tag>develop</tag>
-	</scm>
 
 	<dependencies>
 		<dependency>
@@ -78,12 +41,7 @@
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>${webdrivermanager.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-core</artifactId>
-			<scope>test</scope>
+			<version>3.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/htmlunit-driver -->
 		<dependency>
