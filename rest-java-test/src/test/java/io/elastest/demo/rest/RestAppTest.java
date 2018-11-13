@@ -16,33 +16,12 @@
  */
 package io.elastest.demo.rest;
 
-import static java.lang.invoke.MethodHandles.lookup;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.slf4j.LoggerFactory.getLogger;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
-public class RestAppTest {
-    final static Logger logger = getLogger(lookup().lookupClass());
-
-    @BeforeEach
-    void init(TestInfo info) {
-        logger.info(
-                "##### Start test: " + info.getTestMethod().get().getName());
-    }
-
-    @AfterEach
-    void dispose(TestInfo info) {
-
-        logger.info(
-                "##### Finish test: " + info.getTestMethod().get().getName());
-
-    }
+public class RestAppTest extends ElasTestBase {
 
     @Test
     public void rootServiceTest() {

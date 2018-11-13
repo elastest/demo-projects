@@ -16,48 +16,27 @@
  */
 package io.elastest.demo.rest;
 
-import static java.lang.invoke.MethodHandles.lookup;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.slf4j.LoggerFactory.getLogger;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
-public class RestAppTest {
-    final static Logger logger = getLogger(lookup().lookupClass());
-
-    public void init(String testName) {
-        logger.info("##### Start test: " + testName);
-    }
-
-    public void end(String testName) {
-        logger.info("##### Finish test: " + testName);
-    }
+public class RestAppTest extends ElasTestBase {
 
     @Test
     public void rootServiceTest() {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
+        String appHost = System.getenv("ET_SUT_HOST");
 
-        this.init(testName);
-        try {
-            String appHost = System.getenv("ET_SUT_HOST");
-
-            if (appHost == null) {
-                appHost = "localhost";
-            }
-
-            RestTemplate client = new RestTemplate();
-            String url = "http://" + appHost + ":8080/";
-            logger.info("Send GET request to {}", url);
-            String result = client.getForObject(url, String.class);
-
-            assertThat(result).isEqualTo("Hello World!");
-        } finally {
-            this.end(testName);
+        if (appHost == null) {
+            appHost = "localhost";
         }
 
+        RestTemplate client = new RestTemplate();
+        String url = "http://" + appHost + ":8080/";
+        logger.info("Send GET request to {}", url);
+        String result = client.getForObject(url, String.class);
+
+        assertEquals("Hello World!", result);
     }
 
 }
