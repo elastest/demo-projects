@@ -16,41 +16,20 @@
  */
 package io.elastest.demo.web;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class MultipleWebAppTests {
-    private static final Logger logger = LoggerFactory
-            .getLogger(MultipleWebAppTests.class);
-
-    public static final String CHROME = "chrome";
-    public static final String FIREFOX = "firefox";
-
-    private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
-
-    private static String browserType;
-    private static String browserVersion;
-    private static String eusURL;
-    private static String sutUrl;
-
-    private WebDriver driver;
+public class MultipleWebAppTests extends BaseTest {
 
     @BeforeClass
     public static void setupClass() {
@@ -77,7 +56,9 @@ public class MultipleWebAppTests {
         System.out.println("Webapp URL: " + sutUrl);
     }
 
-    public void setupTest(String testName) throws MalformedURLException {
+    @Before
+    public void beforeEach() throws MalformedURLException {
+        String testName = name.getMethodName();
         logger.info("##### Start test: {}", testName);
 
         browserVersion = System.getProperty("browserVersion");
@@ -112,137 +93,12 @@ public class MultipleWebAppTests {
         driver.get(sutUrl);
     }
 
-    public void teardown(String testName) {
-        testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
+    @After
+    public void afterEach() {
+        teardown();
 
         if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-
-            logger.info("##### Finish test: {}", testName);
-
             driver.quit();
-        }
-    }
-
-    public void addRow(String testName, String newTitle, String newBody)
-            throws InterruptedException {
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
-                + testName + ")");
-        driver.findElement(By.id("submit")).click();
-    }
-
-    @Test
-    public void addMsgAndClear()
-            throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        this.setupTest(testName);
-
-        try {
-            Thread.sleep(2000);
-
-            String newTitle = "MessageTitle";
-            String newBody = "MessageBody";
-
-            this.addRow(testName, newTitle, newBody);
-
-            Thread.sleep(2000);
-
-            String title = driver.findElement(By.id("title")).getText();
-            String body = driver.findElement(By.id("body")).getText();
-
-            // Added
-            logger.info("Checking Message...");
-            assertThat(title, equalTo(newTitle));
-            assertThat(body, equalTo(newBody));
-
-            Thread.sleep(1000);
-
-            int titleExist = driver.findElements(By.id("title")).size();
-            int bodyExist = driver.findElements(By.id("body")).size();
-
-            logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                    + testName + ")");
-            assertThat(titleExist, not(equalTo(0)));
-            assertThat(bodyExist, not(equalTo(0)));
-
-            Thread.sleep(2000);
-        } finally {
-            teardown(testName);
-        }
-    }
-
-    @Test
-    public void findTitleAndBody()
-            throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        this.setupTest(testName);
-
-        try {
-            Thread.sleep(2000);
-
-            String newTitle = "MessageTitle";
-            String newBody = "MessageBody";
-
-            this.addRow(testName, newTitle, newBody);
-
-            Thread.sleep(2000);
-
-            String title = driver.findElement(By.id("title")).getText();
-            String body = driver.findElement(By.id("body")).getText();
-
-            logger.info("Checking Message...");
-            logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                    + testName + ")");
-            assertThat(title, equalTo(newTitle));
-            assertThat(body, equalTo(newBody));
-
-            Thread.sleep(2000);
-        } finally {
-            teardown(testName);
-        }
-    }
-
-    @Test
-    public void checkTitleAndBodyNoEmpty()
-            throws InterruptedException, MalformedURLException {
-        String testName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-
-        this.setupTest(testName);
-
-        try {
-            Thread.sleep(2000);
-
-            String newTitle = "";
-            String newBody = "";
-
-            this.addRow(testName, newTitle, newBody);
-
-            Thread.sleep(2000);
-
-            String title = driver.findElement(By.id("title")).getText();
-            String body = driver.findElement(By.id("body")).getText();
-
-            logger.info("Checking Message...");
-            logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                    + testName + ")");
-            assertThat(title, not(equalTo(newTitle)));
-            assertThat(body, not(equalTo(newBody)));
-
-            Thread.sleep(2000);
-        } finally {
-            teardown(testName);
         }
     }
 

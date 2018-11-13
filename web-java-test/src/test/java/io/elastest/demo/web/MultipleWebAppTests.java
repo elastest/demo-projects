@@ -98,7 +98,6 @@ public class MultipleWebAppTests extends BaseTest {
     @AfterEach
     public void teardown(TestInfo info) {
         String testName = info.getTestMethod().get().getName();
-        testName = testName.replaceAll("\\(", "").replaceAll("\\)", "");
 
         if (driver != null) {
             logger.info("Clearing Messages...");
