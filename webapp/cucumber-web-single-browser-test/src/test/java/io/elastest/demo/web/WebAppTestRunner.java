@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(features = "src/test/resources/webapp-test.feature", plugin = {
         "html:target/surefire-reports/cucumber-html-report",
         "json:target/surefire-reports/cucumber.json",
-        "pretty" }, glue = { "io.elastest.demo.web.unique" })
+        "pretty" }, glue = { "io.elastest.demo.web" })
 
 public class WebAppTestRunner {
 
