@@ -1,32 +1,30 @@
+/*
+ * (C) Copyright 2017-2019 ElasTest (http://elastest.io/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package io.elastest.demo.web;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.net.MalformedURLException;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class BaseTest {
-    protected static final Logger logger = LoggerFactory
-            .getLogger(BaseTest.class);
-
-    protected static final String CHROME = "chrome";
-    protected static final String FIREFOX = "firefox";
-
-    protected static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
-
-    protected static String browserType;
-    protected static String browserVersion;
-    protected static String eusURL;
-    protected static String sutUrl;
-
-    protected static WebDriver driver;
+public class WebAppTest extends ElastestBaseTest {
 
     public void addRow(String testName, String newTitle, String newBody)
             throws InterruptedException {
@@ -41,10 +39,11 @@ public class BaseTest {
         driver.findElement(By.id("submit")).click();
     }
 
+
     @Test
-    public void addMsgAndClear(TestInfo info)
+    public void addMsgAndClear()
             throws InterruptedException, MalformedURLException {
-        String testName = info.getTestMethod().get().getName();
+        String testName = name.getMethodName();
 
         Thread.sleep(2000);
 
@@ -70,17 +69,17 @@ public class BaseTest {
 
         logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
                 + testName + ")");
-
         assertNotEquals(0, titleExist);
         assertNotEquals(0, bodyExist);
 
         Thread.sleep(2000);
+
     }
 
     @Test
-    public void findTitleAndBody(TestInfo info)
+    public void findTitleAndBody()
             throws InterruptedException, MalformedURLException {
-        String testName = info.getTestMethod().get().getName();
+        String testName = name.getMethodName();
 
         Thread.sleep(2000);
 
@@ -97,17 +96,17 @@ public class BaseTest {
         logger.info("Checking Message...");
         logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
                 + testName + ")");
-
         assertEquals(newTitle, title);
         assertEquals(newBody, body);
 
         Thread.sleep(2000);
+
     }
 
     @Test
-    public void checkTitleAndBodyNoEmpty(TestInfo info)
+    public void checkTitleAndBodyNoEmpty()
             throws InterruptedException, MalformedURLException {
-        String testName = info.getTestMethod().get().getName();
+        String testName = name.getMethodName();
 
         Thread.sleep(2000);
 
@@ -124,11 +123,11 @@ public class BaseTest {
         logger.info("Checking Message...");
         logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
                 + testName + ")");
-
         assertNotEquals(newTitle, title);
         assertNotEquals(newBody, body);
 
         Thread.sleep(2000);
+
     }
 
 }
