@@ -37,19 +37,6 @@ public class ElastestBaseTest {
 
     @BeforeClass
     public static void setupClass() {
-        browserType = System.getProperty("browser");
-        logger.info("Browser Type: {}", browserType);
-
-        eusURL = System.getenv("ET_EUS_API");
-        if (eusURL == null) {
-
-            if (browserType == null || browserType.equals(CHROME)) {
-                WebDriverManager.chromedriver().setup();
-            } else {
-                WebDriverManager.firefoxdriver().setup();
-            }
-        }
-
         String sutHost = System.getenv("ET_SUT_HOST");
         String sutPort = System.getenv("ET_SUT_PORT");
         String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
@@ -63,6 +50,18 @@ public class ElastestBaseTest {
             sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
         }
         logger.info("Webapp URL: " + sutUrl);
+
+        browserType = System.getProperty("browser");
+        logger.info("Browser Type: {}", browserType);
+        eusURL = System.getenv("ET_EUS_API");
+
+        if (eusURL == null) {
+            if (browserType == null || browserType.equals(CHROME)) {
+                WebDriverManager.chromedriver().setup();
+            } else {
+                WebDriverManager.firefoxdriver().setup();
+            }
+        }
     }
 
     @Before
@@ -104,7 +103,7 @@ public class ElastestBaseTest {
         if (driver != null) {
             driver.quit();
         }
-        
+
         String testName = name.getMethodName();
         logger.info("##### Finish test: {}", testName);
     }
