@@ -76,10 +76,16 @@ public class WebAppTest {
         }
 
         String sutHost = System.getenv("ET_SUT_HOST");
+        String sutPort = System.getenv("ET_SUT_PORT");
+        String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
+
         if (sutHost == null) {
             sutUrl = "http://localhost:8080/";
         } else {
-            sutUrl = "http://" + sutHost + ":8080/";
+            sutPort = sutPort != null ? sutPort : "8080";
+            sutProtocol = sutProtocol != null ? sutProtocol : "http";
+
+            sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
         }
         logger.info("Webapp URL: {}", sutUrl);
         logger.info("##### Start test: {}", currentTestScenarioName);
