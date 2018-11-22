@@ -96,11 +96,9 @@ public class ElastestBaseTest {
     public void beforeEach() throws MalformedURLException {
         String testName = name.getMethodName();
 
-        if (driver instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) driver).executeScript(
-                    "{\"command\": \"startTest\", \"args\": {\"testName\": \""
-                            + testName + "\"} }");
-        }
+        ((JavascriptExecutor) driver).executeScript(
+                "'{\"elastestCommand\": \"startTest\", \"args\": {\"testName\": \""
+                        + testName + "\"} }'");
 
         logger.info("##### Start test: {}", testName);
 

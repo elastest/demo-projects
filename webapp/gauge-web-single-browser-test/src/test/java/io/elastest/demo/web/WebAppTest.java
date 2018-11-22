@@ -110,11 +110,10 @@ public class WebAppTest {
     @BeforeScenario(tags = { "unique" })
     public void beforeScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
-        if (driver instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) driver).executeScript(
-                    "'{\"command\": \"startTest\", \"args\": {\"testName\": \""
-                            + currentTestScenarioName + "\"} }'");
-        }
+        ((JavascriptExecutor) driver).executeScript(
+                "'{\"elastestCommand\": \"startTest\", \"args\": {\"testName\": \""
+                        + currentTestScenarioName + "\"} }'");
+
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
