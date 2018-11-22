@@ -131,18 +131,6 @@ public class WebAppTest {
         }
     }
 
-    public void addRow(String testName, String newTitle, String newBody)
-            throws InterruptedException {
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-
-        driver.findElement(By.id("submit")).click();
-    }
-
     /* ************************ */
     /* ******** Common ******** */
     /* ************************ */
@@ -212,5 +200,17 @@ public class WebAppTest {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(1000);
+    }
+
+    public void addRow(String testName, String newTitle, String newBody)
+            throws InterruptedException {
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
+
+        Thread.sleep(2000);
+
+        logger.info("Adding Message...");
+
+        driver.findElement(By.id("submit")).click();
     }
 }

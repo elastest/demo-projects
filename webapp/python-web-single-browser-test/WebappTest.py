@@ -9,23 +9,6 @@ import xmlrunner
 import ElasTestBase
 
 
-def getElementById(driver, id, timeout=10):
-    wait = WebDriverWait(driver, timeout)
-    return wait.until(EC.presence_of_element_located((By.ID, id)))
-
-
-def addRow(driver, title, body):
-    getElementById(driver, 'title-input').send_keys(title)
-    getElementById(driver, 'body-input').send_keys(body)
-    print 'Adding Message...'
-    getElementById(driver, 'submit').click()
-
-
-def clearData(driver):
-    print 'Clearing Messages...'
-    getElementById(driver, 'clearSubmit').click()
-
-
 class TestWebApp(ElasTestBase.ElasTestBase):
     def test_check_title_and_body_not_empty(self):
         driver = ElasTestBase.driver
@@ -45,7 +28,6 @@ class TestWebApp(ElasTestBase.ElasTestBase):
             sys.exit(1)
         clearData(driver)
 
-
     def test_find_title_and_body(self):
         driver = ElasTestBase.driver
         try:
@@ -63,6 +45,24 @@ class TestWebApp(ElasTestBase.ElasTestBase):
             clearData(driver)
             sys.exit(1)
         clearData(driver)
+
+
+def getElementById(driver, id, timeout=10):
+    wait = WebDriverWait(driver, timeout)
+    return wait.until(EC.presence_of_element_located((By.ID, id)))
+
+
+def addRow(driver, title, body):
+    getElementById(driver, 'title-input').send_keys(title)
+    getElementById(driver, 'body-input').send_keys(body)
+    print 'Adding Message...'
+    getElementById(driver, 'submit').click()
+
+
+def clearData(driver):
+    print 'Clearing Messages...'
+    getElementById(driver, 'clearSubmit').click()
+
 
 if __name__ == '__main__':
     file_path = './testresults'
