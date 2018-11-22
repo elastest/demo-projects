@@ -140,8 +140,8 @@ public class WebAppTestDefinition {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
-            logger.info("##### Finish test: {}", currentTestScenarioName);
         }
+        logger.info("##### Finish test: {}", currentTestScenarioName);
     }
 
     // Hack because @AfterClass cannot be used

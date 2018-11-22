@@ -108,9 +108,9 @@ public class ElastestBaseTest {
             logger.info("Clearing Messages...");
             driver.findElement(By.id("clearSubmit")).click();
 
-            logger.info("##### Finish test: {}", testName);
             driver.quit();
         }
+        logger.info("##### Finish test: {}", testName);
     }
 
 }

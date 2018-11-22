@@ -103,9 +103,9 @@ public class WebAppTestDefinition {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
-            logger.info("##### Finish test: {}", currentTestScenarioName);
             driver.quit();
         }
+        logger.info("##### Finish test: {}", currentTestScenarioName);
     }
 
     /* ************************ */
