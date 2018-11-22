@@ -35,20 +35,6 @@ public class ElastestBaseTest {
 
     @BeforeAll
     public static void setupClass() throws MalformedURLException {
-
-        browserType = System.getProperty("browser");
-        logger.info("Browser Type: {}", browserType);
-
-        eusURL = System.getenv("ET_EUS_API");
-        if (eusURL == null) {
-
-            if (browserType == null || browserType.equals(CHROME)) {
-                WebDriverManager.chromedriver().setup();
-            } else {
-                WebDriverManager.firefoxdriver().setup();
-            }
-        }
-
         String sutHost = System.getenv("ET_SUT_HOST");
         String sutPort = System.getenv("ET_SUT_PORT");
         String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
@@ -63,12 +49,17 @@ public class ElastestBaseTest {
         }
         logger.info("Webapp URL: " + sutUrl);
 
-        browserVersion = System.getProperty("browserVersion");
-
+        
+        browserType = System.getProperty("browser");
+        logger.info("Browser Type: {}", browserType);
+        eusURL = System.getenv("ET_EUS_API");
+        
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
+                WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
             } else {
+                WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
             }
         } else {
@@ -79,6 +70,7 @@ public class ElastestBaseTest {
                 caps = DesiredCapabilities.firefox();
             }
 
+            browserVersion = System.getProperty("browserVersion");
             if (browserVersion != null) {
                 logger.info("Browser Version: {}", browserVersion);
                 caps.setVersion(browserVersion);

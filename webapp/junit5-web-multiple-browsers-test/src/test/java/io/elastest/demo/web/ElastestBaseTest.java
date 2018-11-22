@@ -38,7 +38,6 @@ public class ElastestBaseTest {
 
         eusURL = System.getenv("ET_EUS_API");
         if (eusURL == null) {
-
             if (browserType == null || browserType.equals(CHROME)) {
                 WebDriverManager.chromedriver().setup();
             } else {
@@ -66,8 +65,6 @@ public class ElastestBaseTest {
         String testName = info.getTestMethod().get().getName();
         logger.info("##### Start test: {}", testName);
 
-        browserVersion = System.getProperty("browserVersion");
-
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
                 driver = new ChromeDriver();
@@ -82,6 +79,7 @@ public class ElastestBaseTest {
                 caps = DesiredCapabilities.firefox();
             }
 
+            browserVersion = System.getProperty("browserVersion");
             if (browserVersion != null) {
                 logger.info("Browser Version: {}", browserVersion);
                 caps.setVersion(browserVersion);

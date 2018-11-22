@@ -64,19 +64,6 @@ public class WebAppTestDefinition {
     // Hack because @BeforeClass cannot be used
     @Before("@firstScenario")
     public void beforeFeature() throws MalformedURLException {
-        browserType = System.getProperty("browser");
-        logger.info("Browser Type: {}", browserType);
-
-        eusURL = System.getenv("ET_EUS_API");
-        if (eusURL == null) {
-
-            if (browserType == null || browserType.equals(CHROME)) {
-                WebDriverManager.chromedriver().setup();
-            } else {
-                WebDriverManager.firefoxdriver().setup();
-            }
-        }
-
         String sutHost = System.getenv("ET_SUT_HOST");
         String sutPort = System.getenv("ET_SUT_PORT");
         String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
@@ -91,12 +78,16 @@ public class WebAppTestDefinition {
         }
         logger.info("Webapp URL: {}", sutUrl);
 
-        browserVersion = System.getProperty("browserVersion");
+        browserType = System.getProperty("browser");
+        logger.info("Browser Type: {}", browserType);
+        eusURL = System.getenv("ET_EUS_API");
 
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
+                WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
             } else {
+                WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
             }
         } else {
@@ -107,6 +98,7 @@ public class WebAppTestDefinition {
                 caps = DesiredCapabilities.firefox();
             }
 
+            browserVersion = System.getProperty("browserVersion");
             if (browserVersion != null) {
                 logger.info("Browser Version: {}", browserVersion);
                 caps.setVersion(browserVersion);
