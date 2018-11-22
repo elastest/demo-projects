@@ -1,3 +1,4 @@
+Tags: multiple
 Test WebApp Application
 ======================= 
 Test an application

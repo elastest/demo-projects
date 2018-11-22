@@ -1,3 +1,4 @@
+Tags: unique
 Test WebApp Application
 ======================= 
 Test an application
