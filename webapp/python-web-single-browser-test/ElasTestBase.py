@@ -41,7 +41,7 @@ class ElasTestBase(unittest.TestCase):
         global driver
         global sutUrl
         testName = self._testMethodName
-        etScript = '\'<<##et => {"command": "startTest", "args": {"testName": "' + testName + '"}}>>\''
+        etScript = '\'{"elastestCommand": "startTest", "args": {"testName": "' + testName + '"}}\''
         driver.execute_script(etScript)
         print '##### Start test: ' + testName
 
