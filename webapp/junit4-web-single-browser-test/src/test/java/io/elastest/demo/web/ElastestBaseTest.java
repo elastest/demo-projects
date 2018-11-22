@@ -60,7 +60,7 @@ public class ElastestBaseTest {
         } else {
             sutUrl = "http://" + sutHost + ":8080/";
         }
-        System.out.println("Webapp URL: " + sutUrl);
+        logger.info("Webapp URL: " + sutUrl);
 
         browserVersion = System.getProperty("browserVersion");
 
