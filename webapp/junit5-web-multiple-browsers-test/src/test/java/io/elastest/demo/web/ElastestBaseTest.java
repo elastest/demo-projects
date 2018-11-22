@@ -30,7 +30,7 @@ public class ElastestBaseTest {
     protected static String eusURL;
     protected static String sutUrl;
 
-    protected static WebDriver driver;
+    protected WebDriver driver;
 
     @BeforeAll
     public static void setupClass() {
