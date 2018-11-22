@@ -51,12 +51,13 @@ public class WebAppTest extends ElastestBaseTest {
         int titleExist = driver.findElements(By.id("title")).size();
         int bodyExist = driver.findElements(By.id("body")).size();
 
-        assertNotEquals(0, titleExist);
-        assertNotEquals(0, bodyExist);
-
-        Thread.sleep(2000);
-
-        clearRows();
+        try {
+            assertNotEquals(0, titleExist);
+            assertNotEquals(0, bodyExist);
+        } finally {
+            Thread.sleep(2000);
+            clearRows();
+        }
     }
 
     @Test
@@ -76,12 +77,13 @@ public class WebAppTest extends ElastestBaseTest {
 
         logger.info("Checking Message...");
 
-        assertEquals(newTitle, title);
-        assertEquals(newBody, body);
-
-        Thread.sleep(2000);
-
-        clearRows();
+        try {
+            assertEquals(newTitle, title);
+            assertEquals(newBody, body);
+        } finally {
+            Thread.sleep(2000);
+            clearRows();
+        }
     }
 
     @Test
@@ -101,12 +103,13 @@ public class WebAppTest extends ElastestBaseTest {
 
         logger.info("Checking Message...");
 
-        assertNotEquals(newTitle, title);
-        assertNotEquals(newBody, body);
-
-        Thread.sleep(2000);
-
-        clearRows();
+        try {
+            assertNotEquals(newTitle, title);
+            assertNotEquals(newBody, body);
+        } finally {
+            Thread.sleep(2000);
+            clearRows();
+        }
     }
 
     /* ********************* */

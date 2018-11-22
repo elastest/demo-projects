@@ -161,11 +161,13 @@ public class WebAppTest {
 
         logger.info("Checking Message...");
 
-        assertThat(title, not(equalTo(newTitle)));
-        assertThat(body, not(equalTo(newBody)));
-
-        Thread.sleep(2000);
-        clearRows();
+        try {
+            assertThat(title, not(equalTo(newTitle)));
+            assertThat(body, not(equalTo(newBody)));
+        } finally {
+            Thread.sleep(2000);
+            clearRows();
+        }
     }
 
     /* *************************************** */
@@ -193,11 +195,13 @@ public class WebAppTest {
         // Added
         logger.info("Checking Message...");
 
-        assertThat(title, equalTo(newTitle));
-        assertThat(body, equalTo(newBody));
-
-        Thread.sleep(1000);
-        clearRows();
+        try {
+            assertThat(title, equalTo(newTitle));
+            assertThat(body, equalTo(newBody));
+        } finally {
+            Thread.sleep(2000);
+            clearRows();
+        }
     }
 
     /* ********************* */
