@@ -98,8 +98,8 @@ public class ElastestBaseTest {
 
         if (driver instanceof JavascriptExecutor) {
             ((JavascriptExecutor) driver).executeScript(
-                    "<<##et => {\"command\": \"startTest\", \"args\": {\"testName\": \""
-                            + testName + "\"} }>>");
+                    "{\"command\": \"startTest\", \"args\": {\"testName\": \""
+                            + testName + "\"} }");
         }
 
         logger.info("##### Start test: {}", testName);

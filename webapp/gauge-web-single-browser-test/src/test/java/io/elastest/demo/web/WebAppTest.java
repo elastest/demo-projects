@@ -112,8 +112,8 @@ public class WebAppTest {
         currentTestScenarioName = context.getCurrentScenario().getName();
         if (driver instanceof JavascriptExecutor) {
             ((JavascriptExecutor) driver).executeScript(
-                    "'<<##et => {\"command\": \"startTest\", \"args\": {\"testName\": \""
-                            + currentTestScenarioName + "\"} }>>'");
+                    "'{\"command\": \"startTest\", \"args\": {\"testName\": \""
+                            + currentTestScenarioName + "\"} }'");
         }
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
