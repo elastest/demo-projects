@@ -94,17 +94,11 @@ public class WebAppTestDefinition {
 
     @After
     public void afterScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-
         if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
             driver.quit();
         }
+        
+        currentTestScenarioName = scenario.getName();
         logger.info("##### Finish test: {}", currentTestScenarioName);
     }
 
@@ -170,6 +164,7 @@ public class WebAppTestDefinition {
         assertThat(body, not(equalTo(newBody)));
 
         Thread.sleep(2000);
+        clearRows();
     }
 
     /* *************************************** */
@@ -199,7 +194,12 @@ public class WebAppTestDefinition {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(1000);
+        clearRows();
     }
+
+    /* ********************* */
+    /* *** Other methods *** */
+    /* ********************* */
 
     public void addRow(String newTitle, String newBody)
             throws InterruptedException {
@@ -211,5 +211,11 @@ public class WebAppTestDefinition {
         logger.info("Adding Message...");
 
         driver.findElement(By.id("submit")).click();
+    }
+
+    public void clearRows() throws InterruptedException {
+        logger.info("Clearing Messages...");
+        driver.findElement(By.id("clearSubmit")).click();
+        Thread.sleep(1000);
     }
 }

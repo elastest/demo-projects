@@ -117,15 +117,6 @@ public class WebAppTest {
     @AfterScenario(tags = { "unique" })
     public void afterScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
-
-        if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-        }
         logger.info("##### Finish test: {}", currentTestScenarioName);
     }
 
@@ -157,7 +148,7 @@ public class WebAppTest {
         newTitle = "";
         newBody = "";
 
-        this.addRow(currentTestScenarioName, newTitle, newBody);
+        this.addRow(newTitle, newBody);
 
         Thread.sleep(2000);
     }
@@ -175,6 +166,8 @@ public class WebAppTest {
         assertThat(body, not(equalTo(newBody)));
 
         Thread.sleep(2000);
+
+        clearRows();
     }
 
     /* *************************************** */
@@ -188,7 +181,7 @@ public class WebAppTest {
         newTitle = "MessageTitle";
         newBody = "MessageBody";
 
-        this.addRow(currentTestScenarioName, newTitle, newBody);
+        this.addRow(newTitle, newBody);
         Thread.sleep(2000);
     }
 
@@ -206,9 +199,14 @@ public class WebAppTest {
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(1000);
+        clearRows();
     }
 
-    public void addRow(String testName, String newTitle, String newBody)
+    /* ********************* */
+    /* *** Other methods *** */
+    /* ********************* */
+
+    public void addRow(String newTitle, String newBody)
             throws InterruptedException {
         driver.findElement(By.id("title-input")).sendKeys(newTitle);
         driver.findElement(By.id("body-input")).sendKeys(newBody);
@@ -218,5 +216,11 @@ public class WebAppTest {
         logger.info("Adding Message...");
 
         driver.findElement(By.id("submit")).click();
+    }
+
+    public void clearRows() throws InterruptedException {
+        logger.info("Clearing Messages...");
+        driver.findElement(By.id("clearSubmit")).click();
+        Thread.sleep(1000);
     }
 }

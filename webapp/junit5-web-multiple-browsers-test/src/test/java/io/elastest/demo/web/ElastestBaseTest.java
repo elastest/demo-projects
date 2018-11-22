@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -97,14 +96,11 @@ public class ElastestBaseTest {
 
     @AfterEach
     public void teardown(TestInfo info) {
-        String testName = info.getTestMethod().get().getName();
-
         if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-
             driver.quit();
         }
+
+        String testName = info.getTestMethod().get().getName();
         logger.info("##### Finish test: {}", testName);
     }
 

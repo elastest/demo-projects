@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -110,12 +109,6 @@ public class ElastestBaseTest {
     @After
     public void afterEach() {
         String testName = name.getMethodName();
-
-        if (driver != null) {
-            logger.info("Clearing Messages...");
-            driver.findElement(By.id("clearSubmit")).click();
-
-        }
         logger.info("##### Finish test: {}", testName);
     }
 

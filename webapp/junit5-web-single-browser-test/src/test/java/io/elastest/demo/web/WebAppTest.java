@@ -57,6 +57,7 @@ public class WebAppTest extends ElastestBaseTest {
         assertNotEquals(0, bodyExist);
 
         Thread.sleep(2000);
+        clearRows();
     }
 
     @Test
@@ -81,6 +82,7 @@ public class WebAppTest extends ElastestBaseTest {
         assertEquals(newBody, body);
 
         Thread.sleep(2000);
+        clearRows();
     }
 
     @Test
@@ -104,7 +106,13 @@ public class WebAppTest extends ElastestBaseTest {
         assertNotEquals(newBody, body);
 
         Thread.sleep(2000);
+        
+        clearRows();
     }
+    
+    /* ********************* */
+    /* *** Other methods *** */
+    /* ********************* */
 
     public void addRow(String newTitle, String newBody)
             throws InterruptedException {
@@ -116,5 +124,11 @@ public class WebAppTest extends ElastestBaseTest {
         logger.info("Adding Message...");
 
         driver.findElement(By.id("submit")).click();
+    }
+
+    public void clearRows() throws InterruptedException {
+        logger.info("Clearing Messages...");
+        driver.findElement(By.id("clearSubmit")).click();
+        Thread.sleep(1000);
     }
 }
