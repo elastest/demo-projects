@@ -33,8 +33,6 @@ public class WebAppTest {
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
 
-    private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
-
     private static String browserType;
     private static String browserVersion;
     private static String eusURL;
@@ -48,7 +46,7 @@ public class WebAppTest {
     String currentTestScenarioName;
 
     // Hack because @BeforeClass cannot be used
-    @BeforeSpec(tags = {"unique"})
+    @BeforeSpec(tags = { "unique" })
     public void beforeFeature() throws MalformedURLException {
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
@@ -99,7 +97,7 @@ public class WebAppTest {
 
     }
 
-    @BeforeScenario(tags = {"unique"})
+    @BeforeScenario(tags = { "unique" })
     public void beforeScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
         if (driver instanceof JavascriptExecutor) {
@@ -110,7 +108,7 @@ public class WebAppTest {
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
-    @AfterScenario(tags = {"unique"})
+    @AfterScenario(tags = { "unique" })
     public void afterScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
 
@@ -126,7 +124,7 @@ public class WebAppTest {
     }
 
     // Hack because @AfterClass cannot be used
-    @AfterSpec(tags = {"unique"})
+    @AfterSpec(tags = { "unique" })
     public void afterFeature() {
         if (driver != null) {
             driver.quit();
@@ -141,8 +139,7 @@ public class WebAppTest {
         Thread.sleep(2000);
 
         logger.info("Adding Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
-                + testName + ")");
+
         driver.findElement(By.id("submit")).click();
     }
 
@@ -179,8 +176,7 @@ public class WebAppTest {
         String body = driver.findElement(By.id("body")).getText();
 
         logger.info("Checking Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + currentTestScenarioName + ")");
+
         assertThat(title, not(equalTo(newTitle)));
         assertThat(body, not(equalTo(newBody)));
 
@@ -212,8 +208,6 @@ public class WebAppTest {
         // Added
         logger.info("Checking Message...");
 
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + currentTestScenarioName + ")");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 

@@ -27,8 +27,6 @@ public class ElastestBaseTest {
     protected static final String CHROME = "chrome";
     protected static final String FIREFOX = "firefox";
 
-    protected static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
-
     protected static String browserType;
     protected static String browserVersion;
     protected static String eusURL;
@@ -94,8 +92,6 @@ public class ElastestBaseTest {
         }
 
         logger.info("##### Start test: {}", testName);
-        logger.info(etMonitorMarkPrefix
-                + " id=action, value=Start Browser Session for " + testName);
 
         driver.get(sutUrl);
     }

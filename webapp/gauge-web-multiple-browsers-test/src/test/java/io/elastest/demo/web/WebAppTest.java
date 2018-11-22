@@ -46,8 +46,6 @@ public class WebAppTest {
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
 
-    private static final String etMonitorMarkPrefix = "##elastest-monitor-mark:";
-
     private static String browserType;
     private static String browserVersion;
     private static String eusURL;
@@ -60,20 +58,7 @@ public class WebAppTest {
     String newBody;
     String currentTestScenarioName;
 
-    public void addRow(String testName, String newTitle, String newBody)
-            throws InterruptedException {
-        driver.findElement(By.id("title-input")).sendKeys(newTitle);
-        driver.findElement(By.id("body-input")).sendKeys(newBody);
-
-        Thread.sleep(2000);
-
-        logger.info("Adding Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Submit ("
-                + testName + ")");
-        driver.findElement(By.id("submit")).click();
-    }
-
-    @BeforeScenario(tags = {"multiple"})
+    @BeforeScenario(tags = { "multiple" })
     public void beforeScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
 
@@ -100,7 +85,7 @@ public class WebAppTest {
         logger.info("##### Start test: {}", currentTestScenarioName);
     }
 
-    @AfterScenario(tags = {"multiple"})
+    @AfterScenario(tags = { "multiple" })
     public void afterScenario(ExecutionContext context) {
         currentTestScenarioName = context.getCurrentScenario().getName();
 
@@ -145,9 +130,6 @@ public class WebAppTest {
 
             caps.setCapability("testName", currentTestScenarioName);
 
-            logger.info(etMonitorMarkPrefix
-                    + " id=action, value=Start Browser Session for "
-                    + currentTestScenarioName);
             driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
 
@@ -165,7 +147,7 @@ public class WebAppTest {
         newTitle = "";
         newBody = "";
 
-        this.addRow(currentTestScenarioName, newTitle, newBody);
+        this.addRow(newTitle, newBody);
 
         Thread.sleep(2000);
     }
@@ -178,8 +160,7 @@ public class WebAppTest {
         String body = driver.findElement(By.id("body")).getText();
 
         logger.info("Checking Message...");
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + currentTestScenarioName + ")");
+
         assertThat(title, not(equalTo(newTitle)));
         assertThat(body, not(equalTo(newBody)));
 
@@ -197,7 +178,7 @@ public class WebAppTest {
         newTitle = "MessageTitle";
         newBody = "MessageBody";
 
-        this.addRow(currentTestScenarioName, newTitle, newBody);
+        this.addRow(newTitle, newBody);
         Thread.sleep(2000);
     }
 
@@ -211,11 +192,21 @@ public class WebAppTest {
         // Added
         logger.info("Checking Message...");
 
-        logger.info(etMonitorMarkPrefix + " id=action, value=Assert ("
-                + currentTestScenarioName + ")");
         assertThat(title, equalTo(newTitle));
         assertThat(body, equalTo(newBody));
 
         Thread.sleep(1000);
+    }
+
+    public void addRow(String newTitle, String newBody)
+            throws InterruptedException {
+        driver.findElement(By.id("title-input")).sendKeys(newTitle);
+        driver.findElement(By.id("body-input")).sendKeys(newBody);
+
+        Thread.sleep(2000);
+
+        logger.info("Adding Message...");
+
+        driver.findElement(By.id("submit")).click();
     }
 }
