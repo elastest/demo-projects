@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -39,47 +38,58 @@ public class ElastestBaseTest {
 
     @BeforeClass
     public static void setupClass() throws MalformedURLException {
-        String sutHost = System.getenv("ET_SUT_HOST");
-        String sutPort = System.getenv("ET_SUT_PORT");
-        String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
+        // If first time, init
+        if (driver == null) {
+            String sutHost = System.getenv("ET_SUT_HOST");
+            String sutPort = System.getenv("ET_SUT_PORT");
+            String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
-        if (sutHost == null) {
-            sutUrl = "http://localhost:8080/";
-        } else {
-            sutPort = sutPort != null ? sutPort : "8080";
-            sutProtocol = sutProtocol != null ? sutProtocol : "http";
-
-            sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
-        }
-        logger.info("Webapp URL: " + sutUrl);
-
-        browserType = System.getProperty("browser");
-        logger.info("Browser Type: {}", browserType);
-        eusURL = System.getenv("ET_EUS_API");
-
-        if (eusURL == null) {
-            if (browserType == null || browserType.equals(CHROME)) {
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+            if (sutHost == null) {
+                sutUrl = "http://localhost:8080/";
             } else {
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-            }
-        } else {
-            DesiredCapabilities caps;
-            if (browserType == null || browserType.equals(CHROME)) {
-                caps = DesiredCapabilities.chrome();
-            } else {
-                caps = DesiredCapabilities.firefox();
-            }
+                sutPort = sutPort != null ? sutPort : "8080";
+                sutProtocol = sutProtocol != null ? sutProtocol : "http";
 
-            browserVersion = System.getProperty("browserVersion");
-            if (browserVersion != null) {
-                logger.info("Browser Version: {}", browserVersion);
-                caps.setVersion(browserVersion);
+                sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
             }
-            driver = new RemoteWebDriver(new URL(eusURL), caps);
+            logger.info("Webapp URL: " + sutUrl);
+
+            browserType = System.getProperty("browser");
+            logger.info("Browser Type: {}", browserType);
+            eusURL = System.getenv("ET_EUS_API");
+
+            if (eusURL == null) {
+                if (browserType == null || browserType.equals(CHROME)) {
+                    WebDriverManager.chromedriver().setup();
+                    driver = new ChromeDriver();
+                } else {
+                    WebDriverManager.firefoxdriver().setup();
+                    driver = new FirefoxDriver();
+                }
+            } else {
+                DesiredCapabilities caps;
+                if (browserType == null || browserType.equals(CHROME)) {
+                    caps = DesiredCapabilities.chrome();
+                } else {
+                    caps = DesiredCapabilities.firefox();
+                }
+
+                browserVersion = System.getProperty("browserVersion");
+                if (browserVersion != null) {
+                    logger.info("Browser Version: {}", browserVersion);
+                    caps.setVersion(browserVersion);
+                }
+                driver = new RemoteWebDriver(new URL(eusURL), caps);
+            }
         }
+
+        // driver quit when all tests end
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                logger.info("Shutting down browser...");
+                driver.quit();
+            }
+        });
     }
 
     @Before
@@ -101,12 +111,5 @@ public class ElastestBaseTest {
     public void afterEach() {
         String testName = name.getMethodName();
         logger.info("##### Finish test: {}", testName);
-    }
-
-    @AfterClass
-    public static void afterAll() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }

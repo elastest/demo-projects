@@ -48,50 +48,62 @@ public class WebAppTest {
     // Hack because @BeforeClass cannot be used
     @BeforeSpec(tags = { "unique" })
     public void beforeFeature() throws MalformedURLException {
-        String sutHost = System.getenv("ET_SUT_HOST");
-        String sutPort = System.getenv("ET_SUT_PORT");
-        String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
+        // If first time, init
+        if (driver == null) {
+            String sutHost = System.getenv("ET_SUT_HOST");
+            String sutPort = System.getenv("ET_SUT_PORT");
+            String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
-        if (sutHost == null) {
-            sutUrl = "http://localhost:8080/";
-        } else {
-            sutPort = sutPort != null ? sutPort : "8080";
-            sutProtocol = sutProtocol != null ? sutProtocol : "http";
-
-            sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
-        }
-        logger.info("Webapp URL: {}", sutUrl);
-
-        browserType = System.getProperty("browser");
-        logger.info("Browser Type: {}", browserType);
-        eusURL = System.getenv("ET_EUS_API");
-        
-        if (eusURL == null) {
-            if (browserType == null || browserType.equals(CHROME)) {
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+            if (sutHost == null) {
+                sutUrl = "http://localhost:8080/";
             } else {
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
+                sutPort = sutPort != null ? sutPort : "8080";
+                sutProtocol = sutProtocol != null ? sutProtocol : "http";
+
+                sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
             }
-        } else {
-            DesiredCapabilities caps;
-            if (browserType == null || browserType.equals(CHROME)) {
-                caps = DesiredCapabilities.chrome();
+            logger.info("Webapp URL: {}", sutUrl);
+
+            browserType = System.getProperty("browser");
+            logger.info("Browser Type: {}", browserType);
+            eusURL = System.getenv("ET_EUS_API");
+
+            if (eusURL == null) {
+                if (browserType == null || browserType.equals(CHROME)) {
+                    WebDriverManager.chromedriver().setup();
+                    driver = new ChromeDriver();
+                } else {
+                    WebDriverManager.firefoxdriver().setup();
+                    driver = new FirefoxDriver();
+                }
             } else {
-                caps = DesiredCapabilities.firefox();
+                DesiredCapabilities caps;
+                if (browserType == null || browserType.equals(CHROME)) {
+                    caps = DesiredCapabilities.chrome();
+                } else {
+                    caps = DesiredCapabilities.firefox();
+                }
+
+                browserVersion = System.getProperty("browserVersion");
+                if (browserVersion != null) {
+                    logger.info("Browser Version: {}", browserVersion);
+                    caps.setVersion(browserVersion);
+                }
+
+                caps.setCapability("testName", currentTestScenarioName);
+
+                driver = new RemoteWebDriver(new URL(eusURL), caps);
             }
 
-            browserVersion = System.getProperty("browserVersion");
-            if (browserVersion != null) {
-                logger.info("Browser Version: {}", browserVersion);
-                caps.setVersion(browserVersion);
-            }
-
-            caps.setCapability("testName", currentTestScenarioName);
-
-            driver = new RemoteWebDriver(new URL(eusURL), caps);
         }
+
+        // driver quit when all tests end
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                logger.info("Shutting down browser...");
+                driver.quit();
+            }
+        });
 
     }
 
