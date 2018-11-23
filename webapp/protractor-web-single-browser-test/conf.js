@@ -1,4 +1,15 @@
-var env = require('./envs.js');
+var envs = {
+    // The address of a running selenium server.
+    seleniumAddress: process.env.ET_EUS_API || 'http://localhost:4444/wd/hub',
+    sutUrl: process.env.ET_SUT_HOST ? 'http://' + process.env.ET_SUT_HOST + ':8080' : 'http://172.17.0.3:8080',
+
+    // Capabilities to be passed to the webdriver instance.
+    capabilities: {
+        browserName: process.env.BROWSER || 'chrome',
+        version: process.env.ET_EUS_API ? (process.env.BROWSER_VERSION ? process.env.BROWSER_VERSION : '') : 'ANY',
+    },
+};
+
 
 class ElasTestBrowserManager {
     
@@ -27,9 +38,9 @@ class ElasTestBrowserManager {
 
     async asyncSpecStarted(result) {
         browser.waitForAngularEnabled(false);
-        await browser.executeScript('{"elastestCommand": "startTest", "args": {"testName": "' + result.description + '"} }');
+        await browser.executeScript('\'{"elastestCommand": "startTest", "args": {"testName": "' + result.description + '"} }\'');
         console.log('##### Start test: ' + result.description);
-        browser.get(env.sutUrl);
+        browser.get(envs.sutUrl);
     }
 
     specDone(result) {
@@ -42,10 +53,10 @@ class ElasTestBrowserManager {
 }
 
 exports.config = {
-    seleniumAddress: env.seleniumAddress,
+    seleniumAddress: envs.seleniumAddress,
     specs: ['test-webapp-spec.js'],
-    sutUrl: env.sutUrl,
-    capabilities: env.capabilities,
+    sutUrl: envs.sutUrl,
+    capabilities: envs.capabilities,
     onPrepare: function() {
         var jasmineReporters = require('jasmine-reporters');
         jasmine.getEnv().addReporter(

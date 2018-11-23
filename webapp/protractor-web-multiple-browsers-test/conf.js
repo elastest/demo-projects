@@ -43,7 +43,7 @@ class ElasTestBrowserManager {
         }
         this.firstTime = false;
         browser.waitForAngularEnabled(false);
-        await browser.executeScript('{"elastestCommand": "startTest", "args": {"testName": "' + result.description + '"} }');
+        await browser.executeScript('\'{"elastestCommand": "startTest", "args": {"testName": "' + result.description + '"} }\'');
         console.log('##### Start test: ' + result.description);
         browser.get(envs.sutUrl);
     }
