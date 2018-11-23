@@ -86,14 +86,6 @@ public class ElastestBaseTest {
                 }
             });
         }
-
-        // driver quit when all tests end
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                logger.info("Shutting down browser...");
-                driver.quit();
-            }
-        });
     }
 
     public void beforeScenario(Scenario scenario) {
