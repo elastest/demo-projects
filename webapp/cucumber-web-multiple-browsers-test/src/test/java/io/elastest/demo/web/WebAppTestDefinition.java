@@ -41,12 +41,12 @@ public class WebAppTestDefinition extends ElastestBaseTest {
     String newBody;
 
     @Before
-    public void before(Scenario scenario) {
+    public void beforeScenario(Scenario scenario) {
         super.beforeScenario(scenario);
     }
 
     @After
-    public void after(Scenario scenario) {
+    public void afterScenario(Scenario scenario) {
         super.afterScenario(scenario);
     }
     
