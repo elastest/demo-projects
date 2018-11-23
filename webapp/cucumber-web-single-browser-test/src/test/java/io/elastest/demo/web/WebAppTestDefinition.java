@@ -21,17 +21,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -39,109 +30,32 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 // With a browser for all test
-public class WebAppTestDefinition {
-    private static final Logger logger = LoggerFactory
-            .getLogger(WebAppTestDefinition.class);
-
-    public static final String CHROME = "chrome";
-    public static final String FIREFOX = "firefox";
-
-    private static String browserType;
-    private static String browserVersion;
-    private static String eusURL;
-    private static String sutUrl;
-
-    private static WebDriver driver;
-
-    // Test variables
+public class WebAppTestDefinition extends ElastestBaseTest {
     String newTitle;
     String newBody;
-    String currentTestScenarioName;
 
     // Hack because @BeforeClass cannot be used
     @Before("@firstScenario")
     public void beforeFeature() throws MalformedURLException {
-        // If first time, init
-        if (driver == null) {
-            String sutHost = System.getenv("ET_SUT_HOST");
-            String sutPort = System.getenv("ET_SUT_PORT");
-            String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
-
-            if (sutHost == null) {
-                sutUrl = "http://localhost:8080/";
-            } else {
-                sutPort = sutPort != null ? sutPort : "8080";
-                sutProtocol = sutProtocol != null ? sutProtocol : "http";
-
-                sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
-            }
-            logger.info("Webapp URL: {}", sutUrl);
-
-            browserType = System.getProperty("browser");
-            logger.info("Browser Type: {}", browserType);
-            eusURL = System.getenv("ET_EUS_API");
-
-            if (eusURL == null) {
-                if (browserType == null || browserType.equals(CHROME)) {
-                    WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
-                } else {
-                    WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
-                }
-            } else {
-                DesiredCapabilities caps;
-                if (browserType == null || browserType.equals(CHROME)) {
-                    caps = DesiredCapabilities.chrome();
-                } else {
-                    caps = DesiredCapabilities.firefox();
-                }
-
-                browserVersion = System.getProperty("browserVersion");
-                if (browserVersion != null) {
-                    logger.info("Browser Version: {}", browserVersion);
-                    caps.setVersion(browserVersion);
-                }
-
-                caps.setCapability("testName", currentTestScenarioName);
-
-                driver = new RemoteWebDriver(new URL(eusURL), caps);
-            }
-        }
-
-        // driver quit when all tests end
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                logger.info("Shutting down browser...");
-                driver.quit();
-            }
-        });
+        super.beforeFeature();
     }
 
     @Before
     public void beforeScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-        ((JavascriptExecutor) driver).executeScript(
-                "'{\"elastestCommand\": \"startTest\", \"args\": {\"testName\": \""
-                        + currentTestScenarioName + "\"} }'");
-        logger.info("##### Start test: {}", currentTestScenarioName);
+        super.beforeScenario(scenario);
     }
 
     @After
     public void afterScenario(Scenario scenario) {
-        currentTestScenarioName = scenario.getName();
-        logger.info("##### Finish test: {}", currentTestScenarioName);
+        super.afterScenario(scenario);
     }
 
     // Hack because @AfterClass cannot be used
     @After("@lastScenario")
     public void afterFeature() {
-        if (driver != null) {
-            driver.quit();
-        }
+        super.afterFeature();
     }
 
     /* ************************ */
