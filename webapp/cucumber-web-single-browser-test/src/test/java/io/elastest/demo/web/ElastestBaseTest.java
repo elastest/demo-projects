@@ -77,6 +77,14 @@ public class ElastestBaseTest {
 
                 driver = new RemoteWebDriver(new URL(eusURL), caps);
             }
+            
+            // driver quit when all tests end
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    logger.info("Shutting down browser...");
+                    driver.quit();
+                }
+            });
         }
 
         // driver quit when all tests end
@@ -100,11 +108,5 @@ public class ElastestBaseTest {
     public void afterScenario(Scenario scenario) {
         currentTestScenarioName = scenario.getName();
         logger.info("##### Finish test: {}", currentTestScenarioName);
-    }
-
-    public void afterFeature() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }

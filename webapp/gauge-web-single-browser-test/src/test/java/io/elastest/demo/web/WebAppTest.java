@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import org.openqa.selenium.By;
 
 import com.thoughtworks.gauge.AfterScenario;
-import com.thoughtworks.gauge.AfterSpec;
 import com.thoughtworks.gauge.BeforeScenario;
 import com.thoughtworks.gauge.BeforeSpec;
 import com.thoughtworks.gauge.ExecutionContext;
@@ -19,7 +18,6 @@ public class WebAppTest extends ElastestBaseTest {
     String newTitle;
     String newBody;
 
-    // Hack because @BeforeClass cannot be used
     @BeforeSpec()
     public void beforeFeature() throws MalformedURLException {
         super.beforeFeature();
@@ -35,12 +33,6 @@ public class WebAppTest extends ElastestBaseTest {
         super.afterScenario(context);
     }
 
-    // Hack because @AfterClass cannot be used
-    @AfterSpec()
-    public void afterFeature() {
-        super.afterFeature();
-    }
-    
     /* ************************ */
     /* ******** Common ******** */
     /* ************************ */

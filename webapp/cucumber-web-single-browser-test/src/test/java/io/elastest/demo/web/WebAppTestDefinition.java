@@ -36,8 +36,7 @@ public class WebAppTestDefinition extends ElastestBaseTest {
     String newTitle;
     String newBody;
 
-    // Hack because @BeforeClass cannot be used
-    @Before("@firstScenario")
+    @Before()
     public void beforeFeature() throws MalformedURLException {
         super.beforeFeature();
     }
@@ -50,12 +49,6 @@ public class WebAppTestDefinition extends ElastestBaseTest {
     @After
     public void afterScenario(Scenario scenario) {
         super.afterScenario(scenario);
-    }
-
-    // Hack because @AfterClass cannot be used
-    @After("@lastScenario")
-    public void afterFeature() {
-        super.afterFeature();
     }
 
     /* ************************ */
