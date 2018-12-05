@@ -44,7 +44,7 @@ public class CalcTest extends ElasTestBase {
     public void subTest() {
 
         int expectedResult = 1;
-        logger.info("Checking if {} + {} = {}", left, right, expectedResult);
+        logger.info("Checking if {} - {} = {}", left, right, expectedResult);
         assertEquals(expectedResult, calc.sub(left, right));
     }
 }
