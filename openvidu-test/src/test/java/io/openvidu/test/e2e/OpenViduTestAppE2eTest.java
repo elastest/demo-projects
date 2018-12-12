@@ -17,14 +17,14 @@
 
 package io.openvidu.test.e2e;
 
-import static java.lang.invoke.MethodHandles.lookup;
-import static org.slf4j.LoggerFactory.getLogger;
 import static java.lang.System.getProperty;
-
+import static java.lang.invoke.MethodHandles.lookup;
 import static org.openqa.selenium.OutputType.BASE64;
+import static org.slf4j.LoggerFactory.getLogger;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -33,9 +33,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TakesScreenshot;
@@ -60,7 +57,6 @@ import io.openvidu.test.e2e.browser.FirefoxUser;
 @Tag("e2e")
 @DisplayName("E2E tests for OpenVidu TestApp")
 @ExtendWith(SeleniumExtension.class)
-@RunWith(JUnitPlatform.class)
 public class OpenViduTestAppE2eTest {
 
     static String OPENVIDU_SECRET = "MY_SECRET";
