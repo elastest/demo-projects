@@ -30,7 +30,7 @@ import org.springframework.core.io.ClassPathResource;
 public class ChromeUser extends BrowserUser {
 
     public ChromeUser(String userName, int timeOfWaitInSeconds,
-            String browserId) {
+            String testName) {
         super(userName, timeOfWaitInSeconds);
 
         ChromeOptions options = new ChromeOptions();
@@ -60,7 +60,13 @@ public class ChromeUser extends BrowserUser {
             this.driver = new ChromeDriver(capabilities);
         } else {
             try {
-                capabilities.setCapability("browserId", browserId);
+                
+                String browserVersion = System.getProperty("browserVersion");
+                if (browserVersion != null) {
+                    logger.info("Browser Version: {}", browserVersion);
+                    capabilities.setVersion(browserVersion);
+                }
+                capabilities.setCapability("testName", testName);
                 this.driver = new RemoteWebDriver(new URL(eusApiURL),
                         capabilities);
             } catch (MalformedURLException e) {
