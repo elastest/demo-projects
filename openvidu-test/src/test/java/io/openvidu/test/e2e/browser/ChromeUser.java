@@ -69,7 +69,7 @@ public class ChromeUser extends BrowserUser {
                 this.driver = new RemoteWebDriver(new URL(eusApiURL),
                         capabilities);
             } catch (MalformedURLException e) {
-                throw new RuntimeException("Exception creaing eusApiURL", e);
+                throw new RuntimeException("Exception creating eusApiURL", e);
             }
         }
 
