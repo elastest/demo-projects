@@ -29,7 +29,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class FirefoxUser extends BrowserUser {
 
     public FirefoxUser(String userName, int timeOfWaitInSeconds,
-            String browserId) {
+            String testName) {
         super(userName, timeOfWaitInSeconds);
 
         FirefoxProfile profile = new FirefoxProfile();
@@ -50,7 +50,12 @@ public class FirefoxUser extends BrowserUser {
             this.driver = new FirefoxDriver(capabilities);
         } else {
             try {
-                capabilities.setCapability("browserId", browserId);
+                String browserVersion = System.getProperty("browserVersion");
+                if (browserVersion != null) {
+                    logger.info("Browser Version: {}", browserVersion);
+                    capabilities.setVersion(browserVersion);
+                }
+                capabilities.setCapability("testName", testName);
                 this.driver = new RemoteWebDriver(new URL(eusApiURL),
                         capabilities);
             } catch (MalformedURLException e) {
