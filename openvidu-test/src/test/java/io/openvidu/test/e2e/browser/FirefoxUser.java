@@ -52,7 +52,6 @@ public class FirefoxUser extends BrowserUser {
             try {
                 String browserVersion = System.getProperty("browserVersion");
                 if (browserVersion != null) {
-                    logger.info("Browser Version: {}", browserVersion);
                     capabilities.setVersion(browserVersion);
                 }
                 capabilities.setCapability("testName", testName);
