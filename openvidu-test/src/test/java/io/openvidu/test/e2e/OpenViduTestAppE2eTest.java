@@ -96,7 +96,7 @@ public class OpenViduTestAppE2eTest {
 
             appURL = protocol + "://" + appURL + ":" + port;
             APP_URL = appURL;
-            OPENVIDU_URL = appURL;
+            OPENVIDU_URL = "https://" + appURL + ":4443";
         }
 
         String appUrl = getProperty("app.url");
