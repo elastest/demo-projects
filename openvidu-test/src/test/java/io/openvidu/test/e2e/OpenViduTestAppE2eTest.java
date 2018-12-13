@@ -186,7 +186,7 @@ public class OpenViduTestAppE2eTest {
         user.getDriver().findElement(By.id("auto-join-checkbox")).click();
         user.getDriver().findElement(By.id("one2one-btn")).click();
 
-        user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
+        user.getEventManager().waitUntilNumberOfEvent("streamPlaying", 4);
 
         log.info("Waiting for video recording");
         Thread.sleep(10000);
