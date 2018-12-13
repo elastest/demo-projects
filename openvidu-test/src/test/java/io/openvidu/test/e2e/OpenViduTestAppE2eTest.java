@@ -84,8 +84,17 @@ public class OpenViduTestAppE2eTest {
 
         String appURL = System.getenv("ET_SUT_HOST");
         if (appURL != null) {
-            // Be sure that protocol is http
-            appURL = "https://" + appURL + ":4443";
+            String port = System.getenv("ET_SUT_PORT");
+            if (port == null) {
+                port = "4443";
+            }
+
+            String protocol = System.getenv("ET_SUT_PROTOCOL");
+            if (protocol == null) {
+                protocol = "https";
+            }
+
+            appURL = protocol + "://" + appURL + ":" + port;
             APP_URL = appURL;
             OPENVIDU_URL = appURL;
         }
