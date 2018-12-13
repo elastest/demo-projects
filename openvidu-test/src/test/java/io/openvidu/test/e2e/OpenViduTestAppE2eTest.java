@@ -179,7 +179,7 @@ public class OpenViduTestAppE2eTest {
     // @DisplayName("One2One Chrome [Video + Audio]")
     void oneToOneVideoAudioSessionChrome(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
-        setupBrowser(BROWSER, info, 120);
+        setupBrowser(BROWSER, info, 50);
 
         log.info("One2One Chrome [Video + Audio]");
 
@@ -192,7 +192,7 @@ public class OpenViduTestAppE2eTest {
         Thread.sleep(10000);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -228,7 +228,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
      * 
-     * try { System.out.println(getBase64Screenshot(user)); } catch (Exception
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception
      * e) { e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
@@ -277,7 +277,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -327,7 +327,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -362,7 +362,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -396,7 +396,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("remoteVideoPlaying", 1);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -431,7 +431,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("remoteVideoPlaying", 1);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -474,7 +474,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 16);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -555,7 +555,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 16);
 
         try {
-            System.out.println(getBase64Screenshot(user));
+            log.info(getBase64Screenshot(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -597,7 +597,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler()
      * { public void uncaughtException(Thread th, Throwable ex) {
-     * System.out.println("Uncaught exception: " + ex); synchronized (lock) {
+     * log.info("Uncaught exception: " + ex); synchronized (lock) {
      * OpenViduTestAppE2eTest.ex = new Exception(ex); } } };
      * 
      * Thread t = new Thread(() -> { BrowserUser user2 = new
@@ -627,7 +627,7 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 2);
      * 
-     * try { System.out.println(getBase64Screenshot(user)); } catch (Exception
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception
      * e) { e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver

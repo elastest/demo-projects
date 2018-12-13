@@ -199,13 +199,13 @@ public class OpenViduEventManager {
 	
 	private boolean hasAudioTracks(WebElement videoElement) {
 		long numberAudioTracks = (long) ((JavascriptExecutor) driver)
-				.executeScript("return $('#" + videoElement.getAttribute("id") + "').prop('srcObject').getAudioTracks().length;");
+				.executeScript("return document.getElementById('" + videoElement.getAttribute("id") + "').srcObject.getAudioTracks().length;");
 		return (numberAudioTracks > 0);
 	}
 	
 	private boolean hasVideoTracks(WebElement videoElement) {
 		long numberAudioTracks = (long) ((JavascriptExecutor) driver)
-				.executeScript("return $('#" + videoElement.getAttribute("id") + "').prop('srcObject').getVideoTracks().length;");
+		        .executeScript("return document.getElementById('" + videoElement.getAttribute("id") + "').srcObject.getVideoTracks().length;");
 		return (numberAudioTracks > 0);
 	}
 
