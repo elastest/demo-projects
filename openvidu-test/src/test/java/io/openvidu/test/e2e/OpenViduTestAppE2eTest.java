@@ -82,8 +82,8 @@ public class OpenViduTestAppE2eTest {
             FirefoxDriverManager.getInstance().setup();
         }
 
-        String appURL = System.getenv("ET_SUT_HOST");
-        if (appURL != null) {
+        String appIp = System.getenv("ET_SUT_HOST");
+        if (appIp != null) {
             String port = System.getenv("ET_SUT_PORT");
             if (port == null) {
                 port = "4443";
@@ -94,9 +94,9 @@ public class OpenViduTestAppE2eTest {
                 protocol = "https";
             }
 
-            appURL = protocol + "://" + appURL + ":" + port;
+            String appURL = protocol + "://" + appIp + ":" + port;
             APP_URL = appURL;
-            OPENVIDU_URL = "https://" + appURL + ":4443";
+            OPENVIDU_URL = "https://" + appIp + ":4443";
         }
 
         String appUrl = getProperty("app.url");
