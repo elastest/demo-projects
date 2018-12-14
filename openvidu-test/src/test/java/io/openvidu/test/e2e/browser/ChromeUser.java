@@ -43,8 +43,9 @@ public class ChromeUser extends BrowserUser {
         options.addArguments(
                 "--auto-select-desktop-capture-source=Entire screen");
         // Disable CORS
-        options.addArguments("–disable-web-security");
-        options.addArguments("–allow-running-insecure-content");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--allow-running-insecure-content");
+        options.addArguments("--auto-open-devtools-for-tabs");
 
         try {
             // Add Screen Sharing extension
