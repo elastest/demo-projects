@@ -42,6 +42,9 @@ public class ChromeUser extends BrowserUser {
         // sharing
         options.addArguments(
                 "--auto-select-desktop-capture-source=Entire screen");
+        // Disable CORS
+        options.addArguments("–disable-web-security");
+        options.addArguments("–allow-running-insecure-content");
 
         try {
             // Add Screen Sharing extension
@@ -60,7 +63,7 @@ public class ChromeUser extends BrowserUser {
             this.driver = new ChromeDriver(capabilities);
         } else {
             try {
-                
+
                 String browserVersion = System.getProperty("browserVersion");
                 if (browserVersion != null) {
                     capabilities.setVersion(browserVersion);
