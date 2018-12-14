@@ -37,6 +37,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 
 import io.github.bonigarcia.SeleniumExtension;
@@ -146,9 +147,10 @@ public class OpenViduTestAppE2eTest {
         sleep(5000);
 
         // TODO open console with elastest capability
-        String openBrowserConsole = Keys.chord(Keys.ALT, Keys.CONTROL, "j");
-        user.getDriver().findElement(By.tagName("html"))
-        .sendKeys(openBrowserConsole);
+
+        Actions keyAction = new Actions(user.getDriver());
+        keyAction.keyDown(Keys.ALT).keyDown(Keys.CONTROL).sendKeys("j")
+                .keyUp(Keys.ALT).keyUp(Keys.CONTROL).perform();
 
         WebElement urlInput = user.getDriver()
                 .findElement(By.id("openvidu-url"));
