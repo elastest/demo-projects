@@ -45,7 +45,7 @@ public class ChromeUser extends BrowserUser {
         // Disable CORS
         options.addArguments("--disable-web-security");
         options.addArguments("--allow-running-insecure-content");
-        options.addArguments("--auto-open-devtools-for-tabs");
+//        options.addArguments("--auto-open-devtools-for-tabs");
 
         try {
             // Add Screen Sharing extension

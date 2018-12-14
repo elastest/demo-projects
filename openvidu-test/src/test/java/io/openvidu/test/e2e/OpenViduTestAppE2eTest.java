@@ -144,6 +144,11 @@ public class OpenViduTestAppE2eTest {
 
         user.getDriver().get(APP_URL);
 
+        // TODO open console with elastest capability
+        String openBrowserConsole = Keys.chord(Keys.CONTROL, Keys.ALT, "j");
+        user.getDriver().findElement(By.tagName("body"))
+                .sendKeys(openBrowserConsole);
+
         sleep(5000);
 
         WebElement urlInput = user.getDriver()
@@ -228,8 +233,8 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
      * 
-     * try { log.info(getBase64Screenshot(user)); } catch (Exception
-     * e) { e.printStackTrace(); }
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception e) {
+     * e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
      * ().findElements(By.tagName("video")), true, true));
@@ -627,8 +632,8 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 2);
      * 
-     * try { log.info(getBase64Screenshot(user)); } catch (Exception
-     * e) { e.printStackTrace(); }
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception e) {
+     * e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
      * ().findElements(By.tagName("video")), true, true));
