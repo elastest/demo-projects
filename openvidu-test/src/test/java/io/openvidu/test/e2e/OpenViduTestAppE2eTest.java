@@ -37,7 +37,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 
 import io.github.bonigarcia.SeleniumExtension;
@@ -144,13 +143,8 @@ public class OpenViduTestAppE2eTest {
         }
 
         user.getDriver().get(APP_URL);
+
         sleep(5000);
-
-        // TODO open console with elastest capability
-
-        Actions keyAction = new Actions(user.getDriver());
-        keyAction.keyDown(Keys.ALT).keyDown(Keys.CONTROL).sendKeys("j")
-                .keyUp(Keys.ALT).keyUp(Keys.CONTROL).perform();
 
         WebElement urlInput = user.getDriver()
                 .findElement(By.id("openvidu-url"));
@@ -234,8 +228,8 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
      * 
-     * try { log.info(getBase64Screenshot(user)); } catch (Exception e) {
-     * e.printStackTrace(); }
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception
+     * e) { e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
      * ().findElements(By.tagName("video")), true, true));
@@ -633,8 +627,8 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 2);
      * 
-     * try { log.info(getBase64Screenshot(user)); } catch (Exception e) {
-     * e.printStackTrace(); }
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception
+     * e) { e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
      * ().findElements(By.tagName("video")), true, true));
