@@ -143,13 +143,12 @@ public class OpenViduTestAppE2eTest {
         }
 
         user.getDriver().get(APP_URL);
+        sleep(5000);
 
         // TODO open console with elastest capability
         String openBrowserConsole = Keys.chord(Keys.ALT, Keys.CONTROL, "j");
-        user.getDriver().findElement(By.tagName("body"))
-                .sendKeys(openBrowserConsole);
-
-        sleep(5000);
+        user.getDriver().findElement(By.tagName("html"))
+        .sendKeys(openBrowserConsole);
 
         WebElement urlInput = user.getDriver()
                 .findElement(By.id("openvidu-url"));
