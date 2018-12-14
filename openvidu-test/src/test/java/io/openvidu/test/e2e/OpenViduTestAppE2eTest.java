@@ -145,7 +145,7 @@ public class OpenViduTestAppE2eTest {
         user.getDriver().get(APP_URL);
 
         // TODO open console with elastest capability
-        String openBrowserConsole = Keys.chord(Keys.CONTROL, Keys.ALT, "j");
+        String openBrowserConsole = Keys.chord(Keys.ALT, Keys.CONTROL, "j");
         user.getDriver().findElement(By.tagName("body"))
                 .sendKeys(openBrowserConsole);
 
