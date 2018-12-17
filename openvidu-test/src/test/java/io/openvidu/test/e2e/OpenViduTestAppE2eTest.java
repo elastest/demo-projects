@@ -179,7 +179,7 @@ public class OpenViduTestAppE2eTest {
     // @DisplayName("One2One Chrome [Video + Audio]")
     void oneToOneVideoAudioSessionChrome(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
-        setupBrowser(BROWSER, info, 50);
+        setupBrowser(BROWSER, info, 150);
 
         log.info("One2One Chrome [Video + Audio]");
 
