@@ -126,6 +126,20 @@ public class OpenViduTestAppE2eTest {
         }
     }
 
+    @AfterEach
+    void dispose(TestInfo info) {
+        try {
+            user.dispose();
+        } finally {
+            log.info("##### Finish test: "
+                    + info.getTestMethod().get().getName());
+        }
+    }
+
+    /* ******************************************** */
+    /* ************** Common methods ************** */
+    /* ******************************************** */
+
     void setupBrowser(String browser, TestInfo testInfo, int secondsOfWait) {
 
         switch (browser) {
@@ -165,18 +179,11 @@ public class OpenViduTestAppE2eTest {
         }
     }
 
-    @AfterEach
-    void dispose(TestInfo info) {
-        try {
-            user.dispose();
-        } finally {
-            log.info("##### Finish test: "
-                    + info.getTestMethod().get().getName());
-        }
-    }
+    /* *********************************** */
+    /* ************** TESTS ************** */
+    /* *********************************** */
 
     @Test
-    // @DisplayName("One2One Chrome [Video + Audio]")
     void oneToOneVideoAudioSessionChrome(TestInfo info) throws Exception {
         log.info("##### Start test: " + info.getTestMethod().get().getName());
         setupBrowser(BROWSER, info, 50);
@@ -189,7 +196,7 @@ public class OpenViduTestAppE2eTest {
         user.getEventManager().waitUntilNumberOfEvent("streamPlaying", 4);
 
         log.info("Waiting for video recording");
-        Thread.sleep(10000);
+        sleep(10000);
 
         try {
             log.info(getBase64Screenshot(user));
@@ -210,9 +217,6 @@ public class OpenViduTestAppE2eTest {
 
         user.getEventManager().waitUntilNumberOfEvent("sessionDisconnected", 2);
 
-        
-        Thread.sleep(50000);
-        
         user.dispose();
     }
 
@@ -231,8 +235,8 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 4);
      * 
-     * try { log.info(getBase64Screenshot(user)); } catch (Exception
-     * e) { e.printStackTrace(); }
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception e) {
+     * e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
      * ().findElements(By.tagName("video")), true, true));
@@ -630,8 +634,8 @@ public class OpenViduTestAppE2eTest {
      * 
      * user.getEventManager().waitUntilNumberOfEvent("videoPlaying", 2);
      * 
-     * try { log.info(getBase64Screenshot(user)); } catch (Exception
-     * e) { e.printStackTrace(); }
+     * try { log.info(getBase64Screenshot(user)); } catch (Exception e) {
+     * e.printStackTrace(); }
      * 
      * Assert.assertTrue(user.getEventManager().assertMediaTracks(user.getDriver
      * ().findElements(By.tagName("video")), true, true));
