@@ -1,0 +1,56 @@
+node(){
+    stage ('start container')
+       def mycontainer = docker.image('elastest/ci-docker-e2e-compose:latest')
+       mycontainer.pull()
+       mycontainer.inside("-u root -v /var/run/docker.sock:/var/run/docker.sock:rw -v /dev/shm:/dev/shm")  {
+           sh '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf &'
+           stage('prepare SUT')
+                git 'https://github.com/elastest/demo-projects'
+           stage('start external SUT')
+                def projectName = "$BUILD_ID"
+                def sutContainerName = projectName + '_webapp_1'
+                def webappPath = 'tutorials/webapp-elasticsearch/webapp.yml'
+                try {
+                    sh 'env'
+                    sh "docker-compose -f $webappPath -p $projectName up -d"
+                   
+                    def sutNetwork = getFirstNetwork(sutContainerName)
+                    def sutIp = containerIp(sutContainerName,sutNetwork)
+                    sh 'docker run -e IP=' + sutIp + ' -e PORT=8080 --network=' + sutNetwork + ' elastest/etm-check-service-up'
+                    withEnv(['ET_SUT_HOST=' + sutIp]) {
+                        sh 'ls'
+                        sh 'cd webapp/junit5-web-single-browser-test; mvn -B -Dbrowser=chrome test;'
+                    }
+                   
+                } catch(err) {
+                   def errString = err.toString()
+                   currentBuild.result = getJobStatus(errString)
+                   throw err
+                } finally {
+                   echo 'Stopping SUT'
+                   sh "docker-compose -f $webappPath -p $projectName down"
+                }
+       }
+}
+
+def getFirstNetwork(containerName) {
+    echo "Inside getFirstNetwork function"
+    network = sh (
+        script: "docker inspect " + containerName + " -f \"{{json .NetworkSettings.Networks}}\" | awk \"{sub(/:.*/,\\\"\\\")}1\" | awk \"{sub(/\\\"/,\\\"\\\")}1\" | awk \"{sub(/\\\"/,\\\"\\\")}1\" | awk \"{sub(/{/,\\\"\\\")}1\"",
+        returnStdout: true
+    ).trim()
+    
+    echo containerName+" Network = " + network;
+    return network;
+}
+
+def containerIp(containerName, network) {
+    echo "Inside containerIp function"
+    containerIp = sh (
+        script: "docker inspect --format '{{(index .NetworkSettings.Networks \"" + network + "\").IPAddress}}' "+ containerName,
+        returnStdout: true
+    ).trim()
+    
+    echo containerName+" IP = " + containerIp;
+    return containerIp;
+}
