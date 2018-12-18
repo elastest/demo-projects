@@ -1,7 +1,7 @@
 Info
 =====
 
-Webapp example using [ELK stack](https://www.elastic.co/elk-stack) to save the application logs.
+Webapp example using docker logs command to **save application logs into a file** and taking a **screenshot** of failed tests
 
 Steps
 =====

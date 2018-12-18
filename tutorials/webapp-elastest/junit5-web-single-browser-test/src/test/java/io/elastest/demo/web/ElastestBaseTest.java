@@ -111,8 +111,10 @@ public class ElastestBaseTest {
         logger.info("##### Finish test: {}", testName);
     }
 
-    void logBase64Screenshot(WebDriver driver) {
-        if (screenshotActivated != null && screenshotActivated) {
+    public void logBase64Screenshot(WebDriver driver) {
+        boolean activated = screenshotActivated != null && screenshotActivated;
+        logger.info("Cheking if screenshots are activated: {}", activated);
+        if (activated) {
             try {
                 String screenshotBase64 = ((TakesScreenshot) driver)
                         .getScreenshotAs(BASE64);
