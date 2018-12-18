@@ -1,7 +1,7 @@
 Info
 =====
 
-Basic Webapp example.
+Basic Webapp example. This job does not display the application logs or any browser information.
 
 Steps
 =====

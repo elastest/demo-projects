@@ -17,7 +17,7 @@ node(){
                     def sutNetwork = 'bridge'
                     def sutIp = containerIp(sutContainerName,sutNetwork)
                     sh 'docker run -e IP=' + sutIp + ' -e PORT=8080 --network=' + sutNetwork + ' elastest/etm-check-service-up'
-                    withEnv(['ET_SUT_HOST=' + sutIp]) {
+                    withEnv(['ET_SUT_HOST=' + sutIp, 'SCREENSHOT_ACTIVATED=true']) {
                         sh 'ls'
                         sh 'cd tutorials/webapp-elastest/junit5-web-single-browser-test; mvn -B -Dbrowser=chrome test;'
                     }
