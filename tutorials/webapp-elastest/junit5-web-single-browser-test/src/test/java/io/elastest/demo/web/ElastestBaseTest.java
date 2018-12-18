@@ -33,7 +33,7 @@ public class ElastestBaseTest {
     protected static String sutUrl;
 
     protected static WebDriver driver;
-    protected static String sutLogsPath;
+    protected static Boolean screenshotActivated;
 
     @BeforeAll
     public static void setupClass() throws MalformedURLException {
@@ -42,7 +42,8 @@ public class ElastestBaseTest {
             String sutHost = System.getenv("ET_SUT_HOST");
             String sutPort = System.getenv("ET_SUT_PORT");
             String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
-            sutLogsPath = System.getenv("ET_SUT_LOGS_PATH");
+            screenshotActivated = Boolean
+                    .getBoolean(System.getenv("SCREENSHOT_ACTIVATED"));
 
             if (sutHost == null) {
                 sutUrl = "http://localhost:8080/";
@@ -110,15 +111,14 @@ public class ElastestBaseTest {
         logger.info("##### Finish test: {}", testName);
     }
 
-    void logBase64Screenshot(WebDriver driver, String fileName) {
-        if (fileName != null) {
+    void logBase64Screenshot(WebDriver driver) {
+        if (screenshotActivated != null && screenshotActivated) {
             try {
                 String screenshotBase64 = ((TakesScreenshot) driver)
                         .getScreenshotAs(BASE64);
                 logger.info("Screenshot (in Base64) at the end of {} "
                         + "(copy&paste this string as URL in browser to watch it):\r\n"
-                        + "data:image/png;base64,{}", fileName,
-                        screenshotBase64);
+                        + "data:image/png;base64,{}", screenshotBase64);
             } catch (Exception e) {
                 logger.trace("Exception getting screenshot in Base64", e);
             }

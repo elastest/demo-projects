@@ -62,7 +62,7 @@ public class WebAppTest extends ElastestBaseTest {
                 clearRows();
             }
         } catch (Exception e) {
-            logBase64Screenshot(driver, sutLogsPath);
+            logBase64Screenshot(driver);
             throw e;
         }
     }
@@ -94,7 +94,7 @@ public class WebAppTest extends ElastestBaseTest {
                 clearRows();
             }
         } catch (Exception e) {
-            logBase64Screenshot(driver, sutLogsPath);
+            logBase64Screenshot(driver);
             throw e;
         }
     }
@@ -126,7 +126,7 @@ public class WebAppTest extends ElastestBaseTest {
                 clearRows();
             }
         } catch (Exception e) {
-            logBase64Screenshot(driver, sutLogsPath);
+            logBase64Screenshot(driver);
             throw e;
         }
     }
