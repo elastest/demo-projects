@@ -9,7 +9,7 @@ node(){
            stage('start external SUT')
                 def projectName = "$BUILD_ID"
                 def sutContainerName = projectName + '_webapp_1'
-                def webappPath = 'tutorials/webapp-elasticsearch/webapp.yml'
+                def webappPath = 'tutorials/webapp-elastest/03-webapp-elasticsearch/webapp.yml'
                 try {
                     sh 'env'
                     sh "docker-compose -f $webappPath -p $projectName up -d"
