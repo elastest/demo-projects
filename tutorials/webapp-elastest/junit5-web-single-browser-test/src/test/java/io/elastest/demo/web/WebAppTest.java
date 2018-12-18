@@ -31,104 +31,90 @@ public class WebAppTest extends ElastestBaseTest {
     @Test
     public void addMsgAndClear(TestInfo info)
             throws InterruptedException, MalformedURLException {
+        Thread.sleep(2000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        this.addRow(newTitle, newBody);
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        // Added
+        logger.info("Checking Message...");
+        assertEquals(newTitle, title);
+        assertEquals(newBody, body);
+
+        Thread.sleep(1000);
+
+        int titleExist = driver.findElements(By.id("title")).size();
+        int bodyExist = driver.findElements(By.id("body")).size();
+
         try {
+            assertNotEquals(0, titleExist);
+            assertNotEquals(0, bodyExist);
+        } finally {
             Thread.sleep(2000);
-
-            String newTitle = "MessageTitle";
-            String newBody = "MessageBody";
-
-            this.addRow(newTitle, newBody);
-
-            Thread.sleep(2000);
-
-            String title = driver.findElement(By.id("title")).getText();
-            String body = driver.findElement(By.id("body")).getText();
-
-            // Added
-            logger.info("Checking Message...");
-            assertEquals(newTitle, title);
-            assertEquals(newBody, body);
-
-            Thread.sleep(1000);
-
-            int titleExist = driver.findElements(By.id("title")).size();
-            int bodyExist = driver.findElements(By.id("body")).size();
-
-            try {
-                assertNotEquals(0, titleExist);
-                assertNotEquals(0, bodyExist);
-            } finally {
-                Thread.sleep(2000);
-                clearRows();
-            }
-        } catch (Exception e) {
-            logBase64Screenshot(driver);
-            throw e;
+            clearRows();
         }
     }
 
     @Test
     public void findTitleAndBody(TestInfo info)
             throws InterruptedException, MalformedURLException {
+        Thread.sleep(2000);
+
+        String newTitle = "MessageTitle";
+        String newBody = "MessageBody";
+
+        this.addRow(newTitle, newBody);
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        logger.info("Checking Message...");
+
         try {
+            assertEquals(newTitle, title);
+            assertEquals(newBody, body);
+
+        } finally {
             Thread.sleep(2000);
-
-            String newTitle = "MessageTitle";
-            String newBody = "MessageBody";
-
-            this.addRow(newTitle, newBody);
-
-            Thread.sleep(2000);
-
-            String title = driver.findElement(By.id("title")).getText();
-            String body = driver.findElement(By.id("body")).getText();
-
-            logger.info("Checking Message...");
-
-            try {
-                assertEquals(newTitle, title);
-                assertEquals(newBody, body);
-
-            } finally {
-                Thread.sleep(2000);
-                clearRows();
-            }
-        } catch (Exception e) {
-            logBase64Screenshot(driver);
-            throw e;
+            clearRows();
         }
     }
 
     @Test
     public void checkTitleAndBodyNoEmpty(TestInfo info)
             throws InterruptedException, MalformedURLException {
+        Thread.sleep(2000);
+
+        String newTitle = "";
+        String newBody = "";
+
+        this.addRow(newTitle, newBody);
+
+        Thread.sleep(2000);
+
+        String title = driver.findElement(By.id("title")).getText();
+        String body = driver.findElement(By.id("body")).getText();
+
+        logger.info("Checking Message...");
+
         try {
+            assertNotEquals(newTitle, title);
+            assertNotEquals(newBody, body);
+
+        } finally {
             Thread.sleep(2000);
-
-            String newTitle = "";
-            String newBody = "";
-
-            this.addRow(newTitle, newBody);
-
-            Thread.sleep(2000);
-
-            String title = driver.findElement(By.id("title")).getText();
-            String body = driver.findElement(By.id("body")).getText();
-
-            logger.info("Checking Message...");
-
-            try {
-                assertNotEquals(newTitle, title);
-                assertNotEquals(newBody, body);
-
-            } finally {
-                Thread.sleep(2000);
-                clearRows();
-            }
-        } catch (Exception e) {
-            logBase64Screenshot(driver);
-            throw e;
+            clearRows();
         }
+
     }
 
     /* ********************* */
