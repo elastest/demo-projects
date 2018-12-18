@@ -17,6 +17,6 @@ Steps
 		- Select **Elastic Search** as Indexer Type
 		- Insert Elasticsearch uri, like http://IP:9200/MYINDEX/_doc. If you are using [Jenkins instance of ElasTest](https://elastest.io/docs/jenkins/) the IP will be the host ip of the ElasTest network (like 172.18.0.1). The index (MYINDEX) can be whatever you want. If you use Jenkins installed on your machine, you can use localhost as ip, as the ports are binded.
 		- Save configuration and restart Jenkins if is necessary
-3. Create a Jenkins pipeline with the code of **Jenkinsfile**
+3. Create a Jenkins pipeline with the code of **Jenkinsfile**. Note that this pipeline uses the wrapper `logstash {}`
 4. Run Job
 
