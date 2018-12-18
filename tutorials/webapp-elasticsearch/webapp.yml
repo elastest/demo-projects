@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webapp:
+    image: elastest/demo-web-java-test-sut
+    expose: 
+        - 8080
+    logging:
+      driver: syslog
+      options:
+        syslog-address: tcp://localhost:5000
