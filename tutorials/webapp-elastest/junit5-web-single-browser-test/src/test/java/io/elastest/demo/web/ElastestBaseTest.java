@@ -43,6 +43,8 @@ public class ElastestBaseTest {
             String sutHost = System.getenv("ET_SUT_HOST");
             String sutPort = System.getenv("ET_SUT_PORT");
             String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
+            String a = System.getenv("SCREENSHOT_ACTIVATED");
+            logger.debug("System.getenv(\"SCREENSHOT_ACTIVATED\") {}", a);
             screenshotActivated = Boolean
                     .getBoolean(System.getenv("SCREENSHOT_ACTIVATED"));
 
