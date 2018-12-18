@@ -21,11 +21,6 @@ node(){
                         sh 'ls'
                         sh 'cd webapp/junit5-web-single-browser-test; mvn -B -Dbrowser=chrome test;'
                     }
-                   
-                } catch(err) {
-                   def errString = err.toString()
-                   currentBuild.result = getJobStatus(errString)
-                   throw err
                 } finally {
                    echo 'Stopping SUT'
                    sh "docker-compose -f $webappPath -p $projectName down"
