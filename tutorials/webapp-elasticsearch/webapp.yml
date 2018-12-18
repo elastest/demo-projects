@@ -4,6 +4,7 @@ services:
     image: elastest/demo-web-java-test-sut
     expose: 
         - 8080
+    network_mode: bridge
     logging:
       driver: syslog
       options:

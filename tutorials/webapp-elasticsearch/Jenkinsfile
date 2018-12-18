@@ -14,7 +14,7 @@ node(){
                     sh 'env'
                     sh "docker-compose -f $webappPath -p $projectName up -d"
                    
-                    def sutNetwork = getFirstNetwork(sutContainerName)
+                    def sutNetwork = 'bridge'
                     def sutIp = containerIp(sutContainerName,sutNetwork)
                     sh 'docker run -e IP=' + sutIp + ' -e PORT=8080 --network=' + sutNetwork + ' elastest/etm-check-service-up'
                     withEnv(['ET_SUT_HOST=' + sutIp]) {
@@ -33,21 +33,10 @@ node(){
        }
 }
 
-def getFirstNetwork(containerName) {
-    echo "Inside getFirstNetwork function"
-    network = sh (
-        script: "docker inspect " + containerName + " -f \"{{json .NetworkSettings.Networks}}\" | awk \"{sub(/:.*/,\\\"\\\")}1\" | awk \"{sub(/\\\"/,\\\"\\\")}1\" | awk \"{sub(/\\\"/,\\\"\\\")}1\" | awk \"{sub(/{/,\\\"\\\")}1\"",
-        returnStdout: true
-    ).trim()
-    
-    echo containerName+" Network = " + network;
-    return network;
-}
-
 def containerIp(containerName, network) {
     echo "Inside containerIp function"
     containerIp = sh (
-        script: "docker inspect --format '{{(index .NetworkSettings.Networks \"" + network + "\").IPAddress}}' "+ containerName,
+        script: "docker inspect --format=\"{{.NetworkSettings.Networks." + network + ".IPAddress}}\" "+ containerName,
         returnStdout: true
     ).trim()
     
