@@ -43,8 +43,6 @@ public class ElastestBaseTest {
             String sutHost = System.getenv("ET_SUT_HOST");
             String sutPort = System.getenv("ET_SUT_PORT");
             String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
-            String a = System.getenv("SCREENSHOT_ACTIVATED");
-            logger.info("System.getenv(\"SCREENSHOT_ACTIVATED\") {}", a);
             screenshotActivated = Boolean
                     .valueOf(System.getenv("SCREENSHOT_ACTIVATED"));
 
@@ -122,9 +120,10 @@ public class ElastestBaseTest {
             try {
                 String screenshotBase64 = ((TakesScreenshot) driver)
                         .getScreenshotAs(BASE64);
-                logger.info("Screenshot (in Base64) at the end of {} "
-                        + "(copy&paste this string as URL in browser to watch it):\r\n"
-                        + "data:image/png;base64,{}", screenshotBase64);
+                logger.info(
+                        "Screenshot (in Base64) at the end of test (copy&paste this string as URL in browser to watch it):\r\n"
+                                + "data:image/png;base64,{}",
+                        screenshotBase64);
             } catch (Exception e) {
                 logger.trace("Exception getting screenshot in Base64", e);
             }
