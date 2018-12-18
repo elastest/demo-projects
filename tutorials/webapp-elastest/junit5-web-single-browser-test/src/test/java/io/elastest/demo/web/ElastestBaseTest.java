@@ -4,13 +4,11 @@ import static org.openqa.selenium.OutputType.BASE64;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -109,13 +107,9 @@ public class ElastestBaseTest {
     }
 
     @AfterEach
-    public void teardown(TestInfo info, ExtensionContext context) {
+    public void teardown(TestInfo info) {
         String testName = info.getTestMethod().get().getName();
-        Optional<Throwable> exception = context.getExecutionException();
-        if (exception.isPresent()) {
-            logBase64Screenshot(driver);
-        }
-
+        logBase64Screenshot(driver);
         logger.info("##### Finish test: {}", testName);
     }
 

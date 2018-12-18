@@ -22,6 +22,9 @@ node(){
                         sh 'cd tutorials/webapp-elastest/junit5-web-single-browser-test; mvn -B -Dbrowser=chrome test;'
                     }
                 } finally {
+		   echo "Saving sut logs"
+                   sh "docker logs $sutContainerName 2>&1 | cat >> sut.logs"
+		   sh "cat sut.logs"
                    echo 'Stopping SUT'
                    sh "docker-compose -f $webappPath -p $projectName down"
                 }
