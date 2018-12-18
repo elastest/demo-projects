@@ -15,7 +15,7 @@ Steps
 	- Go to Manage Jenkins -> Configure System and do scroll to Logstash section to configure:
 		- Check **Enable sending logs to an Indexer**
 		- Select **Elastic Search** as Indexer Type
-		- Insert Elasticsearch uri, like http://IP:9200/MYINDEX/_doc. If you are using [Jenkins instance of ElasTest](https://elastest.io/docs/jenkins/) the IP will be the host ip of the ElasTest network (like 172.18.0.1). The index (MYINDEX) can be whatever you want. If you use Jenkins installed on your machine, you can use localhost as ip, as the ports are binded.
+		- Insert Elasticsearch uri, like http://IP:9200/MYINDEX/_doc. If you are using [Jenkins instance of ElasTest](https://elastest.io/docs/jenkins/) the IP will be the host ip of the ElasTest network (like 172.18.0.1). If you use Jenkins installed on your machine, you can use localhost as ip, as the ports are binded. The index (MYINDEX) can be whatever you want. You can use **webapp**, which is the index to which the application's logs are sent, but there will be no way to differentiate the logs from each other. This can be solved by configuring different [filters and inputs in Logstash](https://www.elastic.co/guide/en/logstash/6.5/filter-plugins.html), but we have not done it for this example.
 		- Save configuration and restart Jenkins if is necessary
 3. Create a Jenkins pipeline with the code of **Jenkinsfile**. Note that this pipeline uses the wrapper `logstash {}`
 4. Run Job
