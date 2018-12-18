@@ -25,6 +25,7 @@ node(){
 		   echo "Saving sut logs"
                    sh "docker logs $sutContainerName 2>&1 | cat >> sut.logs"
 		   sh "cat sut.logs"
+                   archiveArtifacts artifacts: 'sut.logs'
                    echo 'Stopping SUT'
                    sh "docker-compose -f $webappPath -p $projectName down"
                 }
