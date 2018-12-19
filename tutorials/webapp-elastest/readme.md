@@ -17,6 +17,10 @@ The tutorial relies heavily on Docker. The minimum requirements areas follows:
 
         docker run --rm -v ~/.elastest:/data -v /var/run/docker.sock:/var/run/docker.sock elastest/platform start --jenkins --server-address=<vm ip>
 
+- Cloning the samples repository:
+
+      git clone https://github.com/elastest/demo-projects.git
+
 For examples 4 and 5, it is required that the max map count is increased for ElasticSearch, otherwise it might exit abruptly. Therefore, issue this command before starting any  of the tools:
 
     sudo sysctl -w vm.max_map_count=262144
