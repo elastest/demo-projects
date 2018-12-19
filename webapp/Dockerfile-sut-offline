@@ -1,0 +1,22 @@
+FROM elastest/test-etm-alpinegitjava
+
+WORKDIR /root
+
+# Change name to your .m2 folder temporally
+# ONLY for construct. use -v YOURM2FOLDER:/root/.m2 in docker run command
+
+#COPY junit5-web-single-browser-test / app/
+#CMD cd app; mvn install -DskipTests;
+
+
+
+
+#############################################################
+
+# After, comment the lines, copy .m2 folder to demo-projects/webapp and build
+
+COPY .m2 /root/.m2
+
+RUN git clone https://github.com/elastest/demo-projects;
+
+CMD cd /root/demo-projects/webapp/junit5-web-multiple-browsers-test; mvn package -o -DskipTests; cd target; exec java -jar $(ls | grep ".*\.jar$");

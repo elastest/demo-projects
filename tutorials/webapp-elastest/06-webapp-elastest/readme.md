@@ -15,7 +15,7 @@ You can see in more detail how to create tests in ElasTest [here](https://elaste
 3. Create a Sut with the following information:
 	-   **SuT Name**: can be called as you want, but we will call it **`WebApp`**
 	-   Select **`With Docker Image`** option
-	-   **Docker Image**: Use **`elastest/demo-web-java-test-sut`** as Sut image 
+	-   **Docker Image**: Use **`elastest/demo-web-java-test-sut-offline`** as Sut image 
 	-   **Protocol**: **`http`**
 	-   **Wait for http port**: which port of the SuT should ElasTest wait to be available before starting the TJob (**`8080`**)
 4. Create a TJob into the project with the following configuration:
@@ -35,5 +35,17 @@ You can see in more detail how to create tests in ElasTest [here](https://elaste
 5. Run the TJob
 6. Enjoy
 
+
+- Elastest-containers
+        - elastest/platform:1.0.0-beta4
+        - elastest/platform-services:1.0.0-beta4
+        - elastest/edm-mysql:1.0.0-beta4
+        - elastest/etm:1.0.0-beta4
+        - elastest/etm-proxy:1.0.0-beta4
+        - elastest/etm-dockbeat:1.0.0-beta4
+        - elastest/demo-web-java-test-sut-offline
+        - elastest/etm-check-service-up
+        - elastest/test-etm-alpinegitjava
+        - elastestbrowsers/chrome:latest-2.0.1
 
 

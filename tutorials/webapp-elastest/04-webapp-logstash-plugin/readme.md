@@ -20,3 +20,13 @@ Steps
 3. Create a Jenkins pipeline with the code of **Jenkinsfile**. Note that this pipeline uses the wrapper `logstash {}`
 4. Run Job
 
+Docker Images
+=============
+
+- elastest/etm-check-service-up
+- elastest/ci-docker-e2e-compose:latest
+- elastest/demo-web-java-test-sut-offline
+- docker.elastic.co/elasticsearch/elasticsearch:6.5.3
+- docker.elastic.co/kibana/kibana:6.5.3
+- edujgurjc/eslogstash
+

@@ -1,7 +1,7 @@
 version: '3'
 services:
   webapp:
-    image: elastest/demo-web-java-test-sut
+    image: elastest/demo-web-java-test-sut-offline
     expose: 
         - 8080
     network_mode: bridge

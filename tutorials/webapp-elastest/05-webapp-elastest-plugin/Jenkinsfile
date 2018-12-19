@@ -3,7 +3,7 @@ node{
         stage ('Executing Test') {
             echo 'Print env variables'
             sh 'env'
-            def sutImage = docker.image('elastest/demo-web-java-test-sut')
+            def sutImage = docker.image('elastest/demo-web-java-test-sut-offline')
             echo 'Start SUT'
             sutImage.withRun("--name ${env.ET_SUT_CONTAINER_NAME}") { c ->
                 echo "${c.id}"
