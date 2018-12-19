@@ -24,6 +24,7 @@ node(){
                 } finally {
                    echo 'Stopping SUT'
                    sh "docker-compose -f $webappPath -p $projectName down"
+                   step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                 }
        }
 }
