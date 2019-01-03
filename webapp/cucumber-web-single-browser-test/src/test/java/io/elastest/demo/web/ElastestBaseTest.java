@@ -60,6 +60,8 @@ public class ElastestBaseTest {
                     driver = new FirefoxDriver();
                 }
             } else {
+                logger.info("Using ElasTest EUS URL: {}", eusURL);
+
                 DesiredCapabilities caps;
                 if (browserType == null || browserType.equals(CHROME)) {
                     caps = DesiredCapabilities.chrome();
