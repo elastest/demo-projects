@@ -30,9 +30,12 @@ public class ProxyTest extends ElastestBaseTest {
     @Test
     public void testProxy(TestInfo info)
             throws InterruptedException, MalformedURLException {
+        Thread.sleep(2000);
 
         WebElement ip = driver.findElement(By.xpath(
                 "//div/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]"));
+
+        System.err.println(ip.getText());
 
         boolean throughProxy = ip != null && ip.getText() != null
                 && ip.getText().equals(proxyUrl);
