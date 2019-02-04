@@ -91,7 +91,7 @@ public class ElastestBaseTest {
                 caps.setCapability("proxy", proxy);
             }
 
-            browserVersion = System.getProperty("browserVersion");
+            browserVersion = System.getenv("browserVersion");
             if (browserVersion != null) {
                 logger.info("Browser Version: {}", browserVersion);
                 caps.setVersion(browserVersion);
