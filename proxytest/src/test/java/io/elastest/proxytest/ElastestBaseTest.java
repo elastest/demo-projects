@@ -46,10 +46,10 @@ public class ElastestBaseTest {
             if (sutHost == null) {
                 sutUrl = "https://elastest.io/docs/";
             } else {
-                sutPort = sutPort != null ? sutPort : "8080";
                 sutProtocol = sutProtocol != null ? sutProtocol : "http";
 
-                sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
+                sutUrl = sutProtocol + "://" + sutHost
+                        + (sutPort != null ? ":" + sutPort : "");
             }
             logger.info("Webapp URL: " + sutUrl);
 
