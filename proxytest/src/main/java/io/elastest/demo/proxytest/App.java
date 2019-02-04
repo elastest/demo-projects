@@ -1,4 +1,4 @@
-package io.elastest.proxytest;
+package io.elastest.demo.proxytest;
 
 /**
  * Hello world!

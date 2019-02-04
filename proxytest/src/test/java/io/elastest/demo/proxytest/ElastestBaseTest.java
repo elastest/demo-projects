@@ -1,8 +1,7 @@
-package io.elastest.proxytest;
+package io.elastest.demo.proxytest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -75,8 +74,7 @@ public class ElastestBaseTest {
                 } else {
                     caps = DesiredCapabilities.firefox();
                 }
-                caps.setCapability("webdriver.chrome.args",
-                        Arrays.asList("--whitelisted-ips"));
+
                 if (proxyUrl != null) {
                     Proxy proxy = new Proxy();
                     proxy.setHttpProxy(proxyUrl);

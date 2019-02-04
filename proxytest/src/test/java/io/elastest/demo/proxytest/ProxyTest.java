@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package io.elastest.proxytest;
+package io.elastest.demo.proxytest;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
