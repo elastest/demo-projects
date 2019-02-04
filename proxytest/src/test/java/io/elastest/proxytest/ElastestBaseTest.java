@@ -2,6 +2,7 @@ package io.elastest.proxytest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,7 +42,7 @@ public class ElastestBaseTest {
             String sutPort = System.getenv("ET_SUT_PORT");
             String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
-            String proxyUrl = System.getenv("PROXY_URL");
+            String proxyUrl = System.getProperty("PROXY_URL");
 
             if (sutHost == null) {
                 sutUrl = "https://elastest.io/docs/";
@@ -53,7 +54,7 @@ public class ElastestBaseTest {
             }
             logger.info("Webapp URL: " + sutUrl);
 
-            browserType = System.getenv("browser");
+            browserType = System.getProperty("browser");
             logger.info("Browser Type: {}", browserType);
             eusURL = System.getenv("ET_EUS_API");
 
@@ -74,7 +75,8 @@ public class ElastestBaseTest {
                 } else {
                     caps = DesiredCapabilities.firefox();
                 }
-
+                caps.setCapability("webdriver.chrome.args",
+                        Arrays.asList("--whitelisted-ips"));
                 if (proxyUrl != null) {
                     Proxy proxy = new Proxy();
                     proxy.setHttpProxy(proxyUrl);
@@ -82,7 +84,7 @@ public class ElastestBaseTest {
                     caps.setCapability("proxy", proxy);
                 }
 
-                browserVersion = System.getenv("browserVersion");
+                browserVersion = System.getProperty("browserVersion");
                 if (browserVersion != null) {
                     logger.info("Browser Version: {}", browserVersion);
                     caps.setVersion(browserVersion);
