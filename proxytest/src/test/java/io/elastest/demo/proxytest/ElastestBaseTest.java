@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Proxy.ProxyType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -87,6 +88,8 @@ public class ElastestBaseTest {
             if (proxyUrl != null) {
                 Proxy proxy = new Proxy();
                 proxy.setHttpProxy(proxyUrl);
+                proxy.setProxyType(ProxyType.AUTODETECT);
+
                 logger.info("Using proxy url: {}", proxyUrl);
                 caps.setCapability("proxy", proxy);
             }
