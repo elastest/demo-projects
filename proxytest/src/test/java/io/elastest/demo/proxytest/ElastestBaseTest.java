@@ -88,6 +88,7 @@ public class ElastestBaseTest {
             if (proxyUrl != null) {
                 Proxy proxy = new Proxy();
                 proxy.setHttpProxy(proxyUrl);
+                proxy.setAutodetect(true);
                 proxy.setProxyType(ProxyType.AUTODETECT);
 
                 logger.info("Using proxy url: {}", proxyUrl);
