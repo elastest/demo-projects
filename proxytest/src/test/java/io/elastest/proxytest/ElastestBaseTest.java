@@ -41,7 +41,7 @@ public class ElastestBaseTest {
             String sutPort = System.getenv("ET_SUT_PORT");
             String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
-            String proxyUrl = System.getenv("PROXY_URL");
+            String proxyUrl = System.getProperty("PROXY_URL");
 
             if (sutHost == null) {
                 sutUrl = "https://elastest.io/docs/";
