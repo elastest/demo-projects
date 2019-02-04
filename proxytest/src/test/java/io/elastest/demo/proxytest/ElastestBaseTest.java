@@ -41,7 +41,7 @@ public class ElastestBaseTest {
             String sutPort = System.getenv("ET_SUT_PORT");
             String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
-            String proxyUrl = System.getProperty("PROXY_URL");
+            String proxyUrl = System.getenv("PROXY_URL");
 
             if (sutHost == null) {
                 sutUrl = "https://elastest.io/docs/";
@@ -53,7 +53,7 @@ public class ElastestBaseTest {
             }
             logger.info("Webapp URL: " + sutUrl);
 
-            browserType = System.getProperty("browser");
+            browserType = System.getenv("browser");
             logger.info("Browser Type: {}", browserType);
             eusURL = System.getenv("ET_EUS_API");
 
@@ -82,7 +82,7 @@ public class ElastestBaseTest {
                     caps.setCapability("proxy", proxy);
                 }
 
-                browserVersion = System.getProperty("browserVersion");
+                browserVersion = System.getenv("browserVersion");
                 if (browserVersion != null) {
                     logger.info("Browser Version: {}", browserVersion);
                     caps.setVersion(browserVersion);
