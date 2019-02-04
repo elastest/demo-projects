@@ -15,6 +15,7 @@
   cd /demo-projects/proxytest;
   mvn -B test
   ```
-- Parameters:
+- **Parameters**:
   - **Name**: browserVersion |  **Value**: 71
   - **Name**: PROXY_URL |  **Value**: PROXYIP:PROXYPORT or PROXYURL
+- Check **EUS**
