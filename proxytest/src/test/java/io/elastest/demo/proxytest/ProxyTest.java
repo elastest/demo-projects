@@ -18,7 +18,6 @@ package io.elastest.demo.proxytest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.MalformedURLException;
 
@@ -35,10 +34,8 @@ public class ProxyTest extends ElastestBaseTest {
         Thread.sleep(2000);
 
         WebElement ip = driver.findElement(By.xpath(
-                "//div/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]"));
+                "//div/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr[2]/td[2]"));
         assertNotNull(ip);
-
-        System.err.println(ip);
 
         try {
             assertEquals(proxyUrl.split(":")[0], ip.getText());
