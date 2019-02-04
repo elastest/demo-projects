@@ -16,23 +16,29 @@
  */
 package io.elastest.demo.proxytest;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class ProxyTest extends ElastestBaseTest {
 
     @Test
     public void testProxy(TestInfo info)
             throws InterruptedException, MalformedURLException {
-        int elements = driver.findElements(By.id("content")).size();
+
+        WebElement ip = driver.findElement(By.xpath(
+                "//div/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]"));
+
+        boolean throughProxy = ip != null && ip.getText() != null
+                && ip.getText().equals(proxyUrl);
 
         try {
-            assertNotEquals(0, elements);
+            assertTrue(throughProxy);
         } finally {
             Thread.sleep(2000);
         }

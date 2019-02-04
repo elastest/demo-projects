@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.Proxy.ProxyType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -32,6 +31,7 @@ public class ElastestBaseTest {
     protected static String sutUrl;
 
     protected WebDriver driver;
+    protected String proxyUrl;
 
     @BeforeAll
     public static void setupClass() {
@@ -40,20 +40,20 @@ public class ElastestBaseTest {
         String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
         if (sutHost == null) {
-            sutUrl = "https://elastest.io/docs/";
+            sutUrl = "http://amibehindaproxy.com";
         } else {
             sutProtocol = sutProtocol != null ? sutProtocol : "http";
 
             sutUrl = sutProtocol + "://" + sutHost
                     + (sutPort != null ? ":" + sutPort : "");
         }
-        
+
         logger.info("Webapp URL: " + sutUrl);
 
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
         eusURL = System.getenv("ET_EUS_API");
-        
+
         if (eusURL == null) {
             if (browserType == null || browserType.equals(CHROME)) {
                 WebDriverManager.chromedriver().setup();
@@ -83,8 +83,8 @@ public class ElastestBaseTest {
             } else {
                 caps = DesiredCapabilities.firefox();
             }
-            
-            String proxyUrl = System.getenv("PROXY_URL");
+
+            proxyUrl = System.getenv("PROXY_URL");
             if (proxyUrl != null) {
                 Proxy proxy = new Proxy();
                 proxy.setHttpProxy(proxyUrl);
