@@ -18,7 +18,7 @@ package io.elastest.demo.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class CalcTest extends ElasTestBase {
@@ -35,7 +35,7 @@ public class CalcTest extends ElasTestBase {
     static final String EXPECTED_SUM_RESULT_KEY = "EXPECTED_SUM_RESULT";
     static final String EXPECTED_SUB_RESULT_KEY = "EXPECTED_SUB_RESULT";
 
-    @BeforeEach
+    @BeforeAll
     public void setup() {
         this.calc = new Calc();
 
@@ -59,13 +59,13 @@ public class CalcTest extends ElasTestBase {
                     .parseInt(System.getenv(EXPECTED_SUB_RESULT_KEY));
 
             logger.info("Using passed values:");
-            logger.info("left: {}", left);
-            logger.info("right: {}", right);
-            logger.info("expected Sum result: {}", expectedSumResult);
-            logger.info("expected Sub result: {}", expectedSubResult);
         } else {
-            logger.info("Using default values:");
+            logger.info("Using default values");
         }
+        logger.info("left: {}", left);
+        logger.info("right: {}", right);
+        logger.info("expected Sum result: {}", expectedSumResult);
+        logger.info("expected Sub result: {}", expectedSubResult);
     }
 
     @Test
