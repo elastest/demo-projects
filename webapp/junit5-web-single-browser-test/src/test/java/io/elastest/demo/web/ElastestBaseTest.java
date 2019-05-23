@@ -93,9 +93,9 @@ public class ElastestBaseTest {
     @BeforeEach
     public void setupTest(TestInfo info) throws Exception {
         String testName = info.getTestMethod().get().getName();
-        ((JavascriptExecutor) driver).executeScript(
-                "'{\"elastestCommand\": \"startTest\", \"args\": {\"testName\": \""
-                        + testName + "\"} }'");
+//        ((JavascriptExecutor) driver).executeScript(
+//                "'{\"elastestCommand\": \"startTest\", \"args\": {\"testName\": \""
+//                        + testName + "\"} }'");
 
         logger.info("##### Start test: {}", testName);
 
