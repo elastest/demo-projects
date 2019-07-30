@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    io.elastest.type: SUT
+  creationTimestamp: null
+  labels:
+    io.elastest: "true"
+    io.elastest.service: demo-rest-java-sut
+  name: demo-web-java-sut
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.elastest: "true"
+        io.elastest.service: demo-rest-java-sut
+    spec:
+      containers:
+      - image: elastest/demo-rest-java-test-sut
+        name: demo-rest-java-sut
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+status: {}
