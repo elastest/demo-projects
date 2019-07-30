@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    io.elastest.type: SUT
+  creationTimestamp: null
+  labels:
+    io.elastest: "true"
+    io.elastest.service: openvidu-java-sut
+  name: openvidu-java-sut
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.elastest: "true"
+        io.elastest.service: openvidu-java-sut
+    spec:
+      containers:
+      - image: elastest/test-etm-sut-openvidu
+        name: openvidu-java-sut
+        ports:
+        - containerPort: 5000
+        resources: {}
+      restartPolicy: Always
+status: {}
