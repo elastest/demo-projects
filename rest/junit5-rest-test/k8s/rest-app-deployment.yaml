@@ -7,7 +7,7 @@ metadata:
   labels:
     io.elastest: "true"
     io.elastest.service: demo-rest-java-sut
-  name: demo-web-java-sut
+  name: demo-rest-java-sut
 spec:
   replicas: 1
   strategy: {}
