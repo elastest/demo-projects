@@ -1,0 +1,36 @@
+node {
+    elastest(tss: ['EUS'], surefireReportsPattern: '**/target/surefire-reports/TEST-*.xml', monitoring: true, project: 'Jenkins Examples') {
+        withKubeConfig([credentialsId: 'k8s-api-token', serverUrl: env.K8S_URL]) {
+            try {
+                stage("Start SUT") {
+                    git(
+                        url: 'https://github.com/elastest/demo-projects'
+                        ) 
+                    sh "cd ./webapp/junit5-web-multiple-browsers-test/k8s;./addSutPrefix.sh;kubectl create -f k8s/"
+                }
+                
+                stage("Test") {
+                    def sutIp = containerIp('demo-web-java-sut')
+                    withEnv(['ET_SUT_HOST=' + sutIp]) {
+                        sh "cd ./webapp/junit5-web-multiple-browsers-test/;'${mvnHome}/bin/mvn' -Dbrowser=chrome -DforkCount=0 test" 
+                    }
+                }
+            
+            } finally {
+                sh "cd ./webapp/junit5-web-multiple-browsers-test/k8s;./addSutPrefix.sh;kubectl delete -f k8s/"
+                junit "target/*-reports/TEST-*.xml"
+            }
+        }
+    }
+}
+
+def containerIp(podName) {
+    echo "Retrive pod ip"
+    containerIp = sh (
+        script: "kubectl get pod -o wide | grep " + podName + " | awk '{print \$6}'",
+        returnStdout: true
+    ).trim()
+    
+    echo containerName+" IP = " + containerIp;
+    return containerIp;
+}
