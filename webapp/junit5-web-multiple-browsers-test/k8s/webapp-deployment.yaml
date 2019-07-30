@@ -5,7 +5,7 @@ metadata:
     io.elastest.type: SUT
   creationTimestamp: null
   labels:
-    io.elastest: true
+    io.elastest: "true"
     io.elastest.service: demo-web-java-sut
   name: demo-web-java-sut
 spec:
@@ -15,7 +15,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.elastest: true
+        io.elastest: "true"
         io.elastest.service: demo-web-java-sut
     spec:
       containers:
