@@ -19,7 +19,7 @@ spec:
         io.elastest.service: demo-web-java-sut
     spec:
       containers:
-        image: elastest/demo-web-java-test-sut
+      - image: elastest/demo-web-java-test-sut
         name: demo-web-java-sut
         ports:
         - containerPort: 8080
