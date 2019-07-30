@@ -1,28 +1,28 @@
 node {
     elastest(tss: ['EUS'], surefireReportsPattern: '**/target/surefire-reports/TEST-*.xml', project: 'Jenkins Examples') {
         withKubeConfig([credentialsId: 'k8s-api-token', serverUrl: env.K8S_URL]) {
+            sh "env"
             try {
                 stage("Start SUT") {
                     git(
                         url: 'https://github.com/elastest/demo-projects'
                         ) 
-                    sh "cd ./webapp/junit5-web-multiple-browsers-test/k8s;./addSutPrefix.sh;kubectl create -f ."
-                    checkPodStatus(1, "${ET_SUT_CONTAINER_NAME}-demo-web-java-sut")
+                    sh "cd ./rest/junit5-rest-test/k8s;./addSutPrefix.sh;kubectl create -f ."
+                    checkPodStatus(1, "${ET_SUT_CONTAINER_NAME}-demo-rest-java-sut")
                 }
                 
                 stage("Run tests") {
                     mvnHome = tool 'M3.3.9'
-                    def sutIp = getPodIp('demo-web-java-sut')
+                    def sutIp = getPodIp('demo-rest-java-sut')
                     waitForService(5, "http://" + sutIp + ":8080")
                     withEnv(['ET_SUT_HOST=' + sutIp]) {
                         echo "Running test"
-                        sh "cd ./webapp/junit5-web-multiple-browsers-test/;'${mvnHome}/bin/mvn' -Dbrowser=chrome -DforkCount=0 test" 
+                        sh "cd ./rest/junit5-rest-test/;'${mvnHome}/bin/mvn' -Dbrowser=chrome -DforkCount=0 test" 
                     }
                 }
             
             } finally {
-                sh "cd ./webapp/junit5-web-multiple-browsers-test/;kubectl delete -f k8s/"
-                junit "target/*-reports/TEST-*.xml"
+                sh "cd ./rest/junit5-rest-test/;kubectl delete -f k8s/"
             }
         }
     }
