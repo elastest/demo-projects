@@ -7,13 +7,13 @@ node {
                         url: 'https://github.com/elastest/demo-projects'
                         ) 
                     sh "cd ./openvidu-test/k8s;./addSutPrefix.sh;kubectl create -f ."
-                    checkPodStatus(1, "${ET_SUT_CONTAINER_NAME}-openvidu-java-sut")
+                    checkPodStatus(5, "${ET_SUT_CONTAINER_NAME}-openvidu-java-sut")
                 }
                 
                 stage("Run tests") {
                     mvnHome = tool 'M3.3.9'
                     def sutIp = getPodIp('openvidu-java-sut')
-                    waitForService(5, "http://" + sutIp + ":5000")
+                    waitForService(5, "https://" + sutIp + ":5000")
                     withEnv(['ET_SUT_HOST=' + sutIp]) {
                         echo "Running test"
                         sh "cd ./openvidu-test/; '${mvnHome}/bin/mvn' -Dbrowser=chrome -DforkCount=0 test" 
@@ -43,7 +43,7 @@ def waitForService(time, serviceUrl) {
         waitUntil {
             echo "Waiting for the service " + serviceUrl + " is ready"
             script {
-                def r = sh script: 'wget -q ' + serviceUrl + ' -O /dev/null', returnStatus: true
+                def r = sh script: 'wget -q --no-check-certificate ' + serviceUrl + ' -O /dev/null', returnStatus: true
                 return (r == 0);
            }
         }
