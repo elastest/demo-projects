@@ -41,7 +41,6 @@ public class CustomMetrics extends ElasTestBase {
 			counterStr = "10";
 		}
 
-		urlLogstash = "http://localhost:9000/";
 		logger.info("\n-Logstash Ip: " + urlLogstash + "\n-Execution Identifier: " + execId + "\n-Generate "
 				+ counterStr + " prime number");
 	}
