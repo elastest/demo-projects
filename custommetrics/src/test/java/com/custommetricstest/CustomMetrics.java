@@ -40,7 +40,7 @@ public class CustomMetrics extends ElasTestBase {
 		if (counterStr == null) {
 			counterStr = "10";
 		}
-		
+			
 		logger.info("\n-Logstash Ip: " + urlLogstash + "\n-Execution Identifier: " + execId + "\n-Generate "
 				+ counterStr + " prime number");
 	}
@@ -65,7 +65,7 @@ public class CustomMetrics extends ElasTestBase {
 				e.printStackTrace();
 			}
 
-			sleep(2000);
+			sleep(5000);
 			counter--;
 		}
 	}
@@ -102,8 +102,6 @@ public class CustomMetrics extends ElasTestBase {
 		OutputStream os = http.getOutputStream();
 		os.write(out);
 		os.close();
-		
-		http.disconnect();
 	}
 
 	private void sleep(int time) {
