@@ -101,9 +101,9 @@ public class CustomMetrics extends ElasTestBase {
 		http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 		http.connect();
 
-		try (OutputStream os = http.getOutputStream()){
-			os.write(out);
-		} 
+		OutputStream os = http.getOutputStream();
+		os.write(out);
+		os.close();
 	}
 
 	private void sleep(int time) {
