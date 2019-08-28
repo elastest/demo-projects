@@ -41,7 +41,7 @@ public class CustomMetrics extends ElasTestBase {
 			counterStr = "10";
 		}
 
-		urlLogstash = "http://etm:5003/";
+		urlLogstash = "http://localhost:9000/";
 		logger.info("\n-Logstash Ip: " + urlLogstash + "\n-Execution Identifier: " + execId + "\n-Generate "
 				+ counterStr + " prime number");
 	}
@@ -101,8 +101,12 @@ public class CustomMetrics extends ElasTestBase {
 		http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 		http.connect();
 
-		OutputStream os = http.getOutputStream();
-		os.write(out);
+		try {
+			OutputStream os = http.getOutputStream();
+			os.write(out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void sleep(int time) {
