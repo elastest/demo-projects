@@ -77,7 +77,7 @@ public class CustomMetrics extends ElasTestBase {
 		String units = "{" + "\"" + s1 + "\":\"" + u1 + "\"," + "\"" + s2 + "\":\"" + u2 + "\"" + "}";
 
 		String body = "{" + "\"et_type\":\"composed_example\"" + ",\"component\":\"" + component + "\"" + ",\"exec\":\""
-				+ execId + "\"" + ",\"stream\":\"" + stream + "\"" + ",\"stream_type\":\"composed_metric\""
+				+ execId + "\"" + ",\"stream_type\":\"composed_metric\""
 				+ ",\"composed_example\": " + trace + ",\"units\": " + units + "}";
 
 		
