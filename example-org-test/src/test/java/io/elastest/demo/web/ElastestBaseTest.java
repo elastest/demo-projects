@@ -40,12 +40,13 @@ public class ElastestBaseTest {
         if (sutHost == null) {
             sutUrl = "http://localhost:8080/";
         } else {
-            sutPort = sutPort != null ? sutPort : "8080";
             sutProtocol = sutProtocol != null ? sutProtocol : "http";
-
-            sutUrl = sutProtocol + "://" + sutHost + ":" + sutPort;
+            sutUrl = sutProtocol + "://" + sutHost;
+            if (sutPort != null && !"".equals(sutPort)) {
+                sutUrl += ":" + sutPort;
+            }
         }
-        logger.info("Webapp URL: " + sutUrl);
+        logger.info("Sut URL: " + sutUrl);
 
         browserType = System.getProperty("browser");
         logger.info("Browser Type: {}", browserType);
