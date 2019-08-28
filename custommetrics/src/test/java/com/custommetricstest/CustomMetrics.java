@@ -3,6 +3,7 @@ package com.custommetricstest;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Random;
 
 import static java.lang.invoke.MethodHandles.lookup;
@@ -28,6 +29,9 @@ public class CustomMetrics extends ElasTestBase {
 	protected static String containerName;
 	protected static String counterStr;
 	protected static OperatingSystemMXBean osBean;
+	protected static boolean credentials = false;
+	protected static String username;
+	protected static String password;
 
 	@BeforeAll
 	public static void setupClass() {
@@ -36,13 +40,22 @@ public class CustomMetrics extends ElasTestBase {
 		counterStr = System.getenv("COUNTER");
 		urlLogstash = System.getenv("ET_MON_LSHTTP_API");
 		execId = System.getenv("ET_MON_EXEC");
+		username = System.getenv("CREDENTIALS_NAME");
+		password = System.getenv("CREDENTIALS_PASS");
+
+		if (username != null && password != null) {
+			credentials = true;
+			logger.info("Logstash with credentials");
+		} else {
+			logger.info("Logstash without credentials");
+		}
 
 		if (counterStr == null) {
 			counterStr = "10";
 		}
-			
+
 		logger.info("\n-Logstash Ip: " + urlLogstash + "\n-Execution Identifier: " + execId + "\n-Generate "
-				+ counterStr + " prime number");
+				+ counterStr + " prime numbers");
 	}
 
 	@Test
@@ -97,6 +110,14 @@ public class CustomMetrics extends ElasTestBase {
 
 		http.setFixedLengthStreamingMode(length);
 		http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+		if (credentials) {
+			String encoded = Base64.getEncoder()
+					.encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+			
+			http.setRequestProperty("Authorization", "Basic " + encoded);
+		}
+		
 		http.connect();
 
 		OutputStream os = http.getOutputStream();
