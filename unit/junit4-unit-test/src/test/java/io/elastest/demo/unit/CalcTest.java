@@ -35,10 +35,16 @@ public class CalcTest extends ElasTestBase {
 
     @Test
     public void sumTest() {
-        
+
         int expectedResult = 5;
+
         logger.info("Checking if {} + {} = {}", left, right, expectedResult);
         assertEquals(expectedResult, calc.sum(left, right));
+
+        logger.info("Checking if {} + {} = {} (as string number)", left, right,
+                expectedResult);
+        assertEquals(expectedResult, calc.sum(left + "", right + ""));
+
     }
 
     @Test
@@ -47,5 +53,9 @@ public class CalcTest extends ElasTestBase {
         int expectedResult = 1;
         logger.info("Checking if {} + {} = {}", left, right, expectedResult);
         assertEquals(expectedResult, calc.sub(left, right));
+
+        logger.info("Checking if {} + {} = {} (as string number)", left, right,
+                expectedResult);
+        assertEquals(expectedResult, calc.sub(left + "", right + ""));
     }
 }
