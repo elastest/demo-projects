@@ -112,6 +112,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.4.7</version>
+				<configuration>
+					<mutationEngine>descartes</mutationEngine>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>eu.stamp-project</groupId>
+						<artifactId>descartes</artifactId>
+						<version>1.2.5</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
