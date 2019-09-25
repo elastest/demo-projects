@@ -36,7 +36,10 @@ public class RestAppTest extends ElasTestBase {
         logger.info("Send GET request to {}", url);
         String result = client.getForObject(url, String.class);
 
-        assertThat(result).isEqualTo("Hello World!");
+        final String expected = "Hello World!";
+        logger.info("Assert that result '{}' is equal to expected result: {}",
+                result, expected);
+        assertThat(result).isEqualTo(expected);
     }
 
 }
