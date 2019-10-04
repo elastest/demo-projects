@@ -1,0 +1,179 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Openvidu Server Pro CloudFormation template."
+
+Parameters:
+  KeyName:
+    Description: "Name of an existing EC2 KeyPair to enable SSH access to the instance."
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: "must be the name of an existing EC2 KeyPair."
+  
+  InstanceType:
+    Description: "EC2 Instance type"
+    Type: String
+    Default: c5.xlarge
+    AllowedValues:
+    - c5.large
+    - c5.xlarge
+    - c5.2xlarge
+    - c5.4xlarge
+    ConstraintDescription: "Must be a valid EC2 instance type."
+
+  ImageId:
+    Description: "AMI Id for OpenVidu Pro"
+    Type: String
+  
+  OpenViduSecret:
+    Description: "Secret to connect to your OpenVidu Server."
+    Type: String
+    NoEcho: true
+  
+  WhichCert: 
+    Description: "You can choose from the list below which certificate to use."
+    Type: String
+    Default: selfsigned
+    AllowedValues:
+    - selfsigned
+
+  FreeHTTPAccesToRecordingVideos:
+    Description: "Do you want your recordings to be access publicly?"
+    Type: String
+    Default: false
+    AllowedValues:
+    - true
+    - false
+  
+  OpenviduRecordingNotification:
+    Description: "Which users should receive the recording events in the client side (recordingStarted, recordingStopped)."
+    Type: String
+    Default: "publisher_moderator"
+    AllowedValues: 
+    - "all"
+    - "publisher_moderator"
+    - "moderator"
+    - "none"
+  
+  OpenviduStreamsVideoMaxRecvBandwidth: 
+    Description: "Maximum video bandwidth sent from clients to OpenVidu Server, in kbps. 0 means unconstrained."
+    Type: String
+    Default: 0
+    
+  OpenviduStreamsVideoMinRecvBandwidth:
+    Description: "Minimum video bandwidth sent from clients to OpenVidu Server, in kbps. 0 means unconstrained."
+    Type: String
+    Default: 0
+
+  OpenviduStreamsVideoMaxSendBandwidth: 
+    Description: "Maximum video bandwidth sent from OpenVidu Server to clients, in kbps. 0 means unconstrained."
+    Type: String
+    Default: 0
+    
+  OpenviduStreamsVideoMinSendBandwidth:
+    Description: "Minimum video bandwidth sent from OpenVidu Server to clients, in kbps. 0 means unconstrained."
+    Type: String
+    Default: 0
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: SSL Certificate Configuration
+        Parameters:
+        - WhichCert
+      -
+        Label:
+          default: Openvidu Configuration
+        Parameters:
+        - OpenViduSecret
+        - FreeHTTPAccesToRecordingVideos
+        - OpenviduRecordingNotification
+        - OpenviduStreamsVideoMaxRecvBandwidth
+        - OpenviduStreamsVideoMinRecvBandwidth
+        - OpenviduStreamsVideoMaxSendBandwidth
+        - OpenviduStreamsVideoMinSendBandwidth
+    
+    ParameterLabels:
+      WhichCert: 
+        default: Type of SSL Certificate
+      OpenViduSecret: 
+        default: OpenVidu Secret
+      FreeHTTPAccesToRecordingVideos: 
+          default: Free HTTP access to recorded videos
+
+Resources:
+  OpenviduServer:
+    Type: 'AWS::EC2::Instance'
+    Metadata:
+      Comment: Openvidu Pro
+      AWS::CloudFormation::Init:
+        config:
+          files:
+            /usr/local/bin/testWebapp.sh:
+              content: |
+                #!/bin/bash
+                rm -rf /var/www/html/*
+                git clone https://github.com/elastest/openvidu-loadtest.git /var/www/html/openvidu-loadtest
+                mv /var/www/html/openvidu-loadtest/webapp/* /var/www/html
+                rm -rf /var/www/html/openvidu-loadtest
+              mode: "000755"
+              owner: "root"
+              group: "root"
+    Properties:
+      ImageId: !Ref ImageId
+      InstanceType: !Ref InstanceType
+      SecurityGroups:
+        - !Ref OpenviduServerSecurityGroup
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: Name
+          Value: !Ref 'AWS::StackName'
+      UserData: 
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          set -eu -o pipefail
+
+          cfn-init --region ${AWS::Region} --stack ${AWS::StackId} --resource OpenviduServer
+          
+          /usr/local/bin/testWebapp.sh || { echo "[Openvidu] Download test webapp problem"; exit 1; }
+
+          # sending the finish call
+          /usr/local/bin/cfn-signal -e $? --stack ${AWS::StackId} --resource WaitCondition --region ${AWS::Region}
+  
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeType: io1
+            Iops: 200
+            DeleteOnTermination: true
+            VolumeSize: 10
+  
+  OpenviduServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Openvidu ports
+      SecurityGroupIngress:
+      - IpProtocol: tcp 
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: udp
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+
+  WaitCondition:
+    Type: AWS::CloudFormation::WaitCondition
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT10M
+        Count: 1
+
+Outputs:
+  WebsiteURL:
+    Description: "Use this URL to connect OpenVidu with user and password"
+    Value: !Join 
+        - ''
+        - - 'https://'
+          - !GetAtt OpenviduServer.PublicDnsName 
+          - ':4443'
