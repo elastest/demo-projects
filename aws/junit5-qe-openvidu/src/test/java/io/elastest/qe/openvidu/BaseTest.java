@@ -135,7 +135,7 @@ public class BaseTest {
         String keyName = System.getenv("AWS_KEY_NAME");
         String securityGroups = System.getenv("AWS_SECURITY_GROUPS");
         String tagSpecifications = System.getenv("AWS_TAG_SPECIFICATIONS");
-        int numInstances = Integer.parseInt(System.getenv("AWS_NUM_INSTANCES"));
+        int numInstances = 1;
 
         JsonParser parser = new JsonParser();
         awsConfig = new JsonObject();
