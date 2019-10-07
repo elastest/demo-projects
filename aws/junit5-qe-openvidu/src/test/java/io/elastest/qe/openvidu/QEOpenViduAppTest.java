@@ -67,6 +67,10 @@ public class QEOpenViduAppTest extends BaseTest {
                     logger.error(
                             "Error on start browser of user {} at session {}: {}",
                             userId, CURRENT_SESSIONS, e.getMessage());
+                    if (e.getStackTrace() != null) {
+                        logger.error("Caused by: {}",
+                                e.getStackTrace().toString());
+                    }
                     waitForSessionReadyLatch.abort(e.getMessage());
                 }
             });
@@ -142,7 +146,7 @@ public class QEOpenViduAppTest extends BaseTest {
 
             capabilities.setCapability("testName",
                     testName + "_" + userId.replaceAll("-", "_"));
-            
+
             // AWS capabilities for browsers
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> awsConfigMap = mapper
