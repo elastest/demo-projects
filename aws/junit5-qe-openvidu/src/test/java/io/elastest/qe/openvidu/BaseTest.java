@@ -34,6 +34,9 @@ public class BaseTest {
     public static int USERS_BY_SESSION = 3;
     public static int MAX_SESSIONS = 2;
 
+    public static String REGION = "eu-west-1";
+    public static String BROWSERS_AMI_ID = "ami-0bfc646d9bb6ad37c";
+
     public static String OPENVIDU_SECRET = "MY_SECRET";
     protected static String OPENVIDU_SUT_URL;
     protected static String OPENVIDU_WEBAPP_URL;
@@ -123,14 +126,12 @@ public class BaseTest {
         /* *************************************** */
 
         // Aws Config
-        String region = System.getenv("AWS_REGION");
         String secretAccessKey = System.getenv("AWS_SECRET_ACCESS_KEY");
         String accessKeyId = System.getenv("AWS_ACCESS_KEY_ID");
         String sshUser = System.getenv("AWS_SSH_USER");
         String sshPrivateKey = System.getenv("AWS_SSH_PRIVATE_KEY");
 
         // Instances config
-        String awsAmiId = System.getenv("AWS_AMI_ID");
         String instanceType = System.getenv("AWS_INSTANCE_TYPE");
         String keyName = System.getenv("AWS_KEY_NAME");
         String securityGroups = System.getenv("AWS_SECURITY_GROUPS");
@@ -140,7 +141,7 @@ public class BaseTest {
         JsonParser parser = new JsonParser();
         awsConfig = new JsonObject();
 
-        awsConfig.addProperty("region", region);
+        awsConfig.addProperty("region", REGION);
         awsConfig.addProperty("secretAccessKey", secretAccessKey);
         awsConfig.addProperty("accessKeyId", accessKeyId);
         awsConfig.addProperty("sshUser", sshUser);
@@ -150,7 +151,7 @@ public class BaseTest {
         // Instances Config
 
         JsonObject awsInstancesConfig = new JsonObject();
-        awsInstancesConfig.addProperty("amiId", awsAmiId);
+        awsInstancesConfig.addProperty("amiId", BROWSERS_AMI_ID);
         awsInstancesConfig.addProperty("instanceType", instanceType);
         awsInstancesConfig.addProperty("keyName", keyName);
 
