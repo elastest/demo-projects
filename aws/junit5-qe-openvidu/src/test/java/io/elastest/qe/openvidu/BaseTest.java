@@ -60,6 +60,7 @@ public class BaseTest {
         String usersSession = System.getenv("USERS_BY_SESSION");
         String secondsOfWait = System.getenv("SECONDS_OF_WAIT");
         String browserPollInterval = System.getenv("BROWSER_POLL_INTERVAL");
+        String browsersAmiID = System.getenv("BROWSERS_AMI_ID");
 
         if (openviduSecret != null) {
             OPENVIDU_SECRET = openviduSecret;
@@ -76,6 +77,10 @@ public class BaseTest {
 
         if (browserPollInterval != null) {
             BROWSER_POLL_INTERVAL = Integer.parseInt(browserPollInterval);
+        }
+
+        if (browsersAmiID != null && !"".equals(browsersAmiID)) {
+            BROWSERS_AMI_ID = browsersAmiID;
         }
 
     }
