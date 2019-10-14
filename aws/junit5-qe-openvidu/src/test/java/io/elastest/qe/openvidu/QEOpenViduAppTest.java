@@ -103,6 +103,7 @@ public class QEOpenViduAppTest extends BaseTest {
             this.startBrowsers(info);
         } else { // Last session
             logger.info("Maximum sessions reached: {}", MAX_SESSIONS);
+            sleep(2000);
             browserInitializationTaskExecutor.shutdown();
         }
 
