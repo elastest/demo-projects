@@ -93,6 +93,7 @@ public class BaseTest {
         String sutPort = System.getenv("ET_SUT_PORT");
         String sutProtocol = System.getenv("ET_SUT_PROTOCOL");
 
+        // Use image elastest/openvidu-loadtest for sut
         if (sutHost != null) {
             sutPort = sutPort != null ? sutPort : "4443";
             sutProtocol = sutProtocol != null ? sutProtocol : "https";
