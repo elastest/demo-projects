@@ -132,15 +132,6 @@ public class DockerQEOpenViduAppTest extends BaseTest {
 
             capabilities.setCapability("testName", testName + "_" + userId.replaceAll("-", "_"));
 
-            if (USE_OPENVIDU_FAKE_RESOURCES) {
-                // This flag sets the video input
-                options.addArguments(
-                        "--use-file-for-fake-video-capture=" + "/opt/openvidu/fakevideo.y4m");
-                // This flag sets the audio input
-                options.addArguments(
-                        "--use-file-for-fake-audio-capture=" + "/opt/openvidu/fakeaudio.wav");
-            }
-
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             capabilities.setCapability("elastestTimeout", 3600);
 

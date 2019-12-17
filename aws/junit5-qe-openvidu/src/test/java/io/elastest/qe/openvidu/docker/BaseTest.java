@@ -37,8 +37,6 @@ public class BaseTest {
     public static int SECONDS_OF_WAIT = 40;
     public static int BROWSER_POLL_INTERVAL = 1000;
 
-    protected static boolean USE_OPENVIDU_FAKE_RESOURCES = false;
-
     protected static String EUS_URL;
     protected static String ET_ETM_TJOB_ATTACHMENT_API;
 
@@ -53,7 +51,6 @@ public class BaseTest {
         String usersSession = System.getenv("USERS_BY_SESSION");
         String secondsOfWait = System.getenv("SECONDS_OF_WAIT");
         String browserPollInterval = System.getenv("BROWSER_POLL_INTERVAL");
-        String useOpenviduFakeResources = System.getenv("USE_OPENVIDU_FAKE_RESOURCES");
 
         if (openviduSecret != null) {
             OPENVIDU_SECRET = openviduSecret;
@@ -71,11 +68,6 @@ public class BaseTest {
         if (browserPollInterval != null) {
             BROWSER_POLL_INTERVAL = Integer.parseInt(browserPollInterval);
         }
-
-        if (useOpenviduFakeResources != null) {
-            USE_OPENVIDU_FAKE_RESOURCES = useOpenviduFakeResources.equals("true") ? true : false;
-        }
-
     }
 
     @BeforeAll
