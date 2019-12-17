@@ -160,10 +160,11 @@ public class DockerQEOpenViduAppTest extends BaseTest {
         BrowserClient browserClient = new BrowserClient(driver, userId, CURRENT_SESSIONS);
         browserClientList.add(browserClient);
 
-        String publicUrl = OPENVIDU_SUT_URL + (OPENVIDU_SUT_URL.endsWith("/") ? "" : "/");
+        String completeUrl = OPENVIDU_WEBAPP_URL + ":5000?publicurl=" + OPENVIDU_SUT_URL
+                + ":/&secret=" + OPENVIDU_SECRET + "&sessionId=" + browserClient.getSession()
+                + "&userId=" + browserClient.getUserId();
 
-        browserClient.getDriver().get(OPENVIDU_WEBAPP_URL + "?publicurl=" + publicUrl + "&secret="
-                + OPENVIDU_SECRET + "&sessionId=" + CURRENT_SESSIONS + "&userId=" + userId);
+        browserClient.getDriver().get(completeUrl);
 
         browserClient.startEventPolling(true, false);
 

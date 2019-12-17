@@ -99,6 +99,7 @@ public class BaseTest {
 
             OPENVIDU_SUT_URL = sutProtocol + "://" + sutHost + ":" + sutPort;
             OPENVIDU_WEBAPP_URL = sutProtocol + "://" + sutHost;
+
         } else {
             throw new Exception("No Sut URL");
         }
