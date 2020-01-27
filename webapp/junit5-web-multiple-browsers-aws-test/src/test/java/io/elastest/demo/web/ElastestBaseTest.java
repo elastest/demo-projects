@@ -108,6 +108,7 @@ public class ElastestBaseTest {
             }
 
             caps.setCapability("testName", testName);
+            caps.setCapability("elastestTimeout", 3600);
 
             // AWS capabilities for browsers
             ObjectMapper mapper = new ObjectMapper();
